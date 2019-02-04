@@ -1,6 +1,7 @@
- import Header from  "./Header"
+ import {Header} from  "./Header"
  import Footer from "./Footer"
-
+ import LoginMenu from "./LoginMenu"
+ import AccountMenu from "./AccountMenu"
  export{
-     Header, Footer
+     Header, Footer, LoginMenu, AccountMenu
  }

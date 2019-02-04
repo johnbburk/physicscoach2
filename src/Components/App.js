@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import '../styles/App.css';
 import {Footer, Header} from "./Layouts";
 import {Grid, Paper} from "@material-ui/core";
+import {BrowserRouter} from "react-router-dom";
 
 const style = {
   Paper: {
@@ -15,8 +16,9 @@ const style = {
 class App extends Component {
   render() {
     return (
+      <BrowserRouter>
      <Fragment>
-       <Header/>
+       <Header isAuth = {true}/>
       <Grid container>
       <Grid item sm>
       <Paper style = {style.Paper}>
@@ -32,6 +34,7 @@ class App extends Component {
       </Grid>
        <Footer/>
      </Fragment>
+     </BrowserRouter>
     );
   }
 }
