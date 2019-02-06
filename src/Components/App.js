@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
-          <Header isAuth={true} />
+          <Header isAuth={false} />
           <Grid container>
             <Grid item sm>
               <Paper style={style.Paper}>Left Pane
