@@ -5,13 +5,14 @@ import { Grid, Paper, Button } from "@material-ui/core";
 import { BrowserRouter } from "react-router-dom";
 import { WebcamCapture } from "./WebcamCapture";
 
-const style = {
-  Paper: {
-    padding: 20,
-    marginTop: 10,
-    marginBottom: 10
-  }
-};
+// const style = {
+//   Paper: {
+//     padding: 20,
+//     marginTop: 10,
+//     marginBottom: 10
+//   }
+// };
+// paper style moved to App.css
 
 class App extends Component {
   state = {
@@ -40,7 +41,7 @@ class App extends Component {
           <Grid container direction="row">
 
             <Grid item sm>
-              <Paper style={style.Paper}>
+              <Paper className="Paper-container">
               
                 Left Pane
                 <br/><br/>
@@ -55,7 +56,7 @@ class App extends Component {
             </Grid>
 
             <Grid item sm>
-              <Paper style={style.Paper}>
+              <Paper className="Paper-container">
                 Right Pane
                 <WebcamCapture addImage={this.addImage} />
               </Paper>

@@ -17,6 +17,11 @@
   text-align: right;
 }
 
+.Paper-container {
+  padding: 20px;
+  margin: 15px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
