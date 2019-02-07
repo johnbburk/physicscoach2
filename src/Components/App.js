@@ -5,23 +5,25 @@ import { Grid, Paper, Button } from "@material-ui/core";
 import { BrowserRouter } from "react-router-dom";
 import { WebcamCapture } from "./WebcamCapture";
 
-const style = {
-  Paper: {
-    padding: 20,
-    marginTop: 10,
-    marginBottom: 10
-  }
-};
+// const style = {
+//   Paper: {
+//     padding: 20,
+//     marginTop: 10,
+//     marginBottom: 10
+//   }
+// };
+// paper style moved to App.css
 
 class App extends Component {
   state = {
     imageList: []
   };
-  changeImage = this.changeImage.bind(this);
 
-  changeImage(base64Str) {
+  // changeImage = this.changeImage.bind(this);
+  // binding is unnecessary if we define the function with arrow notation
+
+  addImage = (base64Str) => {
     this.setState((prevState) => {
-      console.log(prevState.imageList)
       return {
         imageList: prevState.imageList.concat(base64Str)
       }
@@ -33,28 +35,37 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
+
           <Header isAuth={false} />
-          <Grid container>
-            <Grid item sm>
-              <Paper style={style.Paper}>Left Pane
+          
+          <Grid container direction="row">
 
-              {
-                this.state.imageList.map((image, index) => {
-                  return <img src={image}/>
-                })
-              }
+            <Grid item sm>
+              <Paper className="Paper-container">
+              
+                Left Pane
+                <br/><br/>
+
+                {
+                  this.state.imageList.map((image, index) => {
+                    return <img src={image} alt="Text to display if image fails to load" key={index}/>
+                  })
+                }
 
               </Paper>
-
             </Grid>
+
             <Grid item sm>
-              <Paper style={style.Paper}>
+              <Paper className="Paper-container">
                 Right Pane
-                <WebcamCapture changeImage={this.changeImage} />
+                <WebcamCapture addImage={this.addImage} />
               </Paper>
             </Grid>
+
           </Grid>
+
           <Footer />
+
         </Fragment>
       </BrowserRouter>
     );

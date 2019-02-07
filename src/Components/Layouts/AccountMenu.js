@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 
 import PropTypes from 'prop-types';
 import Menu from "@material-ui/core/Menu"
@@ -22,7 +22,7 @@ export const AccountMenu =({
     anchorEl,
     handleMenu
 }) => (
-    <div>
+    <Fragment>
         <IconButton
         aria-owns={anchorEl ? "menu-appbar": null}
         aria-haspopup = "true"
@@ -41,7 +41,7 @@ export const AccountMenu =({
         onClose={closeAccountMenu}>
         <MenuItem onClick ={onLogoutClick}>Sign Out</MenuItem>
 </Menu>
-    </div>
+    </Fragment>
 )
 
 export default withStyles(styles)(AccountMenu)
