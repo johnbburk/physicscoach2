@@ -17,11 +17,12 @@ class App extends Component {
   state = {
     imageList: []
   };
-  changeImage = this.changeImage.bind(this);
 
-  changeImage(base64Str) {
+  // changeImage = this.changeImage.bind(this);
+  // binding is unnecessary if we define the function with arrow notation
+
+  addImage = (base64Str) => {
     this.setState((prevState) => {
-      console.log(prevState.imageList)
       return {
         imageList: prevState.imageList.concat(base64Str)
       }
@@ -33,28 +34,37 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Fragment>
-          <Header isAuth={true} />
-          <Grid container>
-            <Grid item sm>
-              <Paper style={style.Paper}>Left Pane
 
-              {
-                this.state.imageList.map((image, index) => {
-                  return <img src={image}/>
-                })
-              }
+          <Header isAuth={false} />
+          
+          <Grid container direction="row">
+
+            <Grid item sm>
+              <Paper style={style.Paper}>
+              
+                Left Pane
+                <br/><br/>
+
+                {
+                  this.state.imageList.map((image, index) => {
+                    return <img src={image} alt="Text to display if image fails to load" key={index}/>
+                  })
+                }
 
               </Paper>
-
             </Grid>
+
             <Grid item sm>
               <Paper style={style.Paper}>
                 Right Pane
-                <WebcamCapture changeImage={this.changeImage} />
+                <WebcamCapture addImage={this.addImage} />
               </Paper>
             </Grid>
+
           </Grid>
+
           <Footer />
+
         </Fragment>
       </BrowserRouter>
     );
