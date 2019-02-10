@@ -5,6 +5,8 @@ import { Grid, Paper, Button } from "@material-ui/core";
 import { BrowserRouter } from "react-router-dom";
 import { WebcamCapture } from "./WebcamCapture";
 import Countdown from "./Countdown";
+import SignInScreen from "./SignInScreen";
+import Content from "./Content";
 
 // const style = {
 //   Paper: {
@@ -17,7 +19,8 @@ import Countdown from "./Countdown";
 
 class App extends Component {
   state = {
-    imageList: []
+    imageList: [],
+    isAuth: true,
   };
 
   // changeImage = this.changeImage.bind(this);
@@ -37,36 +40,11 @@ class App extends Component {
       <BrowserRouter>
         <Fragment>
 
-          <Header isAuth={true} />
+          <Header isAuth={this.state.isAuth} />
           
-          <Grid container direction="row">
+          {this.state.isAuth ? 
 
-            <Grid item sm>
-              <Paper className="Paper-container">
-              
-                Left Pane
-                <br/><br/>
-                <Countdown/>
-
-                /* {
-                  this.state.imageList.map((image, index) => {
-                    return <img src={image} alt="Text to display if image fails to load" key={index}/>
-                  })
-                } */
-
-              </Paper>
-            </Grid>
-
-            <Grid item sm>
-              <Paper className="Paper-container">
-                Right Pane
-                <WebcamCapture addImage={this.addImage} />
-              </Paper>
-            </Grid>
-
-          </Grid>
-
-          <Footer />
+          <Content imageList = {this.state.imageList} addImage = {this.addImage}/> : <SignInScreen/>}
 
         </Fragment>
       </BrowserRouter>

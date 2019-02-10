@@ -29,7 +29,7 @@ class Countdown extends Component{
       running: false,
       timerLabel: "Session",
       goal: "",
-      showStart: true,
+      showStart: false, //TODO: change this back to true
       showClose: false,
       sessionRef: null,
       rating: 0,
