@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import "./../styles/Modal.css";
+import "../../styles/Modal.css";
 import Button from '@material-ui/core/Button';
 
 

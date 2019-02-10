@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
 const keys = require("./keys");
 
 export const config = {

@@ -6,11 +6,10 @@
 
 
 import React, { Component } from "react";
-import "./../styles/index.css";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'; 
-import firebase from "../config/constants.js";
-import Modal from "./Modal";
+import firebase from "../config/constants";
+import Modal from "./Layouts/Modal";
 import StarRatings from 'react-star-ratings'
 
 const db = firebase.firestore();
