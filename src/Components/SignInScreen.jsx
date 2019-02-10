@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase";
 import { logout } from "../helpers/auth";
+import {connect} from "react-redux"; 
+import {signIn} from "../actions"
+
 
 class SignInScreen extends React.Component {
   constructor(props) {
@@ -26,7 +29,13 @@ class SignInScreen extends React.Component {
       signInSuccessWithAuthResult: () => false
     }
   };
+  componentWillUpdate(nextProps){
+    if (nextProps.auth){
+      this.context.router.history.push("/app");
+    }
 
+
+  }
   render() {
     if (this.state.loading) {
       return (
@@ -47,4 +56,8 @@ class SignInScreen extends React.Component {
     }
   }
 }
-export default SignInScreen;
+function mapStateToProps({auth}) {
+  return {auth};
+}
+
+export default connect(mapStateToProps,{signIn}) (SignInScreen);

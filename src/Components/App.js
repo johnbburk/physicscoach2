@@ -2,11 +2,16 @@ import React, { Component, Fragment } from "react";
 import "../styles/App.css";
 import { Footer, Header } from "./Layouts";
 import { Grid, Paper, Button } from "@material-ui/core";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { WebcamCapture } from "./WebcamCapture";
 import Countdown from "./Countdown";
 import SignInScreen from "./SignInScreen";
 import Content from "./Content";
+import requireAuth from "./auth/requireAuth";
+import {connect} from "react-redux";
+import {fetchUser} from "../actions";
+import SignIn from "./SignIn";
+
 
 // const style = {
 //   Paper: {
@@ -23,6 +28,9 @@ class App extends Component {
     isAuth: true,
   };
 
+  componentWillMount(){
+    this.props.fetchUser();
+  }
   // changeImage = this.changeImage.bind(this);
   // binding is unnecessary if we define the function with arrow notation
 
@@ -37,19 +45,25 @@ class App extends Component {
   render() {
     console.log(this.state.imageList);
     return (
+
       <BrowserRouter>
-        <Fragment>
 
-          <Header isAuth={this.state.isAuth} />
           
-          {this.state.isAuth ? 
+      <div className="container">
+      <Header isAuth={this.state.isAuth} />
 
-          <Content imageList = {this.state.imageList} addImage = {this.addImage}/> : <SignInScreen/>}
+          <Route exact path ="/" component = {SignInScreen}/>
+          <Route path = "/app" component = {requireAuth(Content)} />
 
-        </Fragment>
+ {/* {this.state.isAuth ? 
+
+           : <SignInScreen/>} */}
+ 
+ </div>
+
       </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default connect(null,{fetchUser}) (App) ;

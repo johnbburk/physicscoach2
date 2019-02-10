@@ -9,6 +9,17 @@ class Content extends Component {
   constructor(props) {
     super(props);
   }
+  state={
+      imageList: [],
+  }
+
+  addImage = (base64Str) => {
+    this.setState((prevState) => {
+      return {
+        imageList: prevState.imageList.concat(base64Str)
+      }
+    });
+  }
 
   render() {
     return (
@@ -20,8 +31,8 @@ class Content extends Component {
               <br />
               <br />
               <Countdown />
-              /*{" "}
-              {this.props.imageList.map((image, index) => {
+              
+              {this.state.imageList.map((image, index) => {
                 return (
                   <img
                     src={image}
@@ -29,15 +40,15 @@ class Content extends Component {
                     key={index}
                   />
                 );
-              })}{" "}
-              */
+              })}
+              
             </Paper>
           </Grid>
 
           <Grid item sm>
             <Paper className="Paper-container">
               Right Pane
-              <WebcamCapture addImage={this.props.addImage} />
+              <WebcamCapture addImage={this.addImage} />
             </Paper>
           </Grid>
         </Grid>
@@ -46,5 +57,7 @@ class Content extends Component {
     );
   }
 }
+
+
 
 export default Content;
