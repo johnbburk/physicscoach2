@@ -36,7 +36,7 @@ class App extends Component {
       <BrowserRouter>
         <Fragment>
 
-          <Header isAuth={false} />
+          <Header isAuth={true} />
           
           <Grid container direction="row">
 
