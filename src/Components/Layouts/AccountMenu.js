@@ -30,7 +30,7 @@ class AccountMenu extends Component {
   };
 
   componentWillUpdate(nextProps) {
-    if (nextProps.auth) {
+    if (!nextProps.auth) {
       this.context.router.history.push("/");
     }
   }
