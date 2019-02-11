@@ -8,8 +8,8 @@ import Countdown from "./Countdown";
 import SignInScreen from "./SignInScreen";
 import Content from "./Content";
 import requireAuth from "./auth/requireAuth";
-import {connect} from "react-redux";
-import {fetchUser} from "../actions";
+import { connect } from "react-redux";
+import { fetchUser } from "../actions";
 import SignIn from "./SignIn";
 import createHistory from "history/createBrowserHistory";
 
@@ -23,35 +23,30 @@ import createHistory from "history/createBrowserHistory";
 // paper style moved to App.css
 
 class App extends Component {
-  componentWillMount(){
+  componentWillMount() {
     this.props.fetchUser();
   }
   // changeImage = this.changeImage.bind(this);
   // binding is unnecessary if we define the function with arrow notation
 
-  
-
   render() {
     return (
+      <BrowserRouter>
+        <div className="container">
+          <Header context={this.context} />
+          <Route exact path="/" component={SignInScreen} />
+          <Route path="/app" component={requireAuth(Content)} />
 
-      <BrowserRouter history ={createHistory()}>
-
-          
-      <div className="container">
-      <Header />
-
-          <Route exact path ="/" component = {SignInScreen}/>
-          <Route path = "/app" component = {requireAuth(Content)} />
-
- {/* {this.state.isAuth ? 
+          {/* {this.state.isAuth ? 
 
           <Content imageList = {this.state.imageList} addImage = {this.addImage}/> : <SignInScreen/>} */}
- 
- </div>
-
+        </div>
       </BrowserRouter>
     );
   }
 }
 
-export default connect(null,{fetchUser}) (App) ;
+export default connect(
+  null,
+  { fetchUser }
+)(App);
