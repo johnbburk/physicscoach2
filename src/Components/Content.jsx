@@ -32,7 +32,7 @@ class Content extends Component {
               <br />
               <Countdown />
               
-              {this.state.imageList.map((image, index) => {
+              /* {this.state.imageList.map((image, index) => {
                 return (
                   <img
                     src={image}
@@ -40,7 +40,7 @@ class Content extends Component {
                     key={index}
                   />
                 );
-              })}
+              })} */
               
             </Paper>
           </Grid>

@@ -25,7 +25,7 @@ class AccountMenu extends Component {
     
     componentWillUpdate(nextProps){
         if (nextProps.auth){
-            this.context.router.history.push("/");
+            this.props.history.push("/");
         }
     }
     render(){

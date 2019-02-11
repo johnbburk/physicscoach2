@@ -11,7 +11,7 @@ import requireAuth from "./auth/requireAuth";
 import {connect} from "react-redux";
 import {fetchUser} from "../actions";
 import SignIn from "./SignIn";
-
+import createHistory from "history/createBrowserHistory";
 
 // const style = {
 //   Paper: {
@@ -23,41 +23,29 @@ import SignIn from "./SignIn";
 // paper style moved to App.css
 
 class App extends Component {
-  state = {
-    imageList: [],
-    isAuth: true,
-  };
-
   componentWillMount(){
     this.props.fetchUser();
   }
   // changeImage = this.changeImage.bind(this);
   // binding is unnecessary if we define the function with arrow notation
 
-  addImage = (base64Str) => {
-    this.setState((prevState) => {
-      return {
-        imageList: prevState.imageList.concat(base64Str)
-      }
-    });
-  }
+  
 
   render() {
-    console.log(this.state.imageList);
     return (
 
-      <BrowserRouter>
+      <BrowserRouter history ={createHistory()}>
 
           
       <div className="container">
-      <Header isAuth={this.state.isAuth} />
+      <Header />
 
           <Route exact path ="/" component = {SignInScreen}/>
           <Route path = "/app" component = {requireAuth(Content)} />
 
  {/* {this.state.isAuth ? 
 
-           : <SignInScreen/>} */}
+          <Content imageList = {this.state.imageList} addImage = {this.addImage}/> : <SignInScreen/>} */}
  
  </div>
 

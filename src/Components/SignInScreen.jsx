@@ -31,7 +31,8 @@ class SignInScreen extends React.Component {
   };
   componentWillUpdate(nextProps){
     if (nextProps.auth){
-      this.context.router.history.push("/app");
+      console.log(this.context)
+      this.props.history.push("/app");
     }
 
 
