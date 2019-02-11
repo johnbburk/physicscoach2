@@ -20,8 +20,9 @@ export const Header = () => (
       </Link>
 
       <div className="Account-container">
-        {fetchUser() != null ? <AccountMenu /> : <LoginMenu />}
+        {true ? <AccountMenu /> : <LoginMenu />}
       </div>
     </Toolbar>
   </AppBar>
 );
+

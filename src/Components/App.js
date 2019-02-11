@@ -24,7 +24,7 @@ import createHistory from "history/createBrowserHistory";
 
 class App extends Component {
   componentWillMount() {
-    this.props.fetchUser();
+    console.log(this.props.fetchUser());
   }
   // changeImage = this.changeImage.bind(this);
   // binding is unnecessary if we define the function with arrow notation
@@ -33,8 +33,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container">
-          <Header context={this.context} />
-          <Route exact path="/" component={SignInScreen} />
+          <Header context={this.context} user = {this.props.fetchUser()}/>
+          <Route exact path="/" component={Footer} />
+          <Route path="/login" component={SignInScreen} />
           <Route path="/app" component={requireAuth(Content)} />
 
           {/* {this.state.isAuth ? 

@@ -10,12 +10,19 @@ import { logout } from "../../helpers/auth";
 import { signOut } from "../../actions";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import {Button} from "@material-ui/core";
 
-const styles = {
-  buttonRoot: {
-    color: "white"
-  }
-};
+
+
+
+const buttonStyle = {
+  color: "white",
+  backgroundColor: "#0073e6",
+  // textDecoration: "none",
+  // alignSelf: "center",
+  // marginLeft: 20
+  // float: "right", (unnecessary because wrapping div takes care of it)
+}
 
 class AccountMenu extends Component {
   static contextTypes = {
@@ -29,13 +36,14 @@ class AccountMenu extends Component {
   }
   render() {
     return (
-      <IconButton
-        aria-haspopup="true"
-        onClick={this.props.signOut}
-        //classes={{root: classes.buttonRoot}}
-      >
-        <AccountCircle />
-      </IconButton>
+      <Button
+      className="Logout-button"
+      style={buttonStyle}
+      onClick={signOut()}
+      data-test={"sign-out"}
+  >
+      Sign Out
+  </Button>
     );
   }
 }

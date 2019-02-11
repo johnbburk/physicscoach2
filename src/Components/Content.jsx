@@ -2,13 +2,14 @@ import React, { Component, Fragment } from "react";
 import "../styles/App.css";
 import { Footer, Header } from "./Layouts";
 import { Grid, Paper, Button } from "@material-ui/core";
-import { WebcamCapture } from "./WebcamCapture";
+import WebcamDialog from "./WebcamCapture";
 import Countdown from "./Countdown";
 
+
 class Content extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   state = {
     imageList: []
   };
@@ -48,7 +49,7 @@ class Content extends Component {
           <Grid item sm>
             <Paper className="Paper-container">
               Right Pane
-              <WebcamCapture addImage={this.addImage} />
+              <WebcamDialog addImage={this.addImage} />
             </Paper>
           </Grid>
         </Grid>
