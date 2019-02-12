@@ -1,7 +1,7 @@
 import { ref, firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
-import { signIn,signOut } from "../actions";
+import { signIn, signOut } from "../actions";
 
 export function fetchUser() {
   firebaseAuth.onAuthStateChanged(result => {
@@ -9,8 +9,7 @@ export function fetchUser() {
     if (result != null) {
       store.dispatch(signIn(result));
       history.push("/app");
-    }
-    else{
+    } else {
       history.push("/");
     }
   });
@@ -23,10 +22,14 @@ export function auth(email, pw) {
 }
 
 export function logout() {
-  console.log(firebaseAuth().signOut());
-  store.dispatch(signOut());
-  history.push("/");
-
+  firebaseAuth.signOut().then(
+    function() {
+      store.dispatch(signOut());
+    },
+    function(error) {
+      console.error("Sign Out Error", error);
+    }
+  );
 }
 
 export function login(email, pw) {
