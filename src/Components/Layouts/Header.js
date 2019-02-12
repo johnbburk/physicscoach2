@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { AppBar, Toolbar } from "@material-ui/core";
 import LoginMenu from "./LoginMenu";
 import AccountMenu from "./AccountMenu";
 import { Link } from "react-router-dom";
-import { fetchUser } from "../../actions";
 
-export const Header = () => (
+export const Header = ({ user }) => (
   <AppBar position="static">
     <Toolbar>
       <Link className="App-logo" to="/">
@@ -20,9 +12,8 @@ export const Header = () => (
       </Link>
 
       <div className="Account-container">
-        {true ? <AccountMenu /> : <LoginMenu />}
+        {user != null ? <AccountMenu /> : <LoginMenu />}
       </div>
     </Toolbar>
   </AppBar>
 );
-

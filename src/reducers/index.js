@@ -1,7 +1,13 @@
-import { combineReducers } from "redux";
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SIGN_IN":
+      return {
+        ...state,
+        user: action.user
+      };
+    default:
+      return state;
+  }
+};
 
-import auth from "./authReducer";
-
-export default combineReducers({
-  auth
-});
+export default reducer;

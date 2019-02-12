@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import history from "../../history";
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
@@ -9,20 +10,19 @@ export default function(ComposedComponent) {
     };
 
     componentWillMount() {
-      if (this.props.authenticated === null) {
-        this.context.router.history.push("/");
+      if (this.props.user === null) {
+        history.push("/");
       }
     }
 
     componentWillUpdate(nextProps) {
-      if (!nextProps.authenticated) {
-        console.log(this.context)
-        this.context.router.history.push("/");
+      if (!nextProps.user) {
+        history.push("/");
       }
     }
 
     render() {
-      if (this.props.authenticated) {
+      if (this.props.user) {
         return <ComposedComponent {...this.props} />;
       }
       return null;
@@ -30,7 +30,7 @@ export default function(ComposedComponent) {
   }
 
   function mapStateToProps(state) {
-    return { authenticated: state.auth };
+    return { user: state.user };
   }
 
   return connect(mapStateToProps)(Authentication);
