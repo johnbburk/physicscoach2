@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "../styles/App.css";
-import { Header } from "./Layouts";
+import { Header, Footer } from "./Layouts";
 import { Router, Route } from "react-router-dom";
 import Content from "./Content";
 import requireAuth from "./auth/requireAuth";
@@ -20,6 +20,7 @@ class App extends Component {
         <Provider store={store}>
           <div className="container">
             <Header user={store.getState().user} />
+            <Route exact path="/" component={Footer} />
             <Route path="/app" component={requireAuth(Content)} />
           </div>
         </Provider>

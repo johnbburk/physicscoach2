@@ -22,18 +22,13 @@ class AccountMenu extends Component {
     router: PropTypes.object
   };
 
-  componentWillUpdate(nextProps) {
-    if (!nextProps.auth) {
-      this.context.router.history.push("/");
-    }
-  }
   render() {
     return (
       <Button
         className="Login-button"
         style={styles.buttonStyle}
         component={Link}
-        data-test={"sign-in"}
+        data-test={"sign-out"}
         to="/"
         onClick={() => {
           alert("Implement me please");
@@ -43,10 +38,6 @@ class AccountMenu extends Component {
       </Button>
     );
   }
-}
-
-function mapStateToProps({ auth }) {
-  return { auth };
 }
 
 export default AccountMenu;
