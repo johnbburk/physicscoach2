@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import {logout} from "../../helpers/auth";
+import history from "../../history";
+import { signOut } from "../../actions";
+import {store} from "../../store";
 
 const styles = {
   buttonRoot: {
@@ -31,7 +35,7 @@ class AccountMenu extends Component {
         data-test={"sign-out"}
         to="/"
         onClick={() => {
-          alert("Implement me please");
+          logout();
         }}
       >
         Sign Out
