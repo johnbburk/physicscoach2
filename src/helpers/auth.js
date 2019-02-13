@@ -7,7 +7,7 @@ export function fetchUser() {
   firebaseAuth.onAuthStateChanged(result => {
     console.log("fetched user: ", result);
     if (result != null) {
-      store.dispatch(signIn(result));
+      store.dispatch(signIn(result)); 
       history.push("/app");
     } else {
       history.push("/");

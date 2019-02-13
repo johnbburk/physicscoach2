@@ -5,7 +5,6 @@ import { Grid, Paper, Button } from "@material-ui/core";
 import WebcamDialog from "./WebcamCapture";
 import Countdown from "./Countdown";
 
-
 class Content extends Component {
   // constructor(props) {
   //   super(props);
@@ -25,14 +24,11 @@ class Content extends Component {
   render() {
     return (
       <Fragment>
-        <Grid container direction="row">
+        <Grid container spacing = {0} alignItems = "center" justify="space-evenly"  direction="column" >
           <Grid item sm>
             <Paper className="Paper-container">
-              Left Pane
-              <br />
-              <br />
               <Countdown />
-              /*{" "}
+              
               {this.state.imageList.map((image, index) => {
                 return (
                   <img
@@ -41,14 +37,8 @@ class Content extends Component {
                     key={index}
                   />
                 );
-              })}{" "}
-              */
-            </Paper>
-          </Grid>
-
-          <Grid item sm>
-            <Paper className="Paper-container">
-              Right Pane
+              })}
+              
               <WebcamDialog addImage={this.addImage} />
             </Paper>
           </Grid>
