@@ -25,7 +25,8 @@ export const StartDialog = ({
   onChange,
   sessionTimeEntry,
   addSession,
-  subSession
+  subSession,
+  goal
 }) => {
   return (
     <div>
@@ -58,6 +59,7 @@ export const StartDialog = ({
           
             <TextField
         id="goal"
+        name = "goal"
         label="Goal for this session"
         placeholder="My goal is..."
         multiline

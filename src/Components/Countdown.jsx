@@ -3,7 +3,7 @@
 //need to refactor so that state is in the app.
 //idea: create state for local start, and measure splits off of that, then record them in array on FS
 
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import firebase from "../config/constants";
@@ -25,7 +25,7 @@ class Countdown extends Component {
       sessionTimeEntry: 1, //in min
       sessionRemainingSeconds: 60, //in seconds
       running: false,
-      timerLabel: "Working",
+      timerLabel: "Paused",
       goal: "",
       showStart: true, //TODO: change this back to true
       showClose: false,
@@ -126,11 +126,11 @@ class Countdown extends Component {
             if (this.state.sessionRemainingSeconds > 0) {
               this.setState({
                 sessionRemainingSeconds: this.state.sessionRemainingSeconds - 1,
-                timerLabel: "Session"
+                timerLabel: "Working"
               });
             } else {
               this.setState({
-                timerLabel: "Session"
+                timerLabel: "Paused"
               });
             }
           }
@@ -138,7 +138,7 @@ class Countdown extends Component {
         break;
       case true:
         console.log("Stop Timer");
-        this.setState({ running: false });
+        this.setState({ running: false, timerLabel: "Paused"});
         clearInterval(this.timer);
         break;
       default:
@@ -150,7 +150,7 @@ class Countdown extends Component {
       sessionTimeEntry: 25,
       sessionRemainingSeconds: 1500,
       running: false,
-      timerLabel: "Session"
+      timerLabel: "Paused"
     });
   }
 
@@ -200,8 +200,11 @@ class Countdown extends Component {
     return (
       <Fragment>
         <Grid container direction="column">
-          <Grid items justify="center" >
-            <Typography align="center" variant = "h4"> Session Timer</Typography>
+          <Grid items justify="center">
+            <Typography align="center" variant="h4">
+              {" "}
+              Session Timer
+            </Typography>
             <h2>{this.state.goal}</h2>
 
             <StartDialog
@@ -212,13 +215,16 @@ class Countdown extends Component {
               subSession={this.subSession}
               sessionTimeEntry={this.state.sessionTimeEntry}
               show={this.state.showStart}
+              goal={this.state.goal}
             />
 
             <div id="mainTimer">
               <Typography align="center" variant="h1">
                 {this.formatMinutes(this.state.sessionRemainingSeconds)}
               </Typography>
-              <Typography align="center" variant="h6">{this.state.timerLabel}</Typography>
+              <Typography align="center" variant="h6">
+                {this.state.timerLabel}
+              </Typography>
 
               <div id="timerControls">
                 <Button
@@ -239,9 +245,8 @@ class Countdown extends Component {
                 </Button>
               </div>
             </div>
-            </Grid>
           </Grid>
-        
+        </Grid>
 
         <Modal show={this.state.showClose}>
           This is the closing screen.
