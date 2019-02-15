@@ -1,4 +1,3 @@
-//TODO: style the app with material.ui, also replace add function with doc
 //need to update the style
 //need to refactor so that state is in the app.
 //idea: create state for local start, and measure splits off of that, then record them in array on FS
@@ -27,7 +26,7 @@ class Countdown extends Component {
       running: false,
       timerLabel: "Paused",
       goal: "",
-      showStart: true, //TODO: change this back to true
+      showStart: true, 
       showClose: false,
       sessionRef: null,
       rating: 0,
@@ -233,7 +232,7 @@ class Countdown extends Component {
                   onClick={this.startStop}
                   id="start-stop"
                 >
-                  Start/Stop
+                  {this.state.running ? "Pause" : "Start"}
                 </Button>
                 <Button
                   variant="contained"
