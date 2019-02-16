@@ -1,3 +1,4 @@
+//TODO: wrap the goal field when it is displayed
 //need to update the style
 //need to refactor so that state is in the app.
 //idea: create state for local start, and measure splits off of that, then record them in array on FS
@@ -198,8 +199,8 @@ class Countdown extends Component {
   render() {
     return (
       <Fragment>
-        <Grid container direction="column">
-          <Grid items justify="center">
+        <Grid container direction="column" >
+          <Grid items style={{textAlign:"center"}} >
             <Typography align="center" variant="h4">
               {" "}
               Session Timer
@@ -225,12 +226,13 @@ class Countdown extends Component {
                 {this.state.timerLabel}
               </Typography>
 
-              <div id="timerControls">
-                <Button
+              <div id="timerControls" style={{display: "inline-block", marginBottom: 20}}>
+              <Button
                   variant="contained"
                   color="primary"
                   onClick={this.startStop}
                   id="start-stop"
+                  style={{ marginRight: 10 }}
                 >
                   {this.state.running ? "Pause" : "Start"}
                 </Button>
