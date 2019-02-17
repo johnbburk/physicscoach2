@@ -122,7 +122,7 @@ class Countdown extends Component {
                 stop_time: firebase.firestore.FieldValue.serverTimestamp()
               });
               document.getElementById("notification").play();
-              this.setState({ running: false, showClose: true });
+              this.setState({ running: false, showEnd: true });
             }
 
             if (this.state.sessionRemainingSeconds > 0) {
@@ -197,7 +197,8 @@ class Countdown extends Component {
   handleStartClose = event => {
     this.setState({ showStart: false });
   };
-  handleEndClose = event => {
+  handleEndClose = event => {console.log("handleEndClose")
+    
     this.setState({ showEnd: false });
   };
 
@@ -255,8 +256,8 @@ class Countdown extends Component {
         </Grid>
 
         <EndDialog 
-        show={this.state.showClose}
-        handleClose = {this.state.handleEndClose}
+        show={this.state.showEnd}
+        handleClose = {this.handleEndClose}
         goal={this.state.goal}
         onChange = {this.onChange}
         rating = {this.state.rating}
