@@ -25,7 +25,7 @@ export default class WebcamModal extends React.Component {
     return (
       <div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Open alert dialog
+          Get Screenshot
         </Button>
         <Dialog> 
           open={this.state.open}

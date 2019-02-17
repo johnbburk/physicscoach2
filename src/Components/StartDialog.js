@@ -33,9 +33,9 @@ export const StartDialog = ({
       <Dialog
         open={show}
         onClose={handleClose}
-        aria-labelledby="form-dialog-title"
+        aria-labelledby="timer-start-dialog"
       >
-        <DialogTitle align="center" id="form-dialog-title">Start New Practice</DialogTitle>
+        <DialogTitle align="center" id="timer-start-dialog">Start New Practice</DialogTitle>
         <DialogContent>
           <DialogContentText variant = "h3" align="center">{sessionTimeEntry}:00</DialogContentText>
           <form>
@@ -82,39 +82,3 @@ export const StartDialog = ({
     </div>
   );
 };
-
-/*
-<form>
-  What is your goal for this session?{" "}
-  <input type="text" name="goal" onChange={this.onChange} />
-</form>
-<div className="flexContainer">
-  <div id="timerContainer" className="flexContainer">
-    <h3
-      id="session-
-label"
-      className="timerContainerLabels"
-    >
-      Session Time
-    </h3>
-    <h3 id="session-length" className="timerContainerLabels">
-      {this.state.sessionTimeEntry}
-    </h3>
-    <button
-      onClick={this.props.subSession}
-      id="session-decrement"
-      className="timerContainerButtons"
-    >
-      -
-    </button>
-    <button
-      onClick={this.addSession}
-      id="session-increment"
-      className="timerContainerButtons"
-    >
-      +
-    </button>
-  </div>
-</div>
-</Modal>
-*/

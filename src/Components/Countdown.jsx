@@ -11,6 +11,7 @@ import Modal from "./Layouts/Modal";
 import StarRatings from "react-star-ratings";
 import { StartDialog } from "./StartDialog";
 import { Typography } from "@material-ui/core";
+import { EndDialog } from "./EndDialog";
 
 const db = firebase.firestore();
 const settings = { /* your settings... */ timestampsInSnapshots: true };
@@ -28,7 +29,7 @@ class Countdown extends Component {
       timerLabel: "Paused",
       goal: "",
       showStart: true, 
-      showClose: false,
+      showEnd: false,
       sessionRef: null,
       rating: 0,
       goal_comment: "",
@@ -43,7 +44,8 @@ class Countdown extends Component {
     this.formatMinutes = this.formatMinutes.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.changeRating = this.changeRating.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleStartClose = this.handleStartClose.bind(this);
+    this.handleEndClose = this.handleEndClose.bind(this);
   }
 
   addSession() {
@@ -188,12 +190,15 @@ class Countdown extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  changeRating = event => {
-    this.setState({ rating: event.target.value });
+  changeRating(newRating, name){
+    this.setState({ rating: newRating });
   };
 
-  handleClose = event => {
+  handleStartClose = event => {
     this.setState({ showStart: false });
+  };
+  handleEndClose = event => {
+    this.setState({ showEnd: false });
   };
 
   render() {
@@ -210,7 +215,7 @@ class Countdown extends Component {
             <StartDialog
               onChange={this.onChange}
               startSession={this.goSession}
-              handleClose={this.handleClose}
+              handleClose={this.handleStartClose}
               addSession={this.addSession}
               subSession={this.subSession}
               sessionTimeEntry={this.state.sessionTimeEntry}
@@ -249,6 +254,18 @@ class Countdown extends Component {
           </Grid>
         </Grid>
 
+        <EndDialog 
+        show={this.state.showClose}
+        handleClose = {this.state.handleEndClose}
+        goal={this.state.goal}
+        onChange = {this.onChange}
+        rating = {this.state.rating}
+        changeRating ={this.changeRating}
+        comment = {this.state.goal_comment}
+        learned = {this.state.learn_comment}
+        question = {this.state.question_cmmment}
+        />
+{/* 
         <Modal show={this.state.showClose}>
           This is the closing screen.
           <form>
@@ -272,7 +289,7 @@ class Countdown extends Component {
               onChange={this.onChange}
             />
           </form>
-        </Modal>
+        </Modal> */}
 
         <audio
           id="notification"
