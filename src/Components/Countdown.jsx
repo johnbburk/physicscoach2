@@ -3,12 +3,10 @@
 //need to refactor so that state is in the app.
 //idea: create state for local start, and measure splits off of that, then record them in array on FS
 
-import React, { Component, Fragment } from "react";
+import React, {Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import firebase from "../config/constants";
-import Modal from "./Layouts/Modal";
-import StarRatings from "react-star-ratings";
 import { StartDialog } from "./StartDialog";
 import { Typography } from "@material-ui/core";
 import { EndDialog } from "./EndDialog";
