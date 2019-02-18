@@ -43,7 +43,7 @@ export const EndDialog = ({
                 rating={rating}
                 starRatedColor="red"
                 numberOfStars={5}
-                starDimension={25}
+                starDimension={'25px'}
                 name="rating"
                 changeRating={changeRating}
               />

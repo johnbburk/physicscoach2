@@ -15,7 +15,7 @@ const db = firebase.firestore();
 const settings = { /* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 const sessionsRef = db.collection("sessions");
-//const user = firebase.auth().currentUser;
+const user = firebase.auth().currentUser;
 
 class Countdown extends Component {
   constructor(props) {
