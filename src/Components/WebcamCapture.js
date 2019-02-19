@@ -27,7 +27,7 @@ export default class WebcamModal extends React.Component {
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
           Get Screenshot
         </Button>
-        <Dialog> 
+        <Dialog 
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
