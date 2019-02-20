@@ -24,7 +24,7 @@ class Content extends Component {
   render() {
     return (
       <Fragment>
-        <Grid container spacing = {0} alignItems = "center" justify="space-evenly"  direction="column" >
+        <Grid container spacing = {"0"} alignItems = "center" justify="space-evenly"  direction="column" >
           <Grid item sm>
             <Paper className="Paper-container">
               <Countdown />
