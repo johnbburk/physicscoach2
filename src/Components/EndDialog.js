@@ -5,7 +5,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
-import { makeStyles } from "@material-ui/styles";
 import StarRatings from "react-star-ratings";
 
 export const EndDialog = ({
@@ -55,7 +54,7 @@ export const EndDialog = ({
               <br/> {goal}
               <TextField
                 id="comment"
-                name="comment"
+                name="goal_comment"
                 label="How did this practice go?"
                 multiline
                 margin="normal"
@@ -65,7 +64,7 @@ export const EndDialog = ({
               <br />
               <TextField
                 id="learned"
-                name="learned"
+                name="learn_comment"
                 label="What did you learn?"
                 multiline
                 margin="normal"
@@ -75,7 +74,7 @@ export const EndDialog = ({
               <br />
               <TextField
                 id="question"
-                name="question"
+                name="question_comment"
                 label="One question I still have"
                 multiline
                 margin="normal"

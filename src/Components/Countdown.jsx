@@ -12,7 +12,7 @@ import { Typography } from "@material-ui/core";
 import { EndDialog } from "./EndDialog";
 
 const db = firebase.firestore();
-const settings = { /* your settings... */ timestampsInSnapshots: true };
+const settings = {};
 db.settings(settings);
 const sessionsRef = db.collection("sessions");
 const user = firebase.auth().currentUser;
@@ -77,6 +77,8 @@ class Countdown extends Component {
         .add({
           start_time: firebase.firestore.FieldValue.serverTimestamp(),
           user: user.uid,
+          userName: user.displayName,
+          email: user.email,
           goal: this.state.goal,
           splits: []
         })
@@ -196,7 +198,13 @@ class Countdown extends Component {
     this.setState({ showStart: false });
   };
   handleEndClose = event => {console.log("handleEndClose")
-    
+  const sessionRef = this.state.sessionRef;
+  sessionsRef.doc(sessionRef).update({
+      rating: this.state.rating,
+      goal_comment: this.state.goal_comment,
+      learn_comment: this.state.learn_comment,
+      question_comment: this.state.question_comment
+    });
     this.setState({ showEnd: false });
   };
 
@@ -204,7 +212,7 @@ class Countdown extends Component {
     return (
       <Fragment>
         <Grid container direction="column" >
-          <Grid items style={{textAlign:"center"}} >
+          <Grid item xs={12} style={{textAlign:"center"}} >
             <Typography align="center" variant="h4">
               {" "}
               Session Timer

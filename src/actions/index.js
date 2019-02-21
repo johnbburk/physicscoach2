@@ -1,4 +1,3 @@
-import { firebaseAuth } from "../config/constants";
 
 export const signIn = user => {
   return {
@@ -14,15 +13,3 @@ export const signOut =() => {
   };
 
 };
-
-
-// export const signOut = () => dispatch => {
-//   firebaseAuth
-//     .signOut()
-//     .then(() => {
-//       // Sign-out successful.
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// };
