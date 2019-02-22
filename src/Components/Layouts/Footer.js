@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Paper, Tabs } from "@material-ui/core"
 import { Tab } from "@material-ui/core/"
-
+import PracticeList from "./PracticeList"
 export default class FooterTabs extends Component {
 
   state = {
@@ -24,7 +24,7 @@ export default class FooterTabs extends Component {
           <Tab label="Previous Sessions" />
         </Tabs>
         {currentTab === 0 && "Item One"}
-        {currentTab === 1 && "Item Two"}
+        {currentTab === 1 && <PracticeList/>}
       </Paper>
     )
   }

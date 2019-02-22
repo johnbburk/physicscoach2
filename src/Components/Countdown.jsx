@@ -16,24 +16,26 @@ const settings = {};
 db.settings(settings);
 const sessionsRef = db.collection("sessions");
 const user = firebase.auth().currentUser;
+const initialState = {
+  sessionTimeEntry: 1, //in min
+  sessionRemainingSeconds: 60, //in seconds
+  running: false,
+  timerLabel: "Paused",
+  goal: "",
+  showStart: true, 
+  showEnd: false,
+  sessionRef: null,
+  rating: 0,
+  goal_comment: "",
+  question_cmmment: "",
+  learn_comment: "",
+  disabled: false,
+};
 
 class Countdown extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sessionTimeEntry: 1, //in min
-      sessionRemainingSeconds: 60, //in seconds
-      running: false,
-      timerLabel: "Paused",
-      goal: "",
-      showStart: true, 
-      showEnd: false,
-      sessionRef: null,
-      rating: 0,
-      goal_comment: "",
-      question_cmmment: "",
-      learn_comment: ""
-    };
+    this.state = initialState;
 
     this.addSession = this.addSession.bind(this);
     this.subSession = this.subSession.bind(this);
@@ -107,6 +109,9 @@ class Countdown extends Component {
     } */
 
     // const chime1 = new Audio("https://res.cloudinary.com/dwut3uz4n/video/upload/v1532362194/352659__foolboymedia__alert-chime-1.mp3") // changed to use <audio> to pass FCC tests
+
+      
+    
     switch (status) {
       case false:
         console.log("Begin Timer");
@@ -117,6 +122,7 @@ class Countdown extends Component {
             if (this.state.sessionRemainingSeconds === 0) {
               // chime1.play(); // changed to use <audio> to pass FCC tests
               const sessionRef = this.state.sessionRef;
+              this.setState({disabled: true});
               console.log(sessionRef);
               sessionsRef.doc(sessionRef).update({
                 stop_time: firebase.firestore.FieldValue.serverTimestamp()
@@ -148,12 +154,7 @@ class Countdown extends Component {
     }
   }
   resetTimer() {
-    this.setState({
-      sessionTimeEntry: 25,
-      sessionRemainingSeconds: 1500,
-      running: false,
-      timerLabel: "Paused"
-    });
+    this.setState(initialState);
   }
 
   formatMinutes(time) {
@@ -242,6 +243,7 @@ class Countdown extends Component {
               <Button
                   variant="contained"
                   color="primary"
+                  disabled ={this.state.disabled}
                   onClick={this.startStop}
                   id="start-stop"
                   style={{ marginRight: 10 }}
