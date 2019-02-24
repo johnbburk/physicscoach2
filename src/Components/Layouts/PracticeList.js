@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import firebase from "../../config/constants";
 import moment from "moment";
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 
 const db = firebase.firestore();
@@ -43,14 +47,15 @@ export default class PracticeList extends Component {
 
     return (
         <div>
+
       <h1>data</h1>
-        
-            {this.state.practice.length}
-            <ul>
+          {this.state.practice.length}
+          <List>
             {this.state.practice.map((data)=>(
-            <li key={data.id}>{data.goal}   {moment.parseZone(data.start_time.toDate()).format('dddd')}</li>
+            <ListItem key={data.id}>
+            <ListItemText primary={data.goal}/>   {moment.parseZone(data.start_time.toDate()).format('dddd')}</ListItem>
             ))}
-            </ul>
+           </List>
         </div>
 
     )
