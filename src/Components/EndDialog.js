@@ -55,6 +55,7 @@ export const EndDialog = ({
               <TextField
                 id="comment"
                 name="goal_comment"
+                required = {true}
                 label="How did this practice go?"
                 multiline
                 margin="normal"
@@ -66,6 +67,7 @@ export const EndDialog = ({
                 id="learned"
                 name="learn_comment"
                 label="What did you learn?"
+                required = {true}
                 multiline
                 margin="normal"
                 variant="outlined"
@@ -76,6 +78,7 @@ export const EndDialog = ({
                 id="question"
                 name="question_comment"
                 label="One question I still have"
+                required = {true}
                 multiline
                 margin="normal"
                 variant="outlined"

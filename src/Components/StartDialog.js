@@ -58,6 +58,7 @@ export const StartDialog = ({
         name = "goal"
         label="Goal for this session"
         placeholder="My goal is..."
+        required = {true}
         multiline
         margin="normal"
         variant="outlined"

@@ -70,7 +70,7 @@ class Countdown extends Component {
   startStop() {
     const status = this.state.running;
 
-    if (!this.state.sessionRef) {
+    if (!this.state.sessionRef || this.state.session===null) {
       //first time starting timer, record new database entry
       console.log("writing session to cloudstore");
       const user = firebase.auth().currentUser;
@@ -81,7 +81,7 @@ class Countdown extends Component {
           user: user.uid,
           userName: user.displayName,
           email: user.email,
-          goal: this.state.goal,
+          goal: this.state.goal || "",
           splits: []
         })
         .then(ref => {
@@ -123,7 +123,7 @@ class Countdown extends Component {
               // chime1.play(); // changed to use <audio> to pass FCC tests
               const sessionRef = this.state.sessionRef;
               this.setState({disabled: true});
-              console.log(sessionRef);
+              console.log("session ref at timer end", sessionRef);
               sessionsRef.doc(sessionRef).update({
                 stop_time: firebase.firestore.FieldValue.serverTimestamp()
               });
@@ -142,7 +142,7 @@ class Countdown extends Component {
               });
             }
           }
-        }, 1000);
+        }, 10); //TODO: Set this back to 1000 when done
         break;
       case true:
         console.log("Stop Timer");
@@ -202,9 +202,9 @@ class Countdown extends Component {
   const sessionRef = this.state.sessionRef;
   sessionsRef.doc(sessionRef).update({
       rating: this.state.rating,
-      goal_comment: this.state.goal_comment,
-      learn_comment: this.state.learn_comment,
-      question_comment: this.state.question_comment
+      goal_comment: this.state.goal_comment || "",
+      learn_comment: this.state.learn_comment || "" ,
+      question_comment: this.state.question_comment || ""
     });
     this.setState({ showEnd: false });
   };
