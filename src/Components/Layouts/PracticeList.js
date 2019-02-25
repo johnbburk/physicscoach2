@@ -48,12 +48,13 @@ export default class PracticeList extends Component {
     return (
         <div>
 
-      <h1>data</h1>
-          {this.state.practice.length}
+      <h1>{this.state.practice.length} Previous Practices</h1>
+          
           <List>
             {this.state.practice.map((data)=>(
             <ListItem key={data.id}>
-            <ListItemText primary={data.goal}/>   {moment.parseZone(data.start_time.toDate()).format('dddd')}</ListItem>
+            <ListItemText primary={data.goal}/>   {moment(data.start_time.toDate()).format('dddd')}<Divider/></ListItem>
+            
             ))}
            </List>
         </div>

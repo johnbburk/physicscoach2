@@ -78,6 +78,7 @@ class Countdown extends Component {
       const sessionRef = sessionsRef
         .add({
           start_time: firebase.firestore.FieldValue.serverTimestamp(),
+          practice_length: this.sessionTimeEntry, 
           user: user.uid,
           userName: user.displayName,
           email: user.email,
