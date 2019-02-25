@@ -24,8 +24,8 @@ export default class WebcamModal extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Get Screenshot
+        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}  style = {{display: "block", margin: "0 auto"}} >
+          Screenshot Work
         </Button>
         <Dialog 
           open={this.state.open}
@@ -33,16 +33,13 @@ export default class WebcamModal extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">Take Screenshot of Work</DialogTitle>
           <DialogContent>
             <WebcamCapture addImage={this.props.addImage}/>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
             <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
+              Take Photo
             </Button>
           </DialogActions>
         </Dialog>
@@ -69,16 +66,18 @@ class WebcamCapture extends React.Component {
       };
    
       return (
-        <div>
+        <div >
           <Webcam
             audio={false}
-            height={350}
+            height={200}
             ref={this.setRef}
             screenshotFormat="image/jpeg"
             width={350}
             videoConstraints={videoConstraints}
+            style = {{display: "block", margin: "0 auto"}}
+
           />
-          <Button onClick={this.capture}>Capture photo</Button>
+          <Button onClick={this.capture}  style={{display: "block" ,margin:"0 auto"}}>Capture photo</Button>
         </div>
       );
     }

@@ -13,13 +13,13 @@ class Content extends Component {
     imageList: []
   };
 
-  addImage = base64Str => {
+  /* addImage = base64Str => {
     this.setState(prevState => {
       return {
         imageList: prevState.imageList.concat(base64Str)
       };
     });
-  };
+  }; */
 
   render() {
     return (
@@ -39,7 +39,7 @@ class Content extends Component {
                 );
               })}
               
-              <WebcamDialog addImage={this.addImage} />
+             
             </Paper>
           </Grid>
         </Grid>

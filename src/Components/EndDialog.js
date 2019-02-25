@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
+import WebcamDialog from "./WebcamCapture";
 import StarRatings from "react-star-ratings";
 
 export const EndDialog = ({
@@ -16,7 +17,8 @@ export const EndDialog = ({
   changeRating,
   comment,
   learned,
-  question
+  question,
+  addImage
 }) => {
   return (
     <div>
@@ -84,6 +86,7 @@ export const EndDialog = ({
                 variant="outlined"
                 onChange={onChange}
               />
+               <WebcamDialog addImage={addImage}/>
               <Button onClick={handleClose} color="primary">
                 Save Practice
               </Button>

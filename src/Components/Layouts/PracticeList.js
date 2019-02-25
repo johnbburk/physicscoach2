@@ -35,7 +35,7 @@ export default class PracticeList extends Component {
                 console.log("doc: ",doc),
                 console.log("doc.id", doc.id),
                 this.setState((prevState)=>({
-                    practice: [...prevState.practice,doc.data() ]
+                    practice: [...prevState.practice, doc.data() ]
                 }))
             ))
         ))

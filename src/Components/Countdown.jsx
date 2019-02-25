@@ -30,6 +30,7 @@ const initialState = {
   question_cmmment: "",
   learn_comment: "",
   disabled: false,
+
 };
 
 class Countdown extends Component {
@@ -78,7 +79,7 @@ class Countdown extends Component {
       const sessionRef = sessionsRef
         .add({
           start_time: firebase.firestore.FieldValue.serverTimestamp(),
-          practice_length: this.sessionTimeEntry, 
+          practice_length: this.state.sessionTimeEntry, 
           user: user.uid,
           userName: user.displayName,
           email: user.email,
@@ -91,28 +92,7 @@ class Countdown extends Component {
           return ref.id;
         });
     }
-
-    //TODO: deal with splits. For now, I'm not recording them in the databse (21/1/19)
-    /* else //need log split in firebase
-    {
-      const sessionRef = this.state.sessionRef
-      console.log("sessionRef is: ",sessionRef)
-      const action = (this.state.running ? "stop":"start");
-      const data = {timestamp: firebase.firestore.FieldValue.serverTimestamp(), action: action}
-      console.log ("data is ",data)
-       const splitRef = sessionsRef.doc(sessionRef).update(
-        {"splits" : firebase.firestore.FieldValue.arrayUnion(
-          data)}
-      ).then(ref=>{
-        console.log("Split write successful with ID ", ref.id);
-        return ref.id
-      }) 
-    } */
-
-    // const chime1 = new Audio("https://res.cloudinary.com/dwut3uz4n/video/upload/v1532362194/352659__foolboymedia__alert-chime-1.mp3") // changed to use <audio> to pass FCC tests
-
-      
-    
+          
     switch (status) {
       case false:
         console.log("Begin Timer");
@@ -143,7 +123,7 @@ class Countdown extends Component {
               });
             }
           }
-        }, 10); //TODO: Set this back to 1000 when done
+        }, 100); //TODO: Set this back to 1000 when done
         break;
       case true:
         console.log("Stop Timer");
@@ -209,6 +189,16 @@ class Countdown extends Component {
     });
     this.setState({ showEnd: false });
   };
+
+  addImage = base64Str => {
+    console.log("addImage called")
+    const sessionRef = this.state.sessionRef;
+  sessionsRef.doc(sessionRef).update({
+      imageList: firebase.FieldValue.arrayUnion(base64Str)
+    });
+
+  };
+
 
   render() {
     return (
