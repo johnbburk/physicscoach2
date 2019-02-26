@@ -1,6 +1,9 @@
 #My notes
 
 
+Next things to implement
+Webcam capture save to state, then firebase
+Webcame capture create a small gallery that can be edited, then saved
 
 
 
