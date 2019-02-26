@@ -102,13 +102,14 @@ class Countdown extends Component {
           if (this.state.running) {
             if (this.state.sessionRemainingSeconds === 0) {
               // chime1.play(); // changed to use <audio> to pass FCC tests
+              document.getElementById("notification").play();
+
               const sessionRef = this.state.sessionRef;
               this.setState({disabled: true});
               console.log("session ref at timer end", sessionRef);
               sessionsRef.doc(sessionRef).update({
                 stop_time: firebase.firestore.FieldValue.serverTimestamp()
               });
-              document.getElementById("notification").play();
               this.setState({ running: false, showEnd: true });
             }
 
@@ -265,35 +266,10 @@ class Countdown extends Component {
         learned = {this.state.learn_comment}
         question = {this.state.question_cmmment}
         />
-{/* 
-        <Modal show={this.state.showClose}>
-          This is the closing screen.
-          <form>
-            Your Goal: {this.state.goal}
-            Comment on your goal:{" "}
-            <input type="text" name="goal_comment" onChange={this.onChange} />
-            Qaulity of practice:{" "}
-            <StarRatings
-              rating={this.state.rating}
-              starRatedColor="red"
-              numberOfStars={5}
-              name="rating"
-              changeRating={this.changeRating}
-            />
-            What did you learn:{" "}
-            <input type="text" name="learn_comment" onChange={this.onChange} />1
-            Question you still have:{" "}
-            <input
-              type="text"
-              name="question_cmmment"
-              onChange={this.onChange}
-            />
-          </form>
-        </Modal> */}
-
+        
         <audio
           id="notification"
-          src="https://res.cloudinary.com/dwut3uz4n/video/upload/v1532362194/352659__foolboymedia__alert-chime-1.mp3"
+          src="Call-bell-ding.ogg"
           preload="auto"
         />
       </Fragment>
