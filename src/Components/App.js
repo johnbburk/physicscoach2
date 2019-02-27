@@ -20,7 +20,7 @@ class App extends Component {
         <Provider store={store}>
           <div className="container">
             <Header user={store.getState().user} />
-            <Route exact path="/" component={Footer} />
+            {/* <Route exact path="/" component={Footer} /> */}
             <Route path="/app" component={requireAuth(Content)} />
           </div>
         </Provider>
