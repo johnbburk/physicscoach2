@@ -43,7 +43,7 @@ class Content extends Component {
             </Paper>
           </Grid>
         </Grid>
-        <Footer />
+   
       </Fragment>
     );
   }

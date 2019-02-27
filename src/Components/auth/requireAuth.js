@@ -9,17 +9,17 @@ export default function(ComposedComponent) {
       router: PropTypes.object
     };
 
-    componentWillMount() {
-      if (this.props.user === null) {
-        history.push("/");
-      }
-    }
+    // componentWillMount() {
+    //   if (this.props.user === null) {
+    //     history.push("/");
+    //   }
+    // }
 
-    componentWillUpdate(nextProps) {
-      if (!nextProps.user) {
-        history.push("/");
-      }
-    }
+    // componentWillUpdate(nextProps) {
+    //   if (!nextProps.user) {
+    //     history.push("/");
+    //   }
+    // }
 
     render() {
       if (this.props.user) {

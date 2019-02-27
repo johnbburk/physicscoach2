@@ -1,6 +1,6 @@
 import React, { Component, } from "react";
 import "../styles/App.css";
-import { Header, Footer } from "./Layouts";
+import { Header, PracticeList } from "./Layouts";
 import { Router, Route } from "react-router-dom";
 import Content from "./Content";
 import requireAuth from "./auth/requireAuth";
@@ -21,7 +21,8 @@ class App extends Component {
           <div className="container">
             <Header user={store.getState().user} />
             {/* <Route exact path="/" component={Footer} /> */}
-            <Route path="/app" component={requireAuth(Content)} />
+            <Route path="/new" component={requireAuth(Content)} />
+            <Route path="/previous" component={requireAuth(PracticeList)}/>
           </div>
         </Provider>
       </Router>

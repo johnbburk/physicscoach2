@@ -8,9 +8,9 @@ export function fetchUser() {
     console.log("fetched user: ", result);
     if (result != null) {
       store.dispatch(signIn(result)); 
-      history.push("/app");
+      //history.push("/app");
     } else {
-      history.push("/");
+      // history.push("/");
     }
   });
 }
