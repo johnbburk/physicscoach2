@@ -8,6 +8,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 
 import PracticeCard from './PracticeCard'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile';
 
 const db = firebase.firestore();
 const user = firebase.auth().currentUser;
@@ -51,15 +53,11 @@ export default class PracticeList extends Component {
     }
 
     return (
-      <div>
+      <div style={{margin: 20}}>
         <h1>{this.state.practice.length} Previous Practices</h1>
-
-        <PracticeCard data={this.state.practice[0]}/>
-
-          {
-            this.state.practice.map(data => <PracticeCard data={data}/>)
-          }
-
+          <GridList cols={4}>
+          { this.state.practice.map(data => <GridListTile> <PracticeCard data={data}/> </GridListTile>) }
+          </GridList>
 
       </div>
     );
