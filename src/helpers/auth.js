@@ -1,17 +1,18 @@
 import { ref, firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
-import { signIn, signOut } from "../actions";
+import { authAction } from "../actions";
 
 export function fetchUser() {
   firebaseAuth.onAuthStateChanged(result => {
     console.log("fetched user: ", result);
-    if (result != null) {
-      store.dispatch(signIn(result)); 
-      //history.push("/app");
-    } else {
-      // history.push("/");
-    }
+    // if (result != null) {
+    //   store.dispatch(signIn(result)); 
+    //   //history.push("/app");
+    // } else {
+    //   // history.push("/");
+    // }
+    store.dispatch(authAction(result));
   });
 }
 
@@ -22,14 +23,7 @@ export function auth(email, pw) {
 }
 
 export function logout() {
-  firebaseAuth.signOut().then(
-    function() {
-      store.dispatch(signOut());
-    },
-    function(error) {
-      console.error("Sign Out Error", error);
-    }
-  );
+  firebaseAuth.signOut();
 }
 
 export function login(email, pw) {

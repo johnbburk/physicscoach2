@@ -36,7 +36,6 @@ export default class PracticeList extends Component {
       .then(snapshot => {
         snapshot.forEach(
           doc => (
-            console.log("doc: ", doc),
             console.log("doc.id", doc.id),
             this.setState(prevState => ({
               practice: [...prevState.practice, doc.data()]

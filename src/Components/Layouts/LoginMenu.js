@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import { firebaseAuth, provider } from "../../config/constants";
 import { store } from "../../store";
 import history from "../../history";
-import { signIn } from "../../actions";
+import { authAction } from "../../actions";
 
 const buttonStyle = {
   color: "white",
@@ -22,14 +22,14 @@ export const LoginMenu = () => (
     className="Login-button"
     style={buttonStyle}
     component={Link}
-    to={"/app"}
+    to={"/new"}
     onClick={() => {
       firebaseAuth
         .signInWithPopup(provider)
-        .then(result => {
-          store.dispatch(signIn(result));
-          history.push("/app");
-        })
+        .then(() => {
+          history.push("/new")
+        }
+        )
         .catch(error => {
           console.log(error);
         });
