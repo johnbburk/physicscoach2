@@ -13,13 +13,7 @@ class Content extends Component {
     imageList: []
   };
 
-  /* addImage = base64Str => {
-    this.setState(prevState => {
-      return {
-        imageList: prevState.imageList.concat(base64Str)
-      };
-    });
-  }; */
+
 
   render() {
     return (
@@ -29,15 +23,6 @@ class Content extends Component {
             <Paper className="Paper-container">
               <Countdown />
               
-              {this.state.imageList.map((image, index) => {
-                return (
-                  <img
-                    src={image}
-                    alt="Text to display if image fails to load"
-                    key={index}
-                  />
-                );
-              })}
               
              
             </Paper>

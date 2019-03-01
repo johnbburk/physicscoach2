@@ -10,6 +10,8 @@ import firebase from "../config/constants";
 import { StartDialog } from "./StartDialog";
 import { Typography } from "@material-ui/core";
 import { EndDialog } from "./EndDialog";
+import ImageDialog from './ImageDialog'
+
 
 const db = firebase.firestore();
 const settings = {};
@@ -24,13 +26,13 @@ const initialState = {
   goal: "",
   showStart: true, 
   showEnd: false,
+  showImageDialog: false,
   sessionRef: null,
   rating: 0,
   goal_comment: "",
   question_cmmment: "",
   learn_comment: "",
   disabled: false,
-
 };
 
 class Countdown extends Component {
@@ -180,9 +182,17 @@ class Countdown extends Component {
   handleStartClose = event => {
     this.setState({ showStart: false });
   };
-  handleEndClose = event => {console.log("handleEndClose")
-  const sessionRef = this.state.sessionRef;
-  sessionsRef.doc(sessionRef).update({
+  handleEndClose = event => {
+    
+    console.log("handleEndClose")
+    if (!this.state.goal_comment || !this.state.learn_comment) {
+      return;
+    }
+    // don't let user submit if required question isn't filled out
+
+    const sessionRef = this.state.sessionRef;
+
+    sessionsRef.doc(sessionRef).update({
       rating: this.state.rating,
       goal_comment: this.state.goal_comment || "",
       learn_comment: this.state.learn_comment || "" ,
@@ -191,14 +201,18 @@ class Countdown extends Component {
     this.setState({ showEnd: false });
   };
 
-  addImage = base64Str => {
-    console.log("addImage called")
-    const sessionRef = this.state.sessionRef;
-  sessionsRef.doc(sessionRef).update({
-      imageList: firebase.FieldValue.arrayUnion(base64Str)
-    });
+  // addImage = base64Str => {
+  //   console.log("addImage called")
+  //   const sessionRef = this.state.sessionRef;
+  // sessionsRef.doc(sessionRef).update({
+  //     imageList: firebase.FieldValue.arrayUnion(base64Str)
+  //   });
 
-  };
+  // };
+
+  handleOpenImageDialog = () => {
+      this.setState({showImageDialog: true})
+  }
 
 
   render() {
@@ -265,7 +279,10 @@ class Countdown extends Component {
         comment = {this.state.goal_comment}
         learned = {this.state.learn_comment}
         question = {this.state.question_cmmment}
+        handleOpenImageDialog = {this.handleOpenImageDialog}
         />
+
+        <ImageDialog open={this.state.showImageDialog}/>
         
         <audio
           id="notification"

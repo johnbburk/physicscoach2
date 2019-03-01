@@ -7,6 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 import WebcamDialog from "./WebcamCapture";
 import StarRatings from "react-star-ratings";
+import { DialogActions } from "@material-ui/core";
 
 export const EndDialog = ({
   show,
@@ -15,6 +16,7 @@ export const EndDialog = ({
   onChange,
   rating,
   changeRating,
+  handleOpenImageDialog,
   comment,
   learned,
   question,
@@ -26,6 +28,7 @@ export const EndDialog = ({
         open={show}
         onClose={handleClose}
         aria-labelledby="timer-end-dialog"
+        fullWidth
       >
         <DialogTitle align="center" id="timer-end-dialog">
           Finish Practice{" "}
@@ -33,31 +36,33 @@ export const EndDialog = ({
 
         <DialogContent>
           <form>
-          
-            <FormControl>
-           This practice was: 
-           <br/>
-           <div>
-            Unfocused
-            <span style={{margin: 20}}>
-              <StarRatings
-                rating={rating}
-                starRatedColor="red"
-                numberOfStars={5}
-                starDimension={'25px'}
-                name="rating"
-                changeRating={changeRating}
-              />
-              </span>
-              Focused
+
+            <FormControl fullWidth>
+              This practice was:
+
+              <br /><br />
+              <div style={{ textAlign: "center" }}>
+                Unfocused
+                <span style={{ margin: 20 }}>
+                  <StarRatings
+                    rating={rating}
+                    starRatedColor="red"
+                    numberOfStars={5}
+                    starDimension={'25px'}
+                    name="rating"
+                    changeRating={changeRating}
+                  />
+                </span>
+                Focused
               </div>
-            <br/>
+              <br />
+
               Your Goal for this session:
-              <br/> {goal}
+              <br /> {goal}
               <TextField
                 id="comment"
                 name="goal_comment"
-                required = {true}
+                required={true}
                 label="How did this practice go?"
                 multiline
                 margin="normal"
@@ -69,7 +74,7 @@ export const EndDialog = ({
                 id="learned"
                 name="learn_comment"
                 label="What did you learn?"
-                required = {true}
+                required={true}
                 multiline
                 margin="normal"
                 variant="outlined"
@@ -80,17 +85,24 @@ export const EndDialog = ({
                 id="question"
                 name="question_comment"
                 label="One question I still have"
-                required = {true}
+                required={false}
                 multiline
                 margin="normal"
                 variant="outlined"
                 onChange={onChange}
               />
-               <WebcamDialog addImage={addImage}/>
+
+
+            </FormControl>
+
+            <DialogActions>
+              <Button onClick={handleOpenImageDialog}>Add Images</Button>
+              {/* <div style={{width: 30}}/> */}
               <Button onClick={handleClose} color="primary">
                 Save Practice
-              </Button>
-            </FormControl>
+            </Button>
+            </DialogActions>
+
           </form>
         </DialogContent>
       </Dialog>

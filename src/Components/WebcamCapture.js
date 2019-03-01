@@ -21,64 +21,59 @@ export default class WebcamModal extends React.Component {
     this.setState({ open: false });
   };
 
+  setRef = webcam => {
+    this.webcam = webcam;
+  };
+
+  capture = () => {
+    const imageSrc = this.webcam.getScreenshot();
+    this.props.addImage(imageSrc);
+    this.handleClose();
+  };
+
   render() {
+    const videoConstraints = {
+      width: 1280,
+      height: 720,
+      facingMode: "user"
+    };
     return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}  style = {{display: "block", margin: "0 auto"}} >
-          Screenshot Work
+        <Button variant="outlined" color="primary" onClick={this.handleClickOpen} >
+          Take Picture with Webcam
         </Button>
-        <Dialog 
+
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">Take Screenshot of Work</DialogTitle>
+          <DialogTitle id="alert-dialog-title">Take Picture with Webcam</DialogTitle>
+
           <DialogContent>
-            <WebcamCapture addImage={this.props.addImage}/>
+            <Webcam
+              audio={false}
+              height={200}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width={350}
+              videoConstraints={videoConstraints}
+              style={{ display: "block", margin: "0 auto" }}
+            />
           </DialogContent>
+
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleClose} color="secondary" autoFocus>
+              Cancel
+            </Button>
+            <Button onClick={this.capture} color="primary" autoFocus>
               Take Photo
             </Button>
           </DialogActions>
+
         </Dialog>
       </div>
     );
   }
 }
-
-class WebcamCapture extends React.Component {
-    setRef = webcam => {
-      this.webcam = webcam;
-    };
-   
-    capture = () => {
-      const imageSrc = this.webcam.getScreenshot();
-      this.props.addImage(imageSrc);
-    };
-   
-    render() {
-      const videoConstraints = {
-        width: 1280,
-        height: 720,
-        facingMode: "user"
-      };
-   
-      return (
-        <div >
-          <Webcam
-            audio={false}
-            height={200}
-            ref={this.setRef}
-            screenshotFormat="image/jpeg"
-            width={350}
-            videoConstraints={videoConstraints}
-            style = {{display: "block", margin: "0 auto"}}
-
-          />
-          <Button onClick={this.capture}  style={{display: "block" ,margin:"0 auto"}}>Capture photo</Button>
-        </div>
-      );
-    }
-  }
