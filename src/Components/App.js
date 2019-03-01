@@ -1,13 +1,14 @@
 import React, { Component, } from "react";
 import "../styles/App.css";
-import { Header, PracticeList } from "./Layouts";
+import { Header } from "./Layouts/Header";
 import { Router, Route } from "react-router-dom";
-import Content from "./Content";
+import Content from "./NewSession/Content";
 import requireAuth from "./auth/requireAuth";
 import { store } from "../store";
 import history from "../history";
 import { Provider } from "react-redux";
 import { fetchUser } from "../helpers/auth";
+import PracticeList from "./PreviousSessions/PracticeList"
 
 class App extends Component {
   componentDidMount() {

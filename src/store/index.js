@@ -1,7 +1,24 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import reducer from "../reducers";
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "SIGN_IN":
+            return {
+                ...state,
+                user: action.user
+            };
+        case "SIGN_OUT":
+            return {
+                ...state,
+                user: false
+            };
+        default:
+            return state;
+    }
+};
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

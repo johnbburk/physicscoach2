@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 
 import LoginMenu from "./LoginMenu";
-import AccountMenu from "./AccountMenu";
+import AccountMenu from "./SignOutButton";
 import SideMenu from "./SideMenu";
 
 const styles = {

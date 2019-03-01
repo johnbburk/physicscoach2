@@ -68,9 +68,9 @@ export const StartDialog = ({
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          {/* <Button onClick={handleClose} color="primary">
             Cancel
-          </Button>
+          </Button> */}
           <Button onClick={startSession} color="primary">
             Start Practice
           </Button>

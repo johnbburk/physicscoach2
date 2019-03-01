@@ -1,3 +1,5 @@
+// Comment from Jason: This file is way too long
+
 //TODO: wrap the goal field when it is displayed
 //need to update the style
 //need to refactor so that state is in the app.
@@ -6,7 +8,7 @@
 import React, {Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import firebase from "../config/constants";
+import firebase from "../../config/constants";
 import { StartDialog } from "./StartDialog";
 import { Typography } from "@material-ui/core";
 import { EndDialog } from "./EndDialog";
