@@ -39,7 +39,7 @@ export default class WebcamModal extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
-              Take Photo
+              Save and Close
             </Button>
           </DialogActions>
         </Dialog>
