@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { Link } from '@material-ui/core';
 
 
 import LoginMenu from "./LoginMenu";
@@ -39,9 +40,9 @@ function ButtonAppBar(props) {
       <AppBar position="static">
         <Toolbar>
            {renderSideMenu(user)}         
-          <Typography variant="h5" color="inherit">
+          <Link variant="h5" color="inherit" href="/" underline='none'>
             Physics Coach
-          </Typography>
+          </Link>
 
           <div className={classes.grow}></div>
           {/* makes the login button right-aligned. */}

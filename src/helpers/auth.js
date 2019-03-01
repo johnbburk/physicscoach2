@@ -4,15 +4,12 @@ import history from "../history";
 import { authAction } from "../actions";
 
 export function fetchUser() {
-  firebaseAuth.onAuthStateChanged(result => {
-    console.log("fetched user: ", result);
-    // if (result != null) {
-    //   store.dispatch(signIn(result)); 
-    //   //history.push("/app");
-    // } else {
-    //   // history.push("/");
-    // }
-    store.dispatch(authAction(result));
+  firebaseAuth.onAuthStateChanged(userResult => {
+    console.log("fetched user: ", userResult);
+    if (userResult === null) {
+      history.push("/");
+    }
+    store.dispatch(authAction(userResult));
   });
 }
 

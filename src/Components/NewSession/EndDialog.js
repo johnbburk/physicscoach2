@@ -35,8 +35,6 @@ export const EndDialog = ({
         </DialogTitle>
 
         <DialogContent>
-          <form>
-
             <FormControl fullWidth>
               This practice was:
 
@@ -100,10 +98,8 @@ export const EndDialog = ({
               {/* <div style={{width: 30}}/> */}
               <Button onClick={handleClose} color="primary">
                 Save Practice
-            </Button>
+              </Button>
             </DialogActions>
-
-          </form>
         </DialogContent>
       </Dialog>
     </div>

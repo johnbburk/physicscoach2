@@ -47,7 +47,8 @@ function SimpleCard(props) {
       <CardActions>
         <Button size="small" color='primary'>Details</Button>
         <div className={classes.grow}/>
-        <Button size="small" color='secondary'>Delete</Button>
+        {/* <Button size="small" color='secondary'>Delete</Button> */}
+        {/* Delete Button should only be accessible for teachers */}
       </CardActions>
     </Card>
   );
