@@ -20,14 +20,25 @@ const styles = {
   },
 };
 
+const renderLoginButton = (user) => {
+  if (user) return <AccountMenu />;
+  else if (user == false) return <LoginMenu />;
+  else return <div>Loading...</div>;
+}
+
+const renderSideMenu = (user) =>{
+  if (user) return <SideMenu />;
+  else if (user == false) return <div></div>;
+  else return <div></div>;
+}
+
 function ButtonAppBar(props) {
   const { classes, user } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-                    
-          {user != null && <SideMenu></SideMenu>}
+           {renderSideMenu(user)}         
           <Typography variant="h5" color="inherit">
             Physics Coach
           </Typography>
@@ -35,7 +46,7 @@ function ButtonAppBar(props) {
           <div className={classes.grow}></div>
           {/* makes the login button right-aligned. */}
 
-          {user != null ? <AccountMenu /> : <LoginMenu />}
+          {renderLoginButton(user)}
 
         </Toolbar>
       </AppBar>
