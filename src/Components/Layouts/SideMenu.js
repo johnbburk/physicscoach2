@@ -13,7 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -47,21 +47,23 @@ class TemporaryDrawer extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          <ListItem button component='a' href='/previous'>
-            <ListItemIcon>{ <InboxIcon />}</ListItemIcon>
-            <ListItemText primary='Previous Work'/>
+          <ListItem button component='a' href='/new'>
+            <ListItemText primary='New Session' />
           </ListItem>
-          {['New Session', 'My Previous Work', 'Classmates\' Work', 'Ask a Question'].map((text, index) => (
+          <ListItem button component='a' href='/previous'>
+            <ListItemText primary='My Previous Work' />
+          </ListItem>
+
+          {['Classmates\' Work', 'Ask a Question'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} onClick={() => console.log('dododo')} />
+              <ListItemText primary={text} onClick={() => console.log('no link yet')} />
             </ListItem>
           ))}
           {/* TODO: Make menu items route to new pages. */}
         </List>
 
 
-        
+
       </div>
     );
 
