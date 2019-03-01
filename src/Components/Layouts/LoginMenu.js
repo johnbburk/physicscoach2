@@ -21,15 +21,15 @@ export const LoginMenu = () => (
   <Button
     className="Login-button"
     style={buttonStyle}
-    component={Link}
-    to={"/new"}
+    // component={Link}
+    // to={"/new"}
+    // Don't direct to "/new" until the user has succesfully signed in
     onClick={() => {
       firebaseAuth
         .signInWithPopup(provider)
         .then(() => {
           history.push("/new")
-        }
-        )
+        })
         .catch(error => {
           console.log(error);
         });
