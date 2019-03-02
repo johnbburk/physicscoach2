@@ -57,6 +57,8 @@ class EndDialog extends Component {
       question_comment,
 
       splits: [], // what is this for? - Jason
+                  //I was originally going to save splits—so that if you paused your work, it would record the pauses. 
+                  //I never quite figured this out, and decided it was a low prioirty.
     })
       .then(ref => {
         console.log("Write successful with ID: ", ref.id);
