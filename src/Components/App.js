@@ -1,7 +1,7 @@
 import React, { Component, } from "react";
 import "../styles/App.css";
 import { Header } from "./Layouts/Header";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Content from "./NewSession/Content";
 import requireAuth from "./auth/requireAuth";
 import { store } from "../store";
@@ -20,14 +20,30 @@ class App extends Component {
       <Router history={history}>
         <Provider store={store}>
           <div className="container">
-            <Header user={store.getState().user} />
-            <Route path="/new" component={requireAuth(Content)} />
-            <Route path="/previous" component={requireAuth(PracticeList)}/>
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Welcome} />
+              <Route path="/new" component={requireAuth(Content)} />
+              <Route path="/previous" component={requireAuth(PracticeList)} />
+              <Route component={requireAuth(NoMatchingPath)} />
+            </Switch>
           </div>
         </Provider>
       </Router>
     );
   }
 }
+
+const NoMatchingPath = () => (
+  <div>
+    <h1>404 Not Found</h1>
+  </div>
+)
+
+const Welcome = () => (
+  <div>
+    <h1>Welcome to Physics Coach</h1>
+  </div>
+)
 
 export default App;

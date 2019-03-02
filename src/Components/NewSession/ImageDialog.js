@@ -37,11 +37,10 @@ class ImageDialog extends Component {
 
   render() {
     const { open } = this.props;
-    console.log(open)
 
     return (
-      <Dialog fullScreen open={open}>
-        <div style={{ padding: 20, width: 750, textAlign: "center", margin: "0 auto" }}>
+      <Dialog open={open} maxWidth="sm" fullWidth>
+        <div style={{ padding: 20, textAlign: "center", margin: "0 auto" }}>
           <TextField
             // id="standard-name"
             label="Add Image with URL"

@@ -1,11 +1,5 @@
 import React, { Component } from "react";
 import firebase from "../../config/constants";
-import moment from "moment";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
 
 import PracticeCard from './PracticeCard'
 import GridList from '@material-ui/core/GridList'
@@ -26,38 +20,38 @@ export default class PracticeList extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    let practice = []
     const user = firebase.auth().currentUser;
     console.log("sessionsRef is ", sessionsRef);
     console.log("user.id is ", user.uid);
-    sessionsRef
+    const snapshot = await sessionsRef
       .where("user", "==", user.uid)
       .get()
-      .then(snapshot => {
-        snapshot.forEach(
-          doc => (
-            console.log("doc.id", doc.id),
-            this.setState(prevState => ({
-              practice: [...prevState.practice, doc.data()]
-            }))
-          )
-        );
-        this.setState({ loading: false });
-      });
+
+    snapshot.forEach((doc) => {
+        practice = practice.concat(doc.data())
+      }
+    );
+
+    practice.sort((a, b) => (a.start_time.seconds - b.start_time.seconds));
+    practice.reverse();
+    this.setState({ practice, loading: false });
   }
 
   render() {
     if (this.state.loading) {
-        return null;
+      return null;
     }
 
-    return (
-      <div style={{margin: 20}}>
-        <h1>{this.state.practice.length} Previous Practices</h1>
-          <GridList cols={4}>
-          { this.state.practice.map(data => <GridListTile> <PracticeCard data={data}/> </GridListTile>) }
-          </GridList>
+    console.log(this.state.practice)
 
+    return (
+      <div style={{ margin: 20 }}>
+        <h1>{this.state.practice.length} Previous Practices</h1>
+        <GridList cols={4}>
+          {this.state.practice.map(data => <GridListTile> <PracticeCard data={data} /> </GridListTile>)}
+        </GridList>
       </div>
     );
   }

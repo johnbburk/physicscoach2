@@ -1,6 +1,6 @@
 
 export const authAction = user => {
-  if (user != null) {
+  if (user !== null) {
     return {
       type: "SIGN_IN",
       user
@@ -8,7 +8,7 @@ export const authAction = user => {
   } else {
     return {
       type: "SIGN_OUT",
-      user: false
+      user: null
     };
   }
 };

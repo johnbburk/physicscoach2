@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,74 +8,96 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 
-/*
-show={this.state.showStart}
-handleClose={this.goSession}
-buttonText="Go!"
-*/
-  
-export const StartDialog = ({
-  show,
-  handleClose,
-  startSession,
-  onChange,
-  sessionTimeEntry,
-  addSession,
-  subSession,
-  goal
-}) => {
-  return (
-    <div>
+import { initializeSessionInfo } from '../../store';
+import { connect } from 'react-redux';
+
+class StartDialog extends Component {
+
+  state = {
+    goal: '',
+    sessionTimeEntry: 1,
+    show: true,
+  }
+
+  changeTime = (amount) => {
+    this.setState((prevState) => {
+      if (prevState.sessionTimeEntry + amount < 1) return;
+      return {
+        sessionTimeEntry: prevState.sessionTimeEntry + amount
+      }
+    })
+  }
+
+  submit = () => {
+    if (!this.state.goal) {
+      return;
+    }
+    this.props.initializeSessionInfo(this.state.sessionTimeEntry, this.state.goal);
+  }
+
+  render() {
+    return (
       <Dialog
-        open={show}
-        onClose={handleClose}
+        open={this.state.show}
         aria-labelledby="timer-start-dialog"
+        onClose={() => this.setState({show: false})}
       >
-        <DialogTitle align="center" id="timer-start-dialog">Start New Practice</DialogTitle>
+        <DialogTitle align="center" id="timer-start-dialog">
+          Start New Practice
+          </DialogTitle>
+
         <DialogContent>
-          <DialogContentText variant = "h3" align="center">{sessionTimeEntry}:00</DialogContentText>
-          <form>
-              <FormControl>  
-                  <div align = "center"> 
-          <Button variant="outlined"
-            onClick={subSession}
-            id="session-decrement"
-            className="timerContainerButtons"
-          >
-            -
-          </Button>
-          <Button variant = "outlined"
-            onClick={addSession}
-            id="session-increment"
-            className="timerContainerButtons"
-          >
-            +
-          </Button>
-          </div> 
-          
+          <DialogContentText variant="h3" align="center">
+            {this.state.sessionTimeEntry}:00
+            </DialogContentText>
+
+          <FormControl>
+
+            <div align="center">
+              <Button variant="outlined"
+                onClick={() => this.changeTime(-1)}
+                id="session-decrement"
+                className="timerContainerButtons"
+              >
+                -
+                </Button>
+              <Button variant="outlined"
+                onClick={() => this.changeTime(+1)}
+                id="session-increment"
+                className="timerContainerButtons"
+              >
+                +
+              </Button>
+            </div>
+
             <TextField
-        id="goal"
-        name = "goal"
-        label="Goal for this session"
-        placeholder="My goal is..."
-        required = {true}
-        multiline
-        margin="normal"
-        variant="outlined"
-        onChange ={onChange}
-      />
-      </FormControl>
-          </form>
+              id="goal"
+              name="goal"
+              label="Goal for this session"
+              placeholder="My goal is..."
+              required={true}
+              multiline
+              margin="normal"
+              variant="outlined"
+              onChange={(event) => this.setState({goal: event.target.value})}
+            />
+
+          </FormControl>
         </DialogContent>
+
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button> */}
-          <Button onClick={startSession} color="primary">
+          <Button onClick={this.submit} color="primary">
             Start Practice
           </Button>
         </DialogActions>
+
       </Dialog>
-    </div>
-  );
-};
+    );
+  };
+}
+
+const mapDispatchToProps = {
+  initializeSessionInfo,
+}
+
+export default connect(undefined, mapDispatchToProps)(StartDialog);
