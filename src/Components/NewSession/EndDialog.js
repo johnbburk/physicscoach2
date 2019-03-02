@@ -19,6 +19,8 @@ class EndDialog extends Component {
     question_comment: "",
     learn_comment: "",
     showImageDialog: false,
+    imageList: []
+    
   }
 
   onChange = (event) => {
@@ -29,11 +31,19 @@ class EndDialog extends Component {
     this.setState({ rating: newRating });
   };
 
+  closeImageDialog = () =>{
+    this.setState({showImageDialog: false})
+  };
+
+  handleImageList = (images)=>{
+    this.setState({iamgeList: images})
+  };
+
   submit = () => {
     if (!this.state.goal_comment || !this.state.learn_comment || !this.state.rating) {
       // don't let user submit if required question isn't filled out
       return;
-    }
+    };
 
     const db = firebase.firestore();
     // const settings = {};
@@ -137,7 +147,7 @@ class EndDialog extends Component {
             </DialogActions>
           </DialogContent>
         </div>
-        <ImageDialog open={(this.state.showImageDialog)} />
+        <ImageDialog open={(this.state.showImageDialog)} handleImageList ={this.handleImageList} closeImageDialog={this.closeImageDialog}/>
       </div>
     );
   }

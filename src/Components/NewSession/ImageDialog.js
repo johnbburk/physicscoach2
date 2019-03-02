@@ -35,6 +35,11 @@ class ImageDialog extends Component {
     }
   }
 
+  handleSubmit = ()=>{
+    this.props.handleImageList(this.state.imageList);
+    this.props.closeImageDialog();
+  }
+
   render() {
     const { open } = this.props;
 
@@ -65,7 +70,7 @@ class ImageDialog extends Component {
           </GridList>
         </div>
         <Button 
-          variant = "contained" color = "primary"
+          variant = "contained" color = "primary" onClick = {this.handleSubmit}
         >Done adding photos</Button>
       </Dialog>
     )
