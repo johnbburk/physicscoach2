@@ -2,12 +2,13 @@ import React, { Component, Fragment } from "react";
 import { Dialog, Button, GridList, GridListTile } from '@material-ui/core/';
 import WebcamDialog from './WebcamCapture';
 import TextField from '@material-ui/core/TextField';
+import PracticeImage from './PracticeImage';
 
 class ImageDialog extends Component {
-
   state = {
     imageList: [],
   };
+  
 
   addImage = (imgSrc) => {
     this.setState(prevState => {
@@ -16,6 +17,15 @@ class ImageDialog extends Component {
       };
     });
   };
+
+  deleteImage = (index) =>{
+    console.log("delete called on index", index)
+    this.setState(prevState=>{
+      return{
+        imageList: prevState.imageList.filter((im, j) => j != index)
+      }
+    })
+  }
 
   submitURL = (event) => {
     if (event.key === 'Enter') {
@@ -49,7 +59,7 @@ class ImageDialog extends Component {
             {this.state.imageList.map((image, index) => {
               return (
                 <GridListTile key={index} >
-                  <img src={image} alt="student work" />
+                  <PracticeImage image={image} index={index} alt={"student work"} deleteImage={this.deleteImage} />
                 </GridListTile>
               );
             })}
