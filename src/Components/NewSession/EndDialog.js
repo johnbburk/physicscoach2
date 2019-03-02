@@ -1,16 +1,17 @@
 import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 import StarRatings from "react-star-ratings";
 import { DialogActions } from "@material-ui/core";
+import firebase from "../../config/constants";
 
 import ImageDialog from './ImageDialog';
+import { connect } from 'react-redux';
+import history from "../../history";
 
-export default class EndDialog extends Component {
+class EndDialog extends Component {
 
   state = {
     rating: 0,
@@ -29,7 +30,38 @@ export default class EndDialog extends Component {
   };
 
   submit = () => {
+    if (!this.state.goal_comment || !this.state.learn_comment || !this.state.rating) {
+      // don't let user submit if required question isn't filled out
+      return;
+    }
 
+    const db = firebase.firestore();
+    // const settings = {};
+    // db.settings(settings); these two lines don't seems to be necessary
+    const user = firebase.auth().currentUser;
+
+    const { rating, goal_comment, learn_comment, question_comment} = this.state;
+    
+    db.collection("sessions").add({
+      start_time: firebase.firestore.FieldValue.serverTimestamp(),
+      user: user.uid,
+      userName: user.displayName,
+      email: user.email,
+
+      practice_length: this.props.sessionInfo.timeInMinutes,
+      goal: this.props.sessionInfo.goal,
+
+      rating,
+      goal_comment,
+      learn_comment,
+      question_comment,
+
+      splits: [], // what is this for? - Jason
+    })
+      .then(ref => {
+        console.log("Write successful with ID: ", ref.id);
+        history.push("/previous")
+      });
   }
 
   render() {
@@ -60,7 +92,7 @@ export default class EndDialog extends Component {
               </div>
               <br />
 
-              <b>Your goal for this session:</b> {"display goal from redux"}
+              <p>Your goal for this session: <strong>{this.props.sessionInfo.goal}</strong></p>
               <TextField
                 id="comment"
                 name="goal_comment"
@@ -96,7 +128,7 @@ export default class EndDialog extends Component {
             </FormControl>
 
             <DialogActions>
-              <Button onClick={() => this.setState({showImageDialog: true})}>Add Images</Button>
+              <Button onClick={() => this.setState({ showImageDialog: true })}>Add Images</Button>
               <Button onClick={this.submit} color="primary">
                 Save Practice
               </Button>
@@ -108,3 +140,11 @@ export default class EndDialog extends Component {
     );
   }
 };
+
+const mapStateToProps = (state) => {
+  return {
+    sessionInfo: state.currentSession
+  }
+}
+
+export default connect(mapStateToProps)(EndDialog);

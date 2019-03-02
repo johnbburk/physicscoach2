@@ -37,7 +37,6 @@ class ImageDialog extends Component {
 
   render() {
     const { open } = this.props;
-    console.log(open)
 
     return (
       <Dialog open={open} maxWidth="sm" fullWidth>

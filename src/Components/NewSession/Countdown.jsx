@@ -8,17 +8,9 @@
 import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import firebase from "../../config/constants";
 import { Typography } from "@material-ui/core";
 
 import { connect } from 'react-redux';
-
-
-const db = firebase.firestore();
-const settings = {};
-db.settings(settings);
-const sessionsRef = db.collection("sessions");
-
 
 class Countdown extends Component {
 
@@ -32,28 +24,6 @@ class Countdown extends Component {
   };
 
   toggleTimerRunning = () => {
-    // if (!this.state.sessionRef || this.state.session===null) {
-    //   //first time starting timer, record new database entry
-    //   console.log("writing session to cloudstore");
-    //   const user = firebase.auth().currentUser;
-
-    //   const sessionRef = sessionsRef
-    //     .add({
-    //       start_time: firebase.firestore.FieldValue.serverTimestamp(),
-    //       practice_length: this.state.sessionTimeEntry, 
-    //       user: user.uid,
-    //       userName: user.displayName,
-    //       email: user.email,
-    //       goal: this.state.goal || "",
-    //       splits: []
-    //     })
-    //     .then(ref => {
-    //       console.log("Write successful with ID: ", ref.id);
-    //       this.setState({ sessionRef: ref.id });
-    //       return ref.id;
-    //     });
-    // }
-
     switch (this.state.running) {
       case false:
         console.log("Begin Timer");
@@ -64,12 +34,6 @@ class Countdown extends Component {
             // chime1.play(); // changed to use <audio> to pass FCC tests
             clearInterval(this.timer);
             document.getElementById("notification").play();
-
-            // const sessionRef = this.state.sessionRef;
-            // console.log("session ref at timer end", sessionRef);
-            // sessionsRef.doc(sessionRef).update({
-            //   stop_time: firebase.firestore.FieldValue.serverTimestamp()
-            // });
 
             // wait for notification to play before dismounting component
             setTimeout(this.props.timeUp, 2000)
@@ -91,6 +55,7 @@ class Countdown extends Component {
         break;
     }
   }
+
   resetTimer = () => {
     this.toggleTimerRunning();
     this.setState({
@@ -116,25 +81,6 @@ class Countdown extends Component {
           : seconds % 60;
     return minutes + ":" + seconds;
   }
-
-  handleEndClose = event => {
-
-    console.log("handleEndClose")
-    if (!this.state.goal_comment || !this.state.learn_comment) {
-      return;
-    }
-    // don't let user submit if required question isn't filled out
-
-    const sessionRef = this.state.sessionRef;
-
-    sessionsRef.doc(sessionRef).update({
-      rating: this.state.rating,
-      goal_comment: this.state.goal_comment || "",
-      learn_comment: this.state.learn_comment || "",
-      question_comment: this.state.question_comment || ""
-    });
-    this.setState({ showEnd: false });
-  };
 
   render() {
     return (

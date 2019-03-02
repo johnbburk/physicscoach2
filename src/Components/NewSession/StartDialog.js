@@ -16,6 +16,7 @@ class StartDialog extends Component {
   state = {
     goal: '',
     sessionTimeEntry: 1,
+    show: true,
   }
 
   changeTime = (amount) => {
@@ -37,8 +38,9 @@ class StartDialog extends Component {
   render() {
     return (
       <Dialog
-        open={this.props.show}
+        open={this.state.show}
         aria-labelledby="timer-start-dialog"
+        onClose={() => this.setState({show: false})}
       >
         <DialogTitle align="center" id="timer-start-dialog">
           Start New Practice
@@ -94,16 +96,8 @@ class StartDialog extends Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  // only show the dialog if the session has not been initialized yet
-  const sessionUninitalized = (state.currentSession === null);
-  return {
-    show: sessionUninitalized
-  }
-}
-
 const mapDispatchToProps = {
   initializeSessionInfo,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartDialog);
+export default connect(undefined, mapDispatchToProps)(StartDialog);
