@@ -36,7 +36,7 @@ class EndDialog extends Component {
   };
 
   handleImageList = (images)=>{
-    this.setState({iamgeList: images})
+    this.setState({imageList: images})
   };
 
   submit = () => {
@@ -60,6 +60,8 @@ class EndDialog extends Component {
 
       practice_length: this.props.sessionInfo.timeInMinutes,
       goal: this.props.sessionInfo.goal,
+
+     imageList: this.state.imageList,
 
       rating,
       goal_comment,
