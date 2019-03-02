@@ -37,7 +37,7 @@ class Countdown extends Component {
 
             // wait for notification to play before dismounting component
             setTimeout(this.props.timeUp, 2000)
-            
+
           } else {
             this.setState((prevState) => {
               return {
@@ -57,7 +57,9 @@ class Countdown extends Component {
   }
 
   resetTimer = () => {
-    this.toggleTimerRunning();
+    if (this.state.running) {
+      this.toggleTimerRunning();
+    }
     this.setState({
       secondsRemaining: this.props.initialTimeInMinutes * 60,
     });
