@@ -64,6 +64,9 @@ class ImageDialog extends Component {
             })}
           </GridList>
         </div>
+        <Button 
+          variant = "contained" color = "primary"
+        >Done adding photos</Button>
       </Dialog>
     )
   }
