@@ -1,4 +1,5 @@
 // Comment from Jason: This file is way too long
+//Agreed. Thanks for pulling out most of the state. 
 
 //TODO: wrap the goal field when it is displayed
 //need to update the style
@@ -31,12 +32,11 @@ class Countdown extends Component {
 
         this.timer = setInterval(() => {
           if (this.state.secondsRemaining === 0) {
-            // chime1.play(); // changed to use <audio> to pass FCC tests
             clearInterval(this.timer);
             document.getElementById("notification").play();
 
             // wait for notification to play before dismounting component
-            setTimeout(this.props.timeUp, 2000)
+            setTimeout(this.props.timeUp, 2000) //
 
           } else {
             this.setState((prevState) => {
@@ -53,6 +53,9 @@ class Countdown extends Component {
         this.setState({ running: false });
         clearInterval(this.timer);
         break;
+
+      default:
+          return
     }
   }
 
