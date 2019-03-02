@@ -23,6 +23,10 @@ class Countdown extends Component {
     sessionRef: null,
 
   };
+  componentDidMount= () => {
+    this.toggleTimerRunning()
+  }
+
 
   toggleTimerRunning = () => {
     switch (this.state.running) {
@@ -86,6 +90,8 @@ class Countdown extends Component {
           : seconds % 60;
     return minutes + ":" + seconds;
   }
+
+ 
 
   render() {
     return (
