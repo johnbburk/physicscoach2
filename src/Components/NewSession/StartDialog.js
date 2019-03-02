@@ -28,17 +28,13 @@ class StartDialog extends Component {
   }
 
   submit = () => {
-
     if (!this.state.goal) {
       return;
     }
     this.props.initializeSessionInfo(this.state.sessionTimeEntry, this.state.goal);
-    // this.props.startSession();
-
   }
 
   render() {
-    console.log('show start', this.props.show)
     return (
       <Dialog
         open={this.props.show}

@@ -5,6 +5,7 @@ import logger from "redux-logger";
 const initialState = { 
     user: null,
     currentSession: null,
+    sessionDone: false,
 };
 
 export function initializeSessionInfo(timeInMinutes, goalForSession) {

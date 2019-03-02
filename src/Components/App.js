@@ -25,7 +25,7 @@ class App extends Component {
               <Route exact path="/" component={Welcome} />
               <Route path="/new" component={requireAuth(Content)} />
               <Route path="/previous" component={requireAuth(PracticeList)} />
-              <Route component={NoMatchingPath} />
+              <Route component={requireAuth(NoMatchingPath)} />
             </Switch>
           </div>
         </Provider>

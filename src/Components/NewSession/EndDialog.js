@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,30 +8,37 @@ import FormControl from "@material-ui/core/FormControl";
 import StarRatings from "react-star-ratings";
 import { DialogActions } from "@material-ui/core";
 
-export class EndDialog extends Component {
-  render() {
-    const { 
-      show,
-      handleClose,
-      goal,
-      onChange,
-      rating,
-      changeRating,
-      handleOpenImageDialog,
-    } = this.props
-    
-    return (
-      <div>
-        <Dialog
-          open={show}
-          onClose={handleClose}
-          aria-labelledby="timer-end-dialog"
-          fullWidth
-        >
-          <DialogTitle align="center" id="timer-end-dialog">
-            Finish Practice{" "}
-          </DialogTitle>
+import ImageDialog from './ImageDialog';
 
+export default class EndDialog extends Component {
+
+  state = {
+    rating: 0,
+    goal_comment: "",
+    question_comment: "",
+    learn_comment: "",
+    showImageDialog: false,
+  }
+
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  changeRating = (newRating) => {
+    this.setState({ rating: newRating });
+  };
+
+  submit = () => {
+
+  }
+
+  render() {
+    return (
+
+      <div style={{ maxWidth: 1000, margin: 'auto' }}>
+        {/* margin auto centers the div */}
+
+        <div>
           <DialogContent>
             <FormControl fullWidth>
               This practice was:
@@ -41,20 +48,19 @@ export class EndDialog extends Component {
                 Unfocused
                 <span style={{ margin: 20 }}>
                   <StarRatings
-                    rating={rating}
+                    rating={this.state.rating}
                     starRatedColor="red"
                     numberOfStars={5}
                     starDimension={'25px'}
                     name="rating"
-                    changeRating={changeRating}
+                    changeRating={this.changeRating}
                   />
                 </span>
                 Focused
               </div>
               <br />
 
-              Your Goal for this session:
-              <br /> {goal}
+              <b>Your goal for this session:</b> {"display goal from redux"}
               <TextField
                 id="comment"
                 name="goal_comment"
@@ -63,7 +69,7 @@ export class EndDialog extends Component {
                 multiline
                 margin="normal"
                 variant="outlined"
-                onChange={onChange}
+                onChange={this.onChange}
               />
               <br />
               <TextField
@@ -74,7 +80,7 @@ export class EndDialog extends Component {
                 multiline
                 margin="normal"
                 variant="outlined"
-                onChange={onChange}
+                onChange={this.onChange}
               />
               <br />
               <TextField
@@ -85,21 +91,19 @@ export class EndDialog extends Component {
                 multiline
                 margin="normal"
                 variant="outlined"
-                onChange={onChange}
+                onChange={this.onChange}
               />
-
-
             </FormControl>
 
             <DialogActions>
-              <Button onClick={handleOpenImageDialog}>Add Images</Button>
-              {/* <div style={{width: 30}}/> */}
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={() => this.setState({showImageDialog: true})}>Add Images</Button>
+              <Button onClick={this.submit} color="primary">
                 Save Practice
               </Button>
             </DialogActions>
           </DialogContent>
-        </Dialog>
+        </div>
+        <ImageDialog open={(this.state.showImageDialog)} />
       </div>
     );
   }
