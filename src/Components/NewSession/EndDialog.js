@@ -1,40 +1,38 @@
-import React from "react";
+import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
-import WebcamDialog from "./WebcamCapture";
 import StarRatings from "react-star-ratings";
 import { DialogActions } from "@material-ui/core";
 
-export const EndDialog = ({
-  show,
-  handleClose,
-  goal,
-  onChange,
-  rating,
-  changeRating,
-  handleOpenImageDialog,
-  comment,
-  learned,
-  question,
-  addImage
-}) => {
-  return (
-    <div>
-      <Dialog
-        open={show}
-        onClose={handleClose}
-        aria-labelledby="timer-end-dialog"
-        fullWidth
-      >
-        <DialogTitle align="center" id="timer-end-dialog">
-          Finish Practice{" "}
-        </DialogTitle>
+export class EndDialog extends Component {
+  render() {
+    const { 
+      show,
+      handleClose,
+      goal,
+      onChange,
+      rating,
+      changeRating,
+      handleOpenImageDialog,
+    } = this.props
+    
+    return (
+      <div>
+        <Dialog
+          open={show}
+          onClose={handleClose}
+          aria-labelledby="timer-end-dialog"
+          fullWidth
+        >
+          <DialogTitle align="center" id="timer-end-dialog">
+            Finish Practice{" "}
+          </DialogTitle>
 
-        <DialogContent>
+          <DialogContent>
             <FormControl fullWidth>
               This practice was:
 
@@ -100,8 +98,9 @@ export const EndDialog = ({
                 Save Practice
               </Button>
             </DialogActions>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
+          </DialogContent>
+        </Dialog>
+      </div>
+    );
+  }
 };

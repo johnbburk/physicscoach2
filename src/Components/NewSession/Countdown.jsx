@@ -9,7 +9,7 @@ import React, {Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import firebase from "../../config/constants";
-import { StartDialog } from "./StartDialog";
+import StartDialog from "./StartDialog";
 import { Typography } from "@material-ui/core";
 import { EndDialog } from "./EndDialog";
 import ImageDialog from './ImageDialog'
@@ -168,7 +168,7 @@ class Countdown extends Component {
   }
 
   goSession = () => {
-    this.setState({ showStart: false });
+    // this.setState({ showStart: false });
     //start timer
     this.startStop();
   };
@@ -229,14 +229,7 @@ class Countdown extends Component {
             <h2>{this.state.goal}</h2>
 
             <StartDialog
-              onChange={this.onChange}
               startSession={this.goSession}
-              handleClose={this.handleStartClose}
-              addSession={this.addSession}
-              subSession={this.subSession}
-              sessionTimeEntry={this.state.sessionTimeEntry}
-              show={this.state.showStart}
-              goal={this.state.goal}
             />
 
             <div id="mainTimer">

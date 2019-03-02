@@ -20,7 +20,7 @@ class App extends Component {
       <Router history={history}>
         <Provider store={store}>
           <div className="container">
-            <Header user={store.getState().user} />
+            <Header />
             <Switch>
               <Route exact path="/" component={Welcome} />
               <Route path="/new" component={requireAuth(Content)} />

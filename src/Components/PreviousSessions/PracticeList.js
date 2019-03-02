@@ -35,12 +35,12 @@ export default class PracticeList extends Component {
       .get()
       .then(snapshot => {
         snapshot.forEach(
-          doc => (
-            console.log("doc.id", doc.id),
+          doc => {
+            console.log("doc.id", doc.id);
             this.setState(prevState => ({
               practice: [...prevState.practice, doc.data()]
-            }))
-          )
+            }));
+          }
         );
         this.setState({ loading: false });
       });
