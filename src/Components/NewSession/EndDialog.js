@@ -6,13 +6,14 @@ import FormControl from "@material-ui/core/FormControl";
 import StarRatings from "react-star-ratings";
 import { DialogActions } from "@material-ui/core";
 import firebase from "../../config/constants";
+import { GridList, GridListTile } from "@material-ui/core/";
+import PracticeImage from "./PracticeImage";
 
-import ImageDialog from './ImageDialog';
-import { connect } from 'react-redux';
+import ImageDialog from "./ImageDialog";
+import { connect } from "react-redux";
 import history from "../../history";
 
 class EndDialog extends Component {
-
   state = {
     rating: 0,
     goal_comment: "",
@@ -20,76 +21,84 @@ class EndDialog extends Component {
     learn_comment: "",
     showImageDialog: false,
     imageList: []
-    
-  }
+  };
 
-  onChange = (event) => {
+  onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  changeRating = (newRating) => {
+  changeRating = newRating => {
     this.setState({ rating: newRating });
   };
 
-  closeImageDialog = () =>{
-    this.setState({showImageDialog: false})
+  closeImageDialog = () => {
+    this.setState({ showImageDialog: false });
   };
 
-  handleImageList = (images)=>{
-    this.setState({imageList: images})
+  handleImageList = images => {
+    this.setState({ imageList: images });
   };
 
   submit = () => {
-    if (!this.state.goal_comment || !this.state.learn_comment || !this.state.rating) {
+    if (
+      !this.state.goal_comment ||
+      !this.state.learn_comment ||
+      !this.state.rating
+    ) {
       // don't let user submit if required question isn't filled out
       return;
-    };
+    }
 
     const db = firebase.firestore();
     // const settings = {};
     // db.settings(settings); these two lines don't seems to be necessary
     const user = firebase.auth().currentUser;
 
-    const { rating, goal_comment, learn_comment, question_comment} = this.state;
-    
-    db.collection("sessions").add({
-      start_time: firebase.firestore.FieldValue.serverTimestamp(),
-      user: user.uid,
-      userName: user.displayName,
-      email: user.email,
-
-      practice_length: this.props.sessionInfo.timeInMinutes,
-      goal: this.props.sessionInfo.goal,
-
-     imageList: this.state.imageList,
-
+    const {
       rating,
       goal_comment,
       learn_comment,
-      question_comment,
+      question_comment
+    } = this.state;
 
-      splits: [], // what is this for? - Jason
-                  //I was originally going to save splits—so that if you paused your work, it would record the pauses. 
-                  //I never quite figured this out, and decided it was a low prioirty.
-    })
+    db.collection("sessions")
+      .add({
+        start_time: firebase.firestore.FieldValue.serverTimestamp(),
+        user: user.uid,
+        userName: user.displayName,
+        email: user.email,
+
+        practice_length: this.props.sessionInfo.timeInMinutes,
+        goal: this.props.sessionInfo.goal,
+
+        imageList: this.state.imageList,
+
+        rating,
+        goal_comment,
+        learn_comment,
+        question_comment,
+
+        splits: [] // what is this for? - Jason
+        //I was originally going to save splits—so that if you paused your work, it would record the pauses.
+        //I never quite figured this out, and decided it was a low prioirty.
+      })
       .then(ref => {
         console.log("Write successful with ID: ", ref.id);
-        history.push("/previous")
+        history.push("/previous");
       });
-  }
+  };
 
   render() {
     return (
-
-      <div style={{ maxWidth: 1000, margin: 'auto' }}>
+      <div style={{ maxWidth: 1000, margin: "auto" }}>
         {/* margin auto centers the div */}
 
         <div>
           <DialogContent>
             <FormControl fullWidth>
               This practice was:
-
-              <br /><br />
+              <br />
+              <br />
               <div style={{ textAlign: "center" }}>
                 Unfocused
                 <span style={{ margin: 20 }}>
@@ -97,7 +106,7 @@ class EndDialog extends Component {
                     rating={this.state.rating}
                     starRatedColor="red"
                     numberOfStars={5}
-                    starDimension={'25px'}
+                    starDimension={"25px"}
                     name="rating"
                     changeRating={this.changeRating}
                   />
@@ -105,8 +114,10 @@ class EndDialog extends Component {
                 Focused
               </div>
               <br />
-
-              <p>Your goal for this session: <strong>{this.props.sessionInfo.goal}</strong></p>
+              <p>
+                Your goal for this session:{" "}
+                <strong>{this.props.sessionInfo.goal}</strong>
+              </p>
               <TextField
                 id="comment"
                 name="goal_comment"
@@ -141,24 +152,45 @@ class EndDialog extends Component {
               />
             </FormControl>
 
+            <ImageDialog
+              open={this.state.showImageDialog}
+              handleImageList={this.handleImageList}
+              closeImageDialog={this.closeImageDialog}
+            />
+
+            <GridList cols={3} style={{ marginTop: 20 }}>
+              {this.state.imageList.map((image, index) => {
+                return (
+                  <GridListTile key={index}>
+                    <PracticeImage
+                      image={image}
+                      index={index}
+                      alt={"student work"}
+                      deleteImage={this.deleteImage}
+                    />
+                  </GridListTile>
+                );
+              })}
+            </GridList>
             <DialogActions>
-              <Button onClick={() => this.setState({ showImageDialog: true })}>Add Images</Button>
+              <Button onClick={() => this.setState({ showImageDialog: true })}>
+                Add Images
+              </Button>
               <Button onClick={this.submit} color="primary">
                 Save Practice
               </Button>
             </DialogActions>
           </DialogContent>
         </div>
-        <ImageDialog open={(this.state.showImageDialog)} handleImageList ={this.handleImageList} closeImageDialog={this.closeImageDialog}/>
       </div>
     );
   }
-};
+}
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     sessionInfo: state.currentSession
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(EndDialog);
