@@ -1,3 +1,5 @@
+//TODO: use getUserMedia to find max size and input that
+
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -57,6 +59,8 @@ export default class WebcamModal extends React.Component {
               height={200}
               ref={this.setRef}
               screenshotFormat="image/jpeg"
+              minScreenshotWidth= {1280}
+              minScreenshotHeight = {720}	
               width={350}
               videoConstraints={videoConstraints}
               style={{ display: "block", margin: "0 auto" }}
