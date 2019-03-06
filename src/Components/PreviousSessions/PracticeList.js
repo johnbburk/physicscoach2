@@ -15,7 +15,7 @@ export default class PracticeList extends Component {
     super(props);
     this.state = {
       practice: [],
-      loading: true
+      loading: true,
     };
     this.componentDidMount = this.componentDidMount.bind(this);
   }
@@ -34,7 +34,7 @@ export default class PracticeList extends Component {
       }
     );
 
-    practice.sort((a, b) => (a.start_time.seconds - b.start_time.seconds));
+    practice.sort((a, b) => (a.submit_time.seconds - b.submit_time.seconds));
     practice.reverse();
     this.setState({ practice, loading: false });
   }

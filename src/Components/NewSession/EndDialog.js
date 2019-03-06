@@ -167,7 +167,7 @@ class EndDialog extends Component {
               closeImageDialog={this.closeImageDialog}
             />
 
-            <GridList cols={3} style={{ marginTop: 20 }}>
+            <GridList cols={4} style={{ marginTop: 20 }}>
               {this.state.imageList.map((image, index) => {
                 return (
                   <GridListTile key={index}>
@@ -176,6 +176,7 @@ class EndDialog extends Component {
                       index={index}
                       alt={"student work"}
                       deleteImage={this.deleteImage}
+                      deleteEnabled={true}
                     />
                   </GridListTile>
                 );
