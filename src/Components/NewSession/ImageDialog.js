@@ -23,7 +23,7 @@ class ImageDialog extends Component {
     const { open } = this.props;
 
     return (
-      <Dialog open={open} maxWidth="sm" fullWidth>
+      <Dialog onClose={this.props.closeImageDialog} open={open} maxWidth="sm" fullWidth>
         <div style={{ padding: 20, textAlign: "center", margin: "0 auto" }}>
           <TextField
             // id="standard-name"

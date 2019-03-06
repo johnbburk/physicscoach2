@@ -18,10 +18,6 @@ class Countdown extends Component {
   state = {
     secondsRemaining: this.props.initialTimeInMinutes * 60,
     running: false,
-    showEnd: false,
-    showImageDialog: false,
-    sessionRef: null,
-
   };
   componentDidMount= () => {
     this.toggleTimerRunning()

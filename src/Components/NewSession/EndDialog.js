@@ -71,12 +71,13 @@ class EndDialog extends Component {
       rating,
       goal_comment,
       learn_comment,
-      question_comment
+      question_comment,
+      imageList
     } = this.state;
 
     db.collection("sessions")
       .add({
-        start_time: firebase.firestore.FieldValue.serverTimestamp(),
+        submit_time: firebase.firestore.FieldValue.serverTimestamp(),
         user: user.uid,
         userName: user.displayName,
         email: user.email,
@@ -84,16 +85,11 @@ class EndDialog extends Component {
         practice_length: this.props.sessionInfo.timeInMinutes,
         goal: this.props.sessionInfo.goal,
 
-        imageList: this.state.imageList,
-
         rating,
         goal_comment,
         learn_comment,
         question_comment,
-
-        splits: [] // what is this for? - Jason
-        //I was originally going to save splits—so that if you paused your work, it would record the pauses.
-        //I never quite figured this out, and decided it was a low prioirty.
+        imageList,
       })
       .then(ref => {
         console.log("Write successful with ID: ", ref.id);
@@ -187,7 +183,7 @@ class EndDialog extends Component {
             </GridList>
             <DialogActions>
               <Button onClick={() => this.setState({ showImageDialog: true })}>
-                Add Images
+                Add Image
               </Button>
               <Button onClick={this.submit} color="primary">
                 Save Practice
