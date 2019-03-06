@@ -1,44 +1,23 @@
 import React, { Component, Fragment } from "react";
-import { Dialog, Button, GridList, GridListTile } from '@material-ui/core/';
-import WebcamDialog from './WebcamCapture';
-import TextField from '@material-ui/core/TextField';
-import PracticeImage from './PracticeImage';
+import { Dialog, Button, GridList, GridListTile } from "@material-ui/core/";
+import WebcamDialog from "./WebcamCapture";
+import TextField from "@material-ui/core/TextField";
+import PracticeImage from "./PracticeImage";
 
 class ImageDialog extends Component {
-  state = {
-    imageList: [],
-  };
-  
-
-  addImage = (imgSrc) => {
-    this.setState(prevState => {
-      return {
-        imageList: prevState.imageList.concat(imgSrc)
-      };
-    });
-  };
-
-  deleteImage = (index) =>{
-    console.log("delete called on index", index)
-    this.setState(prevState=>{
-      return{
-        imageList: prevState.imageList.filter((im, j) => j != index)
-      }
-    })
-  }
-
-  submitURL = (event) => {
-    if (event.key === 'Enter') {
+  submitURL = event => {
+    if (event.key === "Enter") {
       console.log(event.target.value);
-      this.addImage(event.target.value);
+      this.props.addImage(event.target.value);
       event.target.value = "";
     }
-  }
-
-  handleSubmit = ()=>{
-    this.props.handleImageList(this.state.imageList);
     this.props.closeImageDialog();
-  }
+  };
+
+  submitWebcamPhoto = base64str => {
+    this.props.addImage(base64str);
+    this.props.closeImageDialog();
+  };
 
   render() {
     const { open } = this.props;
@@ -57,24 +36,11 @@ class ImageDialog extends Component {
 
           <h1>or</h1>
 
-          <WebcamDialog addImage={this.addImage} />
-
-          <GridList cols={3} style={{marginTop: 20}}>
-            {this.state.imageList.map((image, index) => {
-              return (
-                <GridListTile key={index} >
-                  <PracticeImage image={image} index={index} alt={"student work"} deleteImage={this.deleteImage} />
-                </GridListTile>
-              );
-            })}
-          </GridList>
+          <WebcamDialog addImage={this.submitWebcamPhoto} />
         </div>
-        <Button 
-          variant = "contained" color = "primary" onClick = {this.handleSubmit}
-        >Done adding photos</Button>
       </Dialog>
-    )
+    );
   }
 }
 
-export default ImageDialog
+export default ImageDialog;

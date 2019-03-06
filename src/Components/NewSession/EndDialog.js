@@ -35,8 +35,21 @@ class EndDialog extends Component {
     this.setState({ showImageDialog: false });
   };
 
-  handleImageList = images => {
-    this.setState({ imageList: images });
+  addImage = imgSrc => {
+    this.setState(prevState => {
+      return {
+        imageList: prevState.imageList.concat(imgSrc)
+      };
+    });
+  };
+
+  deleteImage = index => {
+    console.log("delete called on index", index);
+    this.setState(prevState => {
+      return {
+        imageList: prevState.imageList.filter((im, j) => j != index)
+      };
+    });
   };
 
   submit = () => {
@@ -154,7 +167,7 @@ class EndDialog extends Component {
 
             <ImageDialog
               open={this.state.showImageDialog}
-              handleImageList={this.handleImageList}
+              addImage={this.addImage}
               closeImageDialog={this.closeImageDialog}
             />
 

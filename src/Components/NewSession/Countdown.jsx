@@ -40,7 +40,7 @@ class Countdown extends Component {
             document.getElementById("notification").play();
 
             // wait for notification to play before dismounting component
-            setTimeout(this.props.timeUp, 2000) //
+            setTimeout(this.props.timeUp, 500) //
 
           } else {
             this.setState((prevState) => {
