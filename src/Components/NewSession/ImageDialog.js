@@ -27,7 +27,7 @@ class ImageDialog extends Component {
         <div style={{ padding: 20, textAlign: "center", margin: "0 auto" }}>
           <TextField
             // id="standard-name"
-            label="Add Image with URL"
+            label="Add Imanpmge with URL"
             // value={this.state.currentURL}
             onKeyPress={this.submitURL}
             margin="normal"

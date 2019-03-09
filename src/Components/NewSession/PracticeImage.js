@@ -1,3 +1,5 @@
+//Todo: consider this lightbox component: https://github.com/jfcaiceo/react-lightbox-component
+
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -9,6 +11,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+
+
+
+
+
+
 const styles = {
   card: {
     maxWidth: 345
@@ -19,12 +27,14 @@ const styles = {
 };
 
 function MediaCard(props) {
-  const { classes, image, index, deleteImage, deleteEnabled } = props;
+  const { classes, image, index, deleteImage, deleteEnabled, onClick } = props;
   return (
+
+
     <Card className={classes.card}>
-      {console.log("index ", index)}
-      <CardActionArea href={image} target="_blank">
-        <CardMedia className={classes.media} image={image} />
+      <CardActionArea onClick = {()=>{onClick(index)}}>
+
+    <CardMedia className={classes.media} image={image} /> 
       </CardActionArea>
 
       {deleteEnabled && (
