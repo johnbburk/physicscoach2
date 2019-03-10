@@ -1,6 +1,5 @@
-//Todo: use this to implement lightbox https://stackoverflow.com/questions/42350836/cant-get-component-to-show-up-with-react-images
 
-import React from "react";
+import React, { Component } from "react";
 import {
   Dialog,
   DialogActions,
@@ -13,18 +12,61 @@ import {
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from 'react-images';
+import { database } from "firebase";
 
 
-const DetailsDialog = ({ open, onClose, data, onClick }) => {
-  // console.log(data)
+class DetailsDialog extends Component  {
+
+  state = {
+    lightBoxOpwn: false,
+    currentImage: 0
+  } 
+
+  openLightBox = (currentImage)=>{
+    this.setState({lightBoxOpen: true, currentImage: currentImage});
+
+  }
+  
+  onClickPrev = ()=>{
+    let index = this.state.currentImage
+    if (this.state.currentImage != 0){
+      this.setState({currentImage: index-1})
+    }
+  }
+
+  onClickNext = ()=>{
+    let index = this.state.currentImage
+    if (this.state.currentImage != this.props.data.imageList.length-1){
+      this.setState({currentImage: index+1})
+    }
+  }
+
+  render(){
+  const { open, onClose, data, onClick } = this.props
+  console.log(data)
   const images = data.imageList.map( function (image){ return {src: image}});
 
   return (
+    <div>
+    <Lightbox 
+    images = {images} 
+    isOpen = {this.state.lightBoxOpen}
+    currentImage = {this.state.currentImage}
+    onClickPrev = {this.onClickPrev}
+    onClickNext = {this.onClickNext}
+    onClose={()=>this.setState({lightBoxOpen: false})} />
+
     <Dialog open={open} onClose={onClose}>
       <DialogTitle align="center" id="timer-start-dialog">
-        Start New Practice
+        {data.goal}
       </DialogTitle>
-      <GridList cols={4} style={{ marginTop: 20 }}>
+    
+      <DialogContent>
+{data.goal_comment} <br/>
+{data.learn_comment} <br/>
+{data.question_comment} <br/>
+
+<GridList cols={4} style={{ marginTop: 20 }}>
         {data.imageList.map((image, index) => {
           return (
             <GridListTile key={index}>
@@ -33,28 +75,27 @@ const DetailsDialog = ({ open, onClose, data, onClick }) => {
                 index={index}
                 alt={"student work"}
                 deleteEnabled={false}
-                onClick = {onClick}
+                onClick = {this.openLightBox}
               />
             </GridListTile>
           );
         })}
       </GridList> 
-      <DialogContent>
-        <DialogContentText variant="h3" align="center">
-          text
-        </DialogContentText>
+
       </DialogContent>
 
       <DialogActions>
         <Button
-          onClick={() => console.log("user wants to close dialog")}
+          onClick={onClose}
           color="primary"
         >
-          Start Practice
+          Close
         </Button>
       </DialogActions>
     </Dialog>
+    </div>
   );
 };
+}
 
 export default DetailsDialog;

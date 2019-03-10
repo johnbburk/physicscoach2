@@ -28,27 +28,8 @@ const styles = {
 class SimpleCard extends Component {
   state = {
     dialogOpen: false,
-    lightBoxOpen: false,
-    currentImage: 0,
   };
-  openLightBox = (currentImage)=>{
-    this.setState({lightBoxOpen: true, currentImage: currentImage});
-
-  }
-
-  onClickPrev = ()=>{
-    let index = this.state.currentImage
-    if (this.state.currentImage != 0){
-      this.setState({currentImage: index-1})
-    }
-  }
-
-  onClickNext = ()=>{
-    let index = this.state.currentImage
-    if (this.state.currentImage != this.props.data.imageList.length-1){
-      this.setState({currentImage: index+1})
-    }
-  }
+ 
 
   render() {
     const { classes, data } = this.props;
@@ -56,20 +37,11 @@ class SimpleCard extends Component {
 
     return (
       <Card className={classes.card}>
-        <Lightbox 
-        images = {images} 
-        isOpen = {this.state.lightBoxOpen}
-        currentImage = {this.state.currentImage}
-        onClickPrev = {this.onClickPrev}
-        onClickNext = {this.onClickNext}
-        onClose={()=>this.setState({lightBoxOpen: false})} />
 
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
           data={data}
-          openLightBox ={this.state.lightBoxOpen}
-          onClick = {this.openLightBox}
         />
 
         <CardContent>
