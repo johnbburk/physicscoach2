@@ -18,7 +18,7 @@ const styles = {
     // margin: 15,
   },
   title: {
-    fontSize: 14
+    fontSize: 24
   },
   grow: {
     flexGrow: 1
@@ -73,13 +73,14 @@ class SimpleCard extends Component {
         />
 
         <CardContent>
-          <Typography variant="h6" component="h2">
+          <Typography variant="subtitle1"  color ="textSecondary">
             { moment(data.submit_time.toDate()).format("l") }
           </Typography>
 
           <Typography
             className={classes.title}
-            color="textSecondary"
+            variant="title"
+            color = "textPrimary"
             gutterBottom
           >
             {data.goal}
