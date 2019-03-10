@@ -68,7 +68,7 @@ class SimpleCard extends Component {
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
           data={data}
-          openLightBox ={this.state.openLightBox}
+          openLightBox ={this.state.lightBoxOpen}
           onClick = {this.openLightBox}
         />
 
