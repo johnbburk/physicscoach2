@@ -25,7 +25,7 @@ const styles = {
   }
 };
 
-class SimpleCard extends Component {
+class PracticeCard extends Component {
   state = {
     dialogOpen: false,
   };
@@ -75,4 +75,4 @@ class SimpleCard extends Component {
   }
 }
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(PracticeCard);
