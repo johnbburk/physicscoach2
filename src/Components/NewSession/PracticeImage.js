@@ -13,26 +13,22 @@ import Typography from "@material-ui/core/Typography";
 
 
 
-
-
-
-
 const styles = {
   card: {
-    maxWidth: 345
+    maxWidth: 250
   },
   media: {
-    height: 140
+    height: 150,
+    width: 250
   }
 };
 
-function MediaCard(props) {
+function PracticeImage(props) {
   const { classes, image, index, deleteImage, deleteEnabled, onClick } = props;
+  console.log("practice image classes" ,classes)
   return (
-
-
     <Card className={classes.card}>
-      <CardActionArea onClick = {()=>{onClick(index)}}>
+      <CardActionArea style = {{width: "100%"}} onClick = {()=>{onClick(index)}}>
 
     <CardMedia className={classes.media} image={image} /> 
       </CardActionArea>
@@ -53,8 +49,8 @@ function MediaCard(props) {
   );
 }
 
-MediaCard.propTypes = {
+PracticeImage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MediaCard);
+export default withStyles(styles)(PracticeImage);
