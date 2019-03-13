@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {logout} from "../../helpers/auth";
-import history from "../../history";
-import { signOut } from "../../actions";
-import {store} from "../../store";
+
 
 const styles = {
   buttonRoot: {

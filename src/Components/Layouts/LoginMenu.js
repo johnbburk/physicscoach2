@@ -1,12 +1,9 @@
 //TODO: create LOGINPATH and put it in a constants.js file
 
 import React from "react";
-import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { firebaseAuth, provider } from "../../config/constants";
-import { store } from "../../store";
 import history from "../../history";
-import { authAction } from "../../actions";
 
 const buttonStyle = {
   color: "white",

@@ -1,4 +1,3 @@
-
 export const authAction = user => {
   if (user !== null) {
     return {

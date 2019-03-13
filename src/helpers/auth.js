@@ -1,7 +1,7 @@
 import { ref, firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
-import { authAction } from "../actions";
+import { authAction } from "../store/actions";
 
 export function fetchUser() {
   firebaseAuth.onAuthStateChanged(userResult => {
