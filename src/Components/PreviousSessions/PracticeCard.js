@@ -25,6 +25,15 @@ const styles = {
   }
 };
 
+function truncate(string) {
+  const MAX_CHARS = 40
+  if (string.length > MAX_CHARS) {
+    return string.slice(0, MAX_CHARS) + "...";
+  } else {
+    return string;
+  }
+}
+
 class PracticeCard extends Component {
   state = {
     dialogOpen: false,
@@ -55,7 +64,7 @@ class PracticeCard extends Component {
             color = "textPrimary"
             gutterBottom
           >
-            {data.goal}
+            {truncate(data.goal)}
           </Typography>
         </CardContent>
         <CardActions>

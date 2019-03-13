@@ -11,14 +11,14 @@ import {
   GridListTile,
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
-import Lightbox from 'react-images';
+import Lightbox from 'react-images-zoom';
 import { database } from "firebase";
 
 
 class DetailsDialog extends Component  {
 
   state = {
-    lightBoxOpwn: false,
+    lightBoxOpen: false,
     currentImage: 0
   } 
 
@@ -48,13 +48,23 @@ class DetailsDialog extends Component  {
 
   return (
     <div>
-    <Lightbox 
+      <Lightbox
+        images={images}
+        currentImage = {this.state.currentImage}
+        isOpen={this.state.lightBoxOpen}
+        onClickPrev={this.onClickPrev}
+        onClickNext={this.onClickNext}
+        onClose={()=>this.setState({lightBoxOpen: false})}
+        rotatable={true}
+        zoomable={true}
+      />
+    {/* <Lightbox 
     images = {images} 
     isOpen = {this.state.lightBoxOpen}
     currentImage = {this.state.currentImage}
     onClickPrev = {this.onClickPrev}
     onClickNext = {this.onClickNext}
-    onClose={()=>this.setState({lightBoxOpen: false})} />
+    onClose={()=>this.setState({lightBoxOpen: false})} /> */}
 
     <Dialog open={open} onClose={onClose}>
       <DialogTitle align="center" id="timer-start-dialog">
