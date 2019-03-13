@@ -1,7 +1,7 @@
 import { ref, firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
-import { authAction } from "../store/actions";
+import { authAction , getUser} from "../store/actions";
 import firebase from "../config/constants";
 
 const db = firebase.firestore();
@@ -26,11 +26,10 @@ export function fetchUser() {
     
    
     }
-
+    store.dispatch(getUser(userResult));
     store.dispatch(authAction(userResult));
   });
 }
-
 export function logout() {
   firebaseAuth.signOut();
 }

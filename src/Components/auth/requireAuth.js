@@ -13,7 +13,7 @@ export default function(ComposedComponent) {
 
     render() {
       if (this.props.user) {
-        return <ComposedComponent {...this.props} />;
+      return <ComposedComponent {...this.props} />;
       }
       return null;
     }
