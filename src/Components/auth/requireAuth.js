@@ -3,23 +3,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import history from "../../history";
 
+// higher order component that wraps pages which require authentication
+
 export default function(ComposedComponent) {
   class Authentication extends Component {
     static contextTypes = {
       router: PropTypes.object
     };
-
-    // componentWillMount() {
-    //   if (this.props.user === null) {
-    //     history.push("/");
-    //   }
-    // }
-
-    // componentWillUpdate(nextProps) {
-    //   if (!nextProps.user) {
-    //     history.push("/");
-    //   }
-    // }
 
     render() {
       if (this.props.user) {

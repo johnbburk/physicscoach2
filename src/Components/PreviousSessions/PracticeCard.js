@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -8,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import DetailsDialog from "./DetailsDialog";
-import Lightbox from 'react-images';
 
 const styles = {
   card: {
@@ -42,7 +40,6 @@ class PracticeCard extends Component {
 
   render() {
     const { classes, data } = this.props;
-    const images = data.imageList.map( function (image){ return {src: image}});
 
     return (
       <Card className={classes.card}>
