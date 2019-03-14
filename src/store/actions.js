@@ -35,7 +35,7 @@ export const authAction = user => {
     };
   } else {
     return {
-      type: " SIGN_OUT",
+      type: "SIGN_OUT",
       user: null,
       role: null,
       course: null
