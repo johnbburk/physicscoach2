@@ -6,8 +6,6 @@ import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile';
 
 const db = firebase.firestore();
-const user = firebase.auth().currentUser;
-console.log(user);
 const sessionsRef = db.collection("sessions");
 
 export default class PracticeList extends Component {
@@ -43,8 +41,6 @@ export default class PracticeList extends Component {
     if (this.state.loading) {
       return null;
     }
-
-    console.log(this.state.practice)
 
     return (
       <div style={{ margin: 20 }}>

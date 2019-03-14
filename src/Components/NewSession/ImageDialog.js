@@ -7,7 +7,7 @@ import PracticeImage from "./PracticeImage";
 class ImageDialog extends Component {
   submitURL = event => {
     if (event.key === "Enter") {
-      console.log(event.target.value);
+      console.log("image added with URL:", event.target.value);
       this.props.addImage(event.target.value);
       event.target.value = "";
     }

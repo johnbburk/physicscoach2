@@ -43,7 +43,7 @@ class DetailsDialog extends Component  {
 
   render(){
   const { open, onClose, data, onClick } = this.props
-  console.log(data)
+  console.log('data for session currently displayed', data)
   const images = data.imageList.map( function (image){ return {src: image}});
 
   return (
