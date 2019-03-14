@@ -32,5 +32,6 @@ export function fetchUser() {
 }
 export function logout() {
   firebaseAuth.signOut();
+  store.dispatch("SIGN_OUT");
 }
 
