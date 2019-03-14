@@ -7,13 +7,14 @@ import requireAuth from "./auth/requireAuth";
 import { store } from "../store";
 import history from "../history";
 import { Provider } from "react-redux";
-import { fetchUser } from "../helpers/auth";
+import { updateStateBasedOnUser } from "../helpers/auth";
 import PracticeList from "./PreviousSessions/PracticeList"
 import requireTeacher from "./auth/requireTeacher";
+import { firebaseAuth } from "../config/constants";
 
 class App extends Component {
   componentDidMount() {
-    fetchUser();
+    firebaseAuth.onAuthStateChanged(updateStateBasedOnUser); // adds an event listener
   }
 
   render() {
