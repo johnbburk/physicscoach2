@@ -13,7 +13,6 @@ const initialState = {
   isWaitingForUserFromFirebase: true,
 
   currentSession: null,
-  sessionDone: false,
 };
 
 export const initializeSessionInfo = (timeInMinutes, goalForSession) => {
@@ -21,11 +20,13 @@ export const initializeSessionInfo = (timeInMinutes, goalForSession) => {
   return { type: START_SESSION, timeInMinutes, goalForSession };
 }
 
-export const getReduxAuthAction = user => {
+export const getReduxAuthAction = (user, userDocSnapShot) => {
   if (user) {
+    console.log("user snapshot", userDocSnapShot.data())
     return {
       type: SIGN_IN,
-      user
+      user,
+      role: userDocSnapShot.get("role")
     };
 
   } else {
@@ -41,6 +42,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.user,
+        role: action.role,
         isWaitingForUserFromFirebase: false
       };
     case SIGN_OUT:

@@ -7,15 +7,13 @@ import firebase from "../config/constants";
 const db = firebase.firestore();
 
 export const updateStateBasedOnUser = async user => {
-  // store.dispatch(getUser(user));
-  store.dispatch(getReduxAuthAction(user));
-
+  let userDocSnapshot = null;
   console.log("fetched user: ", user);
   if (user === null) {
     history.push("/");
 
   } else {
-    const userDocSnapshot = await db.collection('users') // CollectionReference
+    userDocSnapshot = await db.collection('users') // CollectionReference
       .doc(user.uid) // DocumentReference
       .get(); // DocumentSnapshot
 
@@ -27,8 +25,15 @@ export const updateStateBasedOnUser = async user => {
         role: "student",
         email: user.email
       })
+
+      userDocSnapshot = await db.collection('users') // CollectionReference
+        .doc(user.uid) // DocumentReference
+        .get(); // DocumentSnapshot
     }
   }
+
+  // store.dispatch(getUser(user));
+  store.dispatch(getReduxAuthAction(user, userDocSnapshot));
 }
 
 export function logout() {
