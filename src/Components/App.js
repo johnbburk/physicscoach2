@@ -9,6 +9,7 @@ import history from "../history";
 import { Provider } from "react-redux";
 import { fetchUser } from "../helpers/auth";
 import PracticeList from "./PreviousSessions/PracticeList"
+import requireTeacher from "./auth/requireTeacher";
 
 class App extends Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends Component {
               <Route exact path="/" component={Welcome} />
               <Route path="/new" component={requireAuth(Content)} />
               <Route path="/previous" component={requireAuth(PracticeList)} />
+              <Route path="/teacher" component={requireTeacher(Welcome)} />>
               <Route component={requireAuth(NoMatchingPath)} />
             </Switch>
           </div>
