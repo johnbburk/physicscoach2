@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import history from "../../history";
 
 // higher order component that wraps pages which require authentication
 
