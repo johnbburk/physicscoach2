@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from "react";
-import { Dialog, Button, GridList, GridListTile } from "@material-ui/core/";
+import React, { Component } from "react";
+import { Dialog } from "@material-ui/core/";
 import WebcamDialog from "./WebcamCapture";
 import TextField from "@material-ui/core/TextField";
-import PracticeImage from "./PracticeImage";
 
 class ImageDialog extends Component {
   submitURL = event => {

@@ -5,107 +5,98 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  DialogContentText,
   Button,
   GridList,
   GridListTile,
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from 'react-images-zoom';
-import { database } from "firebase";
 
 
-class DetailsDialog extends Component  {
+class DetailsDialog extends Component {
 
   state = {
     lightBoxOpen: false,
     currentImage: 0
-  } 
+  }
 
-  openLightBox = (currentImage)=>{
-    this.setState({lightBoxOpen: true, currentImage: currentImage});
+  openLightBox = (currentImage) => {
+    this.setState({ lightBoxOpen: true, currentImage: currentImage });
 
   }
-  
-  onClickPrev = ()=>{
+
+  onClickPrev = () => {
     let index = this.state.currentImage
-    if (this.state.currentImage != 0){
-      this.setState({currentImage: index-1})
+    if (this.state.currentImage !== 0) {
+      this.setState({ currentImage: index - 1 })
     }
   }
 
-  onClickNext = ()=>{
+  onClickNext = () => {
     let index = this.state.currentImage
-    if (this.state.currentImage != this.props.data.imageList.length-1){
-      this.setState({currentImage: index+1})
+    if (this.state.currentImage !== this.props.data.imageList.length - 1) {
+      this.setState({ currentImage: index + 1 })
     }
   }
 
-  render(){
-  const { open, onClose, data, onClick } = this.props
-  console.log('data for session currently displayed', data)
-  const images = data.imageList.map( function (image){ return {src: image}});
+  render() {
+    const { open, onClose, data } = this.props
+    console.log('data for session currently displayed', data)
+    const images = data.imageList.map(function (image) { return { src: image } });
 
-  return (
-    <div>
-      <Lightbox
-        images={images}
-        currentImage = {this.state.currentImage}
-        isOpen={this.state.lightBoxOpen}
-        onClickPrev={this.onClickPrev}
-        onClickNext={this.onClickNext}
-        onClose={()=>this.setState({lightBoxOpen: false})}
-        rotatable={true}
-        zoomable={true}
-      />
-    {/* <Lightbox 
-    images = {images} 
-    isOpen = {this.state.lightBoxOpen}
-    currentImage = {this.state.currentImage}
-    onClickPrev = {this.onClickPrev}
-    onClickNext = {this.onClickNext}
-    onClose={()=>this.setState({lightBoxOpen: false})} /> */}
+    return (
+      <div>
+        <Lightbox
+          images={images}
+          currentImage={this.state.currentImage}
+          isOpen={this.state.lightBoxOpen}
+          onClickPrev={this.onClickPrev}
+          onClickNext={this.onClickNext}
+          onClose={() => this.setState({ lightBoxOpen: false })}
+          rotatable={true}
+          zoomable={true}
+        />
 
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle align="center" id="timer-start-dialog">
-        {data.goal}
-      </DialogTitle>
-    
-      <DialogContent>
-{data.goal_comment} <br/>
-{data.learn_comment} <br/>
-{data.question_comment} <br/>
+        <Dialog open={open} onClose={onClose}>
+          <DialogTitle align="center" id="timer-start-dialog">
+            {data.goal}
+          </DialogTitle>
 
-<GridList cols={4} style={{ marginTop: 20 }}>
-        {data.imageList.map((image, index) => {
-          return (
-            <GridListTile key={index}>
-              <PracticeImage
-                image={image}
-                index={index}
-                alt={"student work"}
-                deleteEnabled={false}
-                onClick = {this.openLightBox}
-              />
-            </GridListTile>
-          );
-        })}
-      </GridList> 
+          <DialogContent>
+            {data.goal_comment} <br />
+            {data.learn_comment} <br />
+            {data.question_comment} <br />
 
-      </DialogContent>
+            <GridList cols={4} style={{ marginTop: 20 }}>
+              {data.imageList.map((image, index) => {
+                return (
+                  <GridListTile key={index}>
+                    <PracticeImage
+                      image={image}
+                      index={index}
+                      alt={"student work"}
+                      deleteEnabled={false}
+                      onClick={this.openLightBox}
+                    />
+                  </GridListTile>
+                );
+              })}
+            </GridList>
 
-      <DialogActions>
-        <Button
-          onClick={onClose}
-          color="primary"
-        >
-          Close
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              onClick={onClose}
+              color="primary"
+            >
+              Close
         </Button>
-      </DialogActions>
-    </Dialog>
-    </div>
-  );
-};
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  };
 }
 
 export default DetailsDialog;
