@@ -16,7 +16,14 @@ export function getUser(user) {
         role: role,
         course: course
       });
+      
     }
+    else
+      {
+        dispatch({
+          type: "GET_USER_FAIL"
+        })
+      }
   };
 }
 
