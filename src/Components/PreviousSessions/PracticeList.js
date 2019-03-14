@@ -6,11 +6,15 @@ import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile';
 
 const db = firebase.firestore();
-const user = firebase.auth().currentUser;
-console.log(user);
 const sessionsRef = db.collection("sessions");
 
 export default class PracticeList extends Component {
+
+  // preventing update on unmounted component, solution from here:
+  // https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component/
+
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +24,12 @@ export default class PracticeList extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   async componentDidMount() {
+    this._isMounted = true;
     let practice = []
     const user = firebase.auth().currentUser;
     console.log("sessionsRef is ", sessionsRef);
@@ -30,13 +39,14 @@ export default class PracticeList extends Component {
       .get()
 
     snapshot.forEach((doc) => {
-        practice = practice.concat(doc.data())
-      }
-    );
+      practice = practice.concat(doc.data())
+    });
 
     practice.sort((a, b) => (a.submit_time.seconds - b.submit_time.seconds));
     practice.reverse();
-    this.setState({ practice, loading: false });
+    if (this._isMounted) {
+      this.setState({ practice, loading: false });
+    }
   }
 
   render() {
@@ -44,13 +54,11 @@ export default class PracticeList extends Component {
       return null;
     }
 
-    console.log(this.state.practice)
-
     return (
       <div style={{ margin: 20 }}>
         <h1>{this.state.practice.length} Previous Practices</h1>
         <GridList cols={4}>
-          {this.state.practice.map((data,index) => <GridListTile key = {index}> <PracticeCard data={data} /> </GridListTile>)}
+          {this.state.practice.map((data, index) => <GridListTile key={index}> <PracticeCard data={data} /> </GridListTile>)}
         </GridList>
       </div>
     );

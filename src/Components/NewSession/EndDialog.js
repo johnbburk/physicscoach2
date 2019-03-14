@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -47,7 +47,7 @@ class EndDialog extends Component {
     console.log("delete called on index", index);
     this.setState(prevState => {
       return {
-        imageList: prevState.imageList.filter((im, j) => j != index)
+        imageList: prevState.imageList.filter((im, j) => j !== index)
       };
     });
   };

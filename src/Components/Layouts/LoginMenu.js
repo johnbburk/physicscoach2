@@ -28,7 +28,7 @@ export const LoginMenu = () => (
           history.push("/new")
         })
         .catch(error => {
-          console.log(error);
+          console.log("error logging in", error);
         });
     }}
     data-test={"sign-in"}

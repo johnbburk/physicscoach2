@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Grid, Paper } from "@material-ui/core";
-import WebcamDialog from "./WebcamCapture";
 import Countdown from "./Countdown";
 import { connect } from "react-redux";
 import StartDialog from "./StartDialog";
