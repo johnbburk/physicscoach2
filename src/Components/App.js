@@ -18,6 +18,10 @@ class App extends Component {
   }
 
   render() {
+    if (store.getState().isWaitingForFirebase) {
+      return null;
+    }
+    
     return (
       <Router history={history}>
         <Provider store={store}>

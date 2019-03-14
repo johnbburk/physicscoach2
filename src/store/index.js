@@ -10,7 +10,7 @@ const initialState = {
   user: null,
   role: null,
   course: null,
-  isWaitingForUserFromFirebase: true,
+  isWaitingForFirebase: true,
 
   currentSession: null,
 };
@@ -43,13 +43,13 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
         role: action.role,
-        isWaitingForUserFromFirebase: false
+        isWaitingForFirebase: false
       };
     case SIGN_OUT:
       return {
         ...state,
         user: null,
-        isWaitingForUserFromFirebase: false
+        isWaitingForFirebase: false
       };
 
     // case "GET_USER_SUCCESS":
