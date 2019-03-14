@@ -1,14 +1,14 @@
 import { firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
-import { authAction, getUser } from "../store/actions";
+import { getReduxAuthAction } from "../store";
 import firebase from "../config/constants";
 
 const db = firebase.firestore();
 
 export const updateStateBasedOnUser = async user => {
   // store.dispatch(getUser(user));
-  store.dispatch(authAction(user));
+  store.dispatch(getReduxAuthAction(user));
 
   console.log("fetched user: ", user);
   if (user === null) {

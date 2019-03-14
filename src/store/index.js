@@ -2,50 +2,73 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
+const SIGN_IN = "SIGN_IN";
+const SIGN_OUT = "SIGN_OUT";
+const START_SESSION = "START_SESSION";
+
 const initialState = {
   user: null,
-  currentSession: null,
-  sessionDone: false,
   role: null,
   course: null,
-  isLoading: false
+  isWaitingForUserFromFirebase: true,
+
+  currentSession: null,
+  sessionDone: false,
 };
 
-export function initializeSessionInfo(timeInMinutes, goalForSession) {
+export const initializeSessionInfo = (timeInMinutes, goalForSession) => {
   console.log("Initialized session with", timeInMinutes, goalForSession);
-  return { type: "START_SESSION", timeInMinutes, goalForSession };
+  return { type: START_SESSION, timeInMinutes, goalForSession };
 }
+
+export const getReduxAuthAction = user => {
+  if (user) {
+    return {
+      type: SIGN_IN,
+      user
+    };
+
+  } else {
+    return {
+      type: SIGN_OUT,
+    };
+  }
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SIGN_IN":
+    case SIGN_IN:
       return {
         ...state,
-        user: action.user
+        user: action.user,
+        isWaitingForUserFromFirebase: false
       };
-    case "SIGN_OUT":
+    case SIGN_OUT:
       return {
         ...state,
-        user: false
+        user: null,
+        isWaitingForUserFromFirebase: false
       };
-    case "GET_USER_SUCCESS":
-      return {
-        ...state,
-        role: action.role,
-        course: action.course,
-        loading: false
-      };
-    case "GET_USER_BEGIN":
-      return {
-        ...state,
-        loading: true
-      };
-    case "GET_USER_FAIL":
-      return {
-        ...state,
-        loading: false
-      };
-    case "START_SESSION":
+
+    // case "GET_USER_SUCCESS":
+    //   return {
+    //     ...state,
+    //     role: action.role,
+    //     course: action.course,
+    //     loading: false
+    //   };
+    // case "GET_USER_BEGIN":
+    //   return {
+    //     ...state,
+    //     loading: true
+    //   };
+    // case "GET_USER_FAIL":
+    //   return {
+    //     ...state,
+    //     loading: false
+    //   };
+
+    case START_SESSION:
       return {
         ...state,
         currentSession: {
@@ -54,6 +77,7 @@ const reducer = (state, action) => {
         }
       };
     default:
+      console.log("non-existent action called", action.type)
       return state;
   }
 };
