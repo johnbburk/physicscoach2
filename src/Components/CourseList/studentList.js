@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import Icon from '@material-ui/core/Icon';
 
 const db = firebase.firestore();
 const users = db.collection("users");
@@ -54,6 +54,12 @@ class StudentList extends Component {
       <div>
         <h1>Student List</h1>
         {this.renderAllStudents()}
+        <h2>Your class</h2>
+        {this.state.selectedStudents.map(data=>(
+          <li key={data.uid}>
+          <span>{data.displayName}</span> <Icon onClick={this.studentSelected(data)}>remove_circle</Icon>
+        </li>
+        ))}
       </div>
     );
   }
