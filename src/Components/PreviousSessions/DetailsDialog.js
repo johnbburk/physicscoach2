@@ -8,6 +8,7 @@ import {
   Button,
   GridList,
   GridListTile,
+  TextField
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from 'react-images-zoom';
@@ -63,10 +64,37 @@ class DetailsDialog extends Component {
           </DialogTitle>
 
           <DialogContent>
-            {data.goal_comment} <br />
-            {data.learn_comment} <br />
-            {data.question_comment} <br />
 
+          <TextField
+          id="Goal-Comment-TextField"
+          label="Goal Comment"
+          value={data.goal_comment}
+          fullWidth = {true}
+          readOnly = {true}
+          margin="normal"
+          variant="outlined"
+          multiline = {true}
+        />
+         <TextField
+          id="Learn-Comment-TextField"
+          label="Learn Comment"
+          value={data.learn_comment}
+          fullWidth = {true}
+          readOnly = {true}
+          margin="normal"
+          variant="outlined"
+          multiline = {true}
+        />
+        <TextField
+          id="Question-Comment-TextField"
+          label="Question Comment"
+          value={data.question_comment}
+          fullWidth = {true}
+          readOnly = {true}
+          margin="normal"
+          variant="outlined"
+          multiline = {true}
+        />
             <GridList cols={4} style={{ marginTop: 20 }}>
               {data.imageList.map((image, index) => {
                 return (
