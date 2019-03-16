@@ -57,7 +57,7 @@ export default class PracticeList extends Component {
     return (
       <div style={{ margin: 20 }}>
         <h1>{this.state.practice.length} Previous Practices</h1>
-        <GridList cols={4}>
+        <GridList cols={3}>
           {this.state.practice.map((data, index) => <GridListTile key={index}> <PracticeCard data={data} /> </GridListTile>)}
         </GridList>
       </div>

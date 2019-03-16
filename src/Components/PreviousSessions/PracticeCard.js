@@ -10,8 +10,7 @@ import DetailsDialog from "./DetailsDialog";
 
 const styles = {
   card: {
-    minWidth: 250,
-    maxWidth: 250,
+    minWidth: 400,
     backgroundColor: "#eff0f2"
     // margin: 15,
   },
