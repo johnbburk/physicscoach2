@@ -52,24 +52,6 @@ const reducer = (state, action) => {
         isWaitingForFirebase: false
       };
 
-    // case "GET_USER_SUCCESS":
-    //   return {
-    //     ...state,
-    //     role: action.role,
-    //     course: action.course,
-    //     loading: false
-    //   };
-    // case "GET_USER_BEGIN":
-    //   return {
-    //     ...state,
-    //     loading: true
-    //   };
-    // case "GET_USER_FAIL":
-    //   return {
-    //     ...state,
-    //     loading: false
-    //   };
-
     case START_SESSION:
       return {
         ...state,
