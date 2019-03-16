@@ -36,12 +36,4 @@ export const updateStateBasedOnUser = async user => {
   store.dispatch(getReduxAuthAction(user, userDocSnapshot));
 }
 
-export function logout() {
-  firebaseAuth.signOut();
-  // store.dispatch("SIGN_OUT");
-
-  // It's unnecessary to dispatch this action because updateStateBasedOnUser will be called
-  // which dispatches the action. Dispatching twice causes double reloading.
-  // Also, "SIGN_OUT" is a string, not an action
-}
 

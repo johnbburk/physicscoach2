@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {logout} from "../../helpers/auth";
+import { firebaseAuth } from "../config/constants";
 
 
 const styles = {
@@ -33,7 +33,7 @@ class AccountMenu extends Component {
         data-test={"sign-out"}
         to="/"
         onClick={() => {
-          logout();
+          firebaseAuth.signOut();
         }}
       >
         Sign Out
