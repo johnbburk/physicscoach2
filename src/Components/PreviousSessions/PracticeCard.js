@@ -38,8 +38,9 @@ class PracticeCard extends Component {
  
 
   render() {
-    const { classes, data } = this.props;
-
+    const { classes, practiceDoc } = this.props;
+    const data = practiceDoc.data()
+    
     return (
       <Card className={classes.card}>
 
