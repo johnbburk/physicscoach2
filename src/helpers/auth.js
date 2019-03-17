@@ -1,4 +1,3 @@
-import { firebaseAuth } from "../config/constants";
 import { store } from "../store";
 import history from "../history";
 import { getReduxAuthAction } from "../store";
@@ -32,7 +31,6 @@ export const updateStateBasedOnUser = async user => {
     }
   }
 
-  // store.dispatch(getUser(user));
   store.dispatch(getReduxAuthAction(user, userDocSnapshot));
 }
 

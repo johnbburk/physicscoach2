@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import LoginMenu from "./LoginMenu";
 import AccountMenu from "./SignOutButton";
 import SideMenu from "./SideMenu";
-import { isNull } from 'util';
 
 const styles = {
   root: {

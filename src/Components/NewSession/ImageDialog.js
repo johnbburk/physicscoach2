@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Dialog } from "@material-ui/core/";
 import WebcamDialog from "./WebcamCapture";
 import TextField from "@material-ui/core/TextField";
-import ImageUploader from 'react-images-upload';
 
 class ImageDialog extends Component {
   submitURL = event => {
@@ -36,15 +35,7 @@ class ImageDialog extends Component {
 
           <h1>or</h1>
           
-          <ImageUploader
-                withIcon={true}
-                buttonText='Upload local images'
-                onChange={this.props.addImage}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                maxFileSize={5242880}
-          />
-
-          <h1>or</h1>
+        
 
           <WebcamDialog addImage={this.submitWebcamPhoto} />
         </div>
