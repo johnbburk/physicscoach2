@@ -8,9 +8,11 @@ import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import DetailsDialog from "./DetailsDialog";
 
+import { connect } from "react-redux";
+
 const styles = {
   card: {
-    minWidth: 400,
+    // minWidth: 400, // removed because this messes with the "edit button"
     backgroundColor: "#eff0f2"
     // margin: 15,
   },
@@ -73,12 +75,17 @@ class PracticeCard extends Component {
             Details
           </Button>
           <div className={classes.grow} />
-          {/* <Button size="small" color='secondary'>Delete</Button> */}
-          {/* Delete Button should only be accessible for teachers */}
+          {this.props.role === "teacher" && <Button size="small" color='secondary'>Edit</Button>}
         </CardActions>
       </Card>
     );
   }
 }
 
-export default withStyles(styles)(PracticeCard);
+function mapStateToProps(state) {
+  return {
+    role: state.role
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(PracticeCard));
