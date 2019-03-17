@@ -63,10 +63,8 @@ class EndDialog extends Component {
     }
 
     const db = firebase.firestore();
-    // const settings = {};
-    // db.settings(settings); these two lines don't seems to be necessary
-    const user = firebase.auth().currentUser;
-
+    const user = this.props.user;
+    
     const {
       rating,
       goal_comment,
@@ -74,7 +72,7 @@ class EndDialog extends Component {
       question_comment,
       imageList
     } = this.state;
-
+    
     db.collection("sessions")
       .add({
         submit_time: firebase.firestore.FieldValue.serverTimestamp(),
@@ -199,7 +197,8 @@ class EndDialog extends Component {
 
 const mapStateToProps = state => {
   return {
-    sessionInfo: state.currentSession
+    sessionInfo: state.currentSession,
+    user: state.user
   };
 };
 

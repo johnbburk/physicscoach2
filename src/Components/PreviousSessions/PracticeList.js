@@ -4,11 +4,12 @@ import firebase from "../../config/constants";
 import PracticeCard from './PracticeCard'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile';
+import { connect } from "react-redux";
 
 const db = firebase.firestore();
 const sessionsRef = db.collection("sessions");
 
-export default class PracticeList extends Component {
+class PracticeList extends Component {
 
   // preventing update on unmounted component, solution from here:
   // https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component/
@@ -30,8 +31,7 @@ export default class PracticeList extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    let practice = []
-    const user = firebase.auth().currentUser;
+    const user = this.props.user;
     console.log("sessionsRef is ", sessionsRef);
     console.log("user.id is ", user.uid);
     const snapshot = await sessionsRef
@@ -61,3 +61,10 @@ export default class PracticeList extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+
+
+export default connect(mapStateToProps)(PracticeList);
