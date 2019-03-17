@@ -23,7 +23,6 @@ const styles = {
 
 function PracticeImage(props) {
   const { classes, image, index, deleteImage, deleteEnabled, onClick } = props;
-  console.log("practice image classes" ,classes)
   return (
     <Card className={classes.card}>
       <CardActionArea style = {{width: "100%"}} onClick = {()=>{onClick(index)}}>

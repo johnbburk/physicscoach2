@@ -7,7 +7,6 @@ const db = firebase.firestore();
 
 export const updateStateBasedOnUser = async user => {
   let userDocSnapshot = null;
-  console.log("fetched user: ", user);
   if (user === null) {
     history.push("/");
 
