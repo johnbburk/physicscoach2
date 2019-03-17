@@ -8,6 +8,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
+import { isUndefined } from "util";
 
 
 
@@ -22,7 +23,13 @@ const styles = {
 };
 
 function PracticeImage(props) {
-  const { classes, image, index, deleteImage, deleteEnabled, onClick } = props;
+  const { classes, image, index, deleteImage, deleteEnabled } = props;
+
+  let onClick = props.onClick;
+  if (isUndefined(onClick)) { // end dialog doesn't provide onclick function
+    onClick = () => (null)
+  }
+
   return (
     <Card className={classes.card}>
       <CardActionArea style = {{width: "100%"}} onClick = {()=>{onClick(index)}}>
