@@ -30,13 +30,8 @@ const renderSideMenu = (user) =>{
 }
 
 function ButtonAppBar(props) {
-  const { classes, user, loading } = props;
-  if(loading){
-    return null;
-
-  }
-  else return (
-   
+  const { classes, user } = props;
+  return (
     <AppBar position="static">
       <Toolbar>
         {renderSideMenu(user)}
@@ -59,8 +54,7 @@ ButtonAppBar.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return { user: state.user,
-          loading: state.isWaitingForFirebase };
+  return { user: state.user };
 }
 
 export const Header = connect(mapStateToProps)(withStyles(styles)(ButtonAppBar));

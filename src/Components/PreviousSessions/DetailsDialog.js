@@ -42,7 +42,6 @@ class DetailsDialog extends Component {
 
   render() {
     const { open, onClose, data } = this.props
-    console.log('data for session currently displayed', data)
     const images = data.imageList.map(function (image) { return { src: image } });
 
     return (
@@ -58,43 +57,44 @@ class DetailsDialog extends Component {
           zoomable={true}
         />
 
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
           <DialogTitle align="center" id="timer-start-dialog">
             {data.goal}
           </DialogTitle>
 
           <DialogContent>
 
-          <TextField
-          id="Goal-Comment-TextField"
-          label="Goal Comment"
-          value={data.goal_comment}
-          fullWidth = {true}
-          readOnly = {true}
-          margin="normal"
-          variant="outlined"
-          multiline = {true}
-        />
-         <TextField
-          id="Learn-Comment-TextField"
-          label="Learn Comment"
-          value={data.learn_comment}
-          fullWidth = {true}
-          readOnly = {true}
-          margin="normal"
-          variant="outlined"
-          multiline = {true}
-        />
-        <TextField
-          id="Question-Comment-TextField"
-          label="Question Comment"
-          value={data.question_comment}
-          fullWidth = {true}
-          readOnly = {true}
-          margin="normal"
-          variant="outlined"
-          multiline = {true}
-        />
+            <TextField
+              id="Goal-Comment-TextField"
+              label="Goal Comment"
+              value={data.goal_comment}
+              fullWidth={true}
+              readOnly={true}
+              margin="normal"
+              variant="outlined"
+              multiline={true}
+            />
+            <TextField
+              id="Learn-Comment-TextField"
+              label="Learn Comment"
+              value={data.learn_comment}
+              fullWidth={true}
+              readOnly={true}
+              margin="normal"
+              variant="outlined"
+              multiline={true}
+            />
+            <TextField
+              id="Question-Comment-TextField"
+              label="Question Comment"
+              value={data.question_comment}
+              fullWidth={true}
+              readOnly={true}
+              margin="normal"
+              variant="outlined"
+              multiline={true}
+            />
+
             <GridList cols={4} style={{ marginTop: 20 }}>
               {data.imageList.map((image, index) => {
                 return (
@@ -104,7 +104,7 @@ class DetailsDialog extends Component {
                       index={index}
                       alt={"student work"}
                       deleteEnabled={false}
-                      onClick={this.openLightBox}
+                      onClick={() => this.openLightBox(index)}
                     />
                   </GridListTile>
                 );
