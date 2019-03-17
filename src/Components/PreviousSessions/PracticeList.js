@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import firebase from "../../config/constants";
 
-import PracticeCard from './PracticeCard'
-import GridList from '@material-ui/core/GridList'
+import PracticeCard from './PracticeCard';
+import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+
+import StudentPicker from './StudentPicker';
+import LoadingComponent from '../Layouts/LoadingComponent'
+
 import { connect } from "react-redux";
 
 const db = firebase.firestore();
@@ -13,58 +17,83 @@ class PracticeList extends Component {
 
   // preventing update on unmounted component, solution from here:
   // https://www.robinwieruch.de/react-warning-cant-call-setstate-on-an-unmounted-component/
+  // actually, I don't think this is necessary
 
-  _isMounted = false;
+  state = {
+    pastPracticeDocs: [],
+    loading: false,
+    isStudentSelected: false,
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      pastPracticeDocs: [],
-      loading: true,
-    };
-    this.componentDidMount = this.componentDidMount.bind(this);
+  componentDidMount() {
+    if (this.props.role === "student") {
+      this.getPastSessionsOfStudent(this.props.user.uid);
+    }
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  getPastSessionsOfStudent = async (uid) => {
+    console.log("getting sessions for", uid)
 
-  async componentDidMount() {
-    this._isMounted = true;
-    const user = this.props.user;
-    console.log("sessionsRef is ", sessionsRef);
-    console.log("user.id is ", user.uid);
-    const snapshot = await sessionsRef
-      .where("user", "==", user.uid)
+    if (uid === "") {
+      // teacher selected the default option in picker
+      this.setState({ isStudentSelected: false })
+      return;
+    }
+
+    this.setState({
+      isStudentSelected: true,
+      loading: true
+    })
+
+    const sessionsSnapshot = await sessionsRef
+      .where("user", "==", uid)
       .orderBy("submit_time", "desc")
       .get()
 
-    if (this._isMounted) {
-      this.setState({ pastPracticeDocs: snapshot.docs, loading: false });
-    }
-  }
+    this.setState({
+      pastPracticeDocs: sessionsSnapshot.docs,
+    });
 
-  render() {
-    if (this.state.loading) {
+    setTimeout(() => this.setState({ loading: false }), 750)
+    // make sure loading icon doesn't disappear too quickly
+  };
+
+  renderPastPractices = () => {
+    if (!this.state.isStudentSelected) {
       return null;
     }
 
+    if (this.state.loading) {
+      return LoadingComponent;
+    }
+
     return (
-      <div style={{ margin: 20 }}>
-        <h1>{this.state.pastPracticeDocs.length} Previous Practices</h1>
+      <Fragment><h1>{this.state.pastPracticeDocs.length} Previous Practices</h1>
         <GridList cols={3} spacing={20}>
           {this.state.pastPracticeDocs.map((doc, index) =>
             <GridListTile key={index}> <PracticeCard practiceDoc={doc} /> </GridListTile>
           )}
         </GridList>
+      </Fragment>
+    )
+  }
+
+  render() {
+    return (
+      <div style={{ margin: 20 }}>
+
+        {this.props.role === "teacher" &&
+          <StudentPicker onSelectStudent={this.getPastSessionsOfStudent} />
+        }
+
+        {this.renderPastPractices()}
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user };
+  return { user: state.user, role: state.role };
 }
-
 
 export default connect(mapStateToProps)(PracticeList);
