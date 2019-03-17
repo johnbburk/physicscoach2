@@ -9,7 +9,6 @@ import history from "../history";
 import { Provider } from "react-redux";
 import { updateStateBasedOnUser } from "../helpers/auth";
 import PracticeList from "./PreviousSessions/PracticeList"
-import requireTeacher from "./auth/requireTeacher";
 import { firebaseAuth } from "../config/constants";
 import StudentList from "./CourseList/studentList";
 
@@ -30,10 +29,10 @@ class App extends Component {
             <Header />
             <Switch>
               <Route exact path="/" component={Welcome} />
-              <Route path="/new" component={requireAuth(Content)} />
-              <Route path="/previous" component={requireAuth(PracticeList)} />
-              <Route path="/teacher" component={requireTeacher(StudentList)} />>
-              <Route component={requireAuth(NoMatchingPath)} />
+              <Route path="/new" component={requireAuth(['student','teacher'], Content)} />
+              <Route path="/previous" component={requireAuth(['student','teacher'], PracticeList)} />
+              <Route path="/teacher" component={requireAuth(['teacher'] , StudentList)} />>
+              <Route component={requireAuth(["teacher","student"],NoMatchingPath)} />
             </Switch>
           </div>
         </Provider>
