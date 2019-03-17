@@ -15,7 +15,7 @@ class StartDialog extends Component {
 
   state = {
     goal: '',
-    sessionTimeEntry: 1,
+    sessionTimeEntry: 0.1,
     show: true,
   }
 

@@ -171,9 +171,8 @@ class EndDialog extends Component {
                   <GridListTile key={index}>
                     <PracticeImage
                       image={image}
-                      index={index}
                       alt={"student work"}
-                      deleteImage={this.deleteImage}
+                      onDelete={() => this.deleteImage(index)}
                       deleteEnabled={true}
                     />
                   </GridListTile>
