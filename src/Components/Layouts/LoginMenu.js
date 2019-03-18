@@ -24,9 +24,6 @@ export const LoginMenu = () => (
     onClick={() => {
       firebaseAuth
         .signInWithPopup(provider)
-        .then(() => {
-          history.push("/new")
-        })
         .catch(error => {
           console.log("error logging in", error);
         });

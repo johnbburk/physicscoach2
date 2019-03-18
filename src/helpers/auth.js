@@ -8,8 +8,8 @@ const db = firebase.firestore();
 export const updateStateBasedOnUser = async user => {
   let userDocSnapshot = null;
   if (user === null) {
-    history.push("/");
-
+    // history.push("/");
+    // don't need to do this, components will handle redirecting
   } else {
     userDocSnapshot = await db.collection('users') // CollectionReference
       .doc(user.uid) // DocumentReference

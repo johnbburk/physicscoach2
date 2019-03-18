@@ -11,6 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { connect } from 'react-redux';
+
 const styles = {
   list: {
     width: 250,
@@ -36,28 +38,39 @@ class TemporaryDrawer extends React.Component {
   };
 
   render() {
+    if (this.props.course === null) {
+      return null;
+    }
+
     const { classes } = this.props;
+
+    const courseURL = "/course/" + this.props.course;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          <ListItem button component='a' href='/new'>
+          <ListItem button component='a' href={courseURL + '/new'}>
             <ListItemText primary='New Session' />
           </ListItem>
-          <ListItem button component='a' href='/previous'>
+
+          <ListItem button component='a' href={courseURL + '/previous'}>
             <ListItemText primary='My Previous Work' />
           </ListItem>
 
-          {['Classmates\' Work', 'Ask a Question'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} onClick={() => console.log('no link yet')} />
+          <ListItem button component='a' href={courseURL + '/classmates'}>
+            <ListItemText primary="Classmates' Work" />
+          </ListItem>
+
+          <ListItem button component='a' href={courseURL + '/question'}>
+            <ListItemText primary="Ask a Question" />
+          </ListItem>
+
+          {this.props.role === "teacher" &&
+            <ListItem button component='a' href={courseURL + '/roster'}>
+              <ListItemText primary="Roster" />
             </ListItem>
-          ))}
-          {/* TODO: Make menu items route to new pages. */}
+          }
         </List>
-
-
-
       </div>
     );
 
@@ -89,4 +102,8 @@ TemporaryDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TemporaryDrawer);
+function mapStateToProps(state) {
+  return { course: state.course, role: state.role };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(TemporaryDrawer));

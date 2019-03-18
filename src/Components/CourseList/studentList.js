@@ -39,11 +39,11 @@ class StudentList extends Component {
   };
 
   renderAllStudents = () => (
-    <ul>
+    <ul style={{ listStyleType: "none" }}>
       {this.state.allStudents.map(data => (
         <li key={data.uid}>
-          <span>{data.displayName}</span>
           <Checkbox onChange={this.studentSelected(data)} value={"selected"} />
+          <span>{data.displayName}</span>
         </li>
       ))}
     </ul>
@@ -51,14 +51,14 @@ class StudentList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="Main-content">
         <h1>Student List</h1>
         {this.renderAllStudents()}
         <h2>Your class</h2>
-        {this.state.selectedStudents.map(data=>(
+        {this.state.selectedStudents.map(data => (
           <li key={data.uid}>
-          <span>{data.displayName}</span> <Icon onClick={this.studentSelected(data)}>remove_circle</Icon>
-        </li>
+            <span>{data.displayName}</span> <Icon onClick={this.studentSelected(data)}>remove_circle</Icon>
+          </li>
         ))}
       </div>
     );

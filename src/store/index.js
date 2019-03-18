@@ -5,6 +5,7 @@ import logger from "redux-logger";
 const SIGN_IN = "SIGN_IN";
 const SIGN_OUT = "SIGN_OUT";
 const START_SESSION = "START_SESSION";
+const SELECT_COURSE = "SELECT_COURSE";
 
 const initialState = {
   user: null,
@@ -36,6 +37,10 @@ export const getReduxAuthAction = (user, userDocSnapShot) => {
   }
 };
 
+export const selectCourse = (courseID) => {
+  return { type: SELECT_COURSE, courseID };
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
     case SIGN_IN:
@@ -47,11 +52,15 @@ const reducer = (state, action) => {
       };
     case SIGN_OUT:
       return {
-        ...state,
-        user: null,
+        ...initialState,
         isWaitingForFirebase: false
       };
 
+    case SELECT_COURSE:
+      return {
+        ...state,
+        course: action.courseID,
+      }
     case START_SESSION:
       return {
         ...state,
