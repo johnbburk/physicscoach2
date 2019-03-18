@@ -52,8 +52,7 @@ const reducer = (state, action) => {
       };
     case SIGN_OUT:
       return {
-        ...state,
-        user: null,
+        ...initialState,
         isWaitingForFirebase: false
       };
 
