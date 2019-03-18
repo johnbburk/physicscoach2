@@ -3,7 +3,6 @@ import "../styles/App.css";
 import { Header } from "./Layouts/Header";
 import { Router, Route, Switch } from "react-router-dom";
 
-import requireAuth from "./auth/requireAuth";
 import { store } from "../store";
 import history from "../history";
 import { Provider } from "react-redux";
@@ -26,14 +25,13 @@ class App extends Component {
         <Provider store={store}>
           <div className="container">
             <Header />
+
             <Switch>
               <Route exact path="/" component={Welcome} />
-              <Route
-                path="/course/:courseID"
-                component={requireAuth(['student', 'teacher'], CourseHomepage)}
-              />
+              <Route path="/course/:courseID" component={CourseHomepage}/>
               <Route component={NoMatchingPath} />
             </Switch>
+            
           </div>
         </Provider>
       </Router>

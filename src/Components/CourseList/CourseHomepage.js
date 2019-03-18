@@ -1,13 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import Content from "../NewSession/Content";
-import requireAuth from "../auth/requireAuth";
 import PracticeList from "../PreviousSessions/PracticeList"
 import StudentList from "../CourseList/studentList";
-import { Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
+import { connect } from 'react-redux';
+import { selectCourse } from '../../store';
 
 class CourseHomepage extends Component {
+  componentDidMount = () => {
+    this.props.selectCourse(this.props.match.params.courseID)
+  }
+
   render() {
+    if (this.props.user === null) {
+      return <Redirect to="/" />
+    }
+
     const courseURL = this.props.match.url
     
     const Welcome = () => (
@@ -18,12 +27,21 @@ class CourseHomepage extends Component {
       <Switch>
         <Route path={courseURL + "/new"} component={Content} />
         <Route path={courseURL + "/previous"} component={PracticeList} />
-        <Route path={courseURL + "/teacher"} component={requireAuth(['teacher'], StudentList)} />
+        {this.props.role === "teacher" &&
+          <Route path={courseURL + "/roster"} component={StudentList} />}
         <Route exact path={courseURL} component={Welcome} />
-        <Route component={() => "put 404 error stuff here"}/>
+        <Route component={() => <Redirect to={courseURL}/>}/>
       </Switch>
     )
   }
 }
 
-export default CourseHomepage;
+function mapStateToProps(state) {
+  return { user: state.user, role: state.role };
+}
+
+const mapDispatchToProps = {
+  selectCourse,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseHomepage);
