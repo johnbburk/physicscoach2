@@ -1,4 +1,4 @@
-import React, { Component, } from "react";
+import React, { Component } from "react";
 import "../styles/App.css";
 import { Header } from "./Layouts/Header";
 import { Router, Route, Switch } from "react-router-dom";
@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { updateStateBasedOnUser } from "../helpers/auth";
 import { firebaseAuth } from "../config/constants";
 import CourseHomepage from "./CourseList/CourseHomepage";
+import Welcome from "./Welcome";
 
 class App extends Component {
   componentDidMount() {
@@ -42,12 +43,6 @@ class App extends Component {
 const NoMatchingPath = () => (
   <div>
     <h1>404 Not Found</h1>
-  </div>
-)
-
-const Welcome = () => (
-  <div>
-    <h1>Welcome to Physics Coach</h1>
   </div>
 )
 
