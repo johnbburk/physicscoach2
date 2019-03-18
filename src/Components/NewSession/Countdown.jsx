@@ -134,7 +134,8 @@ class Countdown extends Component {
 
         <audio
           id="notification"
-          src="Call-bell-ding.ogg"
+          src="/Call-bell-ding.ogg" // starting slash = relative to root of the current web
+                                    // see here: https://www.w3schools.com/html/html_filepaths.asp
           preload="auto"
         />
       </Fragment>
