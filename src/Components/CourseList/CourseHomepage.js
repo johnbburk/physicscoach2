@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Content from "../NewSession/Content";
-import PracticeList from "../PreviousSessions/PracticeList"
+import PracticeList from "../PreviousSessions/PracticeList";
 import StudentList from "../CourseList/studentList";
+import ClassmatePractices from "../PreviousSessions/ClassmatePractices";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import { connect } from 'react-redux';
@@ -73,6 +74,7 @@ class CourseHomepage extends Component {
       <Switch>
         <Route path={courseURL + "/new"} component={Content} />
         <Route path={courseURL + "/previous"} component={PracticeList} />
+        <Route path={courseURL + "/classmates"} component={ClassmatePractices} />
         {this.props.role === "teacher" &&
           <Route path={courseURL + "/roster"} component={StudentList} />}
         <Route exact path={courseURL} component={Welcome} />
