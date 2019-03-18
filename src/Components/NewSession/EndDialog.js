@@ -64,6 +64,7 @@ class EndDialog extends Component {
 
     const db = firebase.firestore();
     const user = this.props.user;
+    const courseURL = "/course/" + this.props.course
     
     const {
       rating,
@@ -91,7 +92,7 @@ class EndDialog extends Component {
       })
       .then(ref => {
         console.log("Write successful with ID: ", ref.id);
-        history.push("/previous");
+        history.push(courseURL + '/previous');
       });
   };
 
@@ -197,7 +198,8 @@ class EndDialog extends Component {
 const mapStateToProps = state => {
   return {
     sessionInfo: state.currentSession,
-    user: state.user
+    user: state.user,
+    course: state.course
   };
 };
 
