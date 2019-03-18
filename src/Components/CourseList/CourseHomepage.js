@@ -12,15 +12,23 @@ import { Button } from '@material-ui/core';
 const db = firebase.firestore();
 
 class CourseHomepage extends Component {
+  courseID = this.props.match.params.courseID;
+
   state = {
     courseDoc: null,
   }
 
   async componentDidMount() {
-    this.props.selectCourse(this.props.match.params.courseID)
-    const courseID = this.props.match.params.courseID;
-    const courseDoc = await db.collection("courses").doc(courseID).get();
+    this.props.selectCourse(this.courseID)
+    const courseDoc = await db.collection("courses").doc(this.courseID).get();
     this.setState({ courseDoc });
+  }
+
+  requestJoin = async () => {
+    await db.collection("courses").doc(this.courseID).update({
+      requests: firebase.firestore.FieldValue.arrayUnion(this.props.user.uid)
+    });
+    window.location.reload();
   }
 
   render() {
@@ -43,8 +51,11 @@ class CourseHomepage extends Component {
     if (!this.state.courseDoc.get("students").includes(this.props.user.uid)) {
       return (
         <div className="Main-content">
-          <h1>You are not enrolled in this course</h1>
-          <Button color="primary">Request to join</Button>
+          <h1>You are not enrolled in this course.</h1>
+          {this.state.courseDoc.get("requests").includes(this.props.user.uid) ?
+            <h3>You have already requested to join this course.</h3> :
+            <Button onClick={this.requestJoin} color="primary">Request to join</Button>
+          }
         </div>
       );
     }
@@ -54,7 +65,7 @@ class CourseHomepage extends Component {
     const Welcome = () => (
       <div className="Main-content">
         <h2>Welcome to {this.state.courseDoc.get("name")}
-            , taught by {this.state.courseDoc.get("teacher")}.</h2>
+          , taught by {this.state.courseDoc.get("teacher")}.</h2>
       </div>
     )
 
