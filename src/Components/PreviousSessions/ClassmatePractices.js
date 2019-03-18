@@ -51,7 +51,7 @@ class ClassmatePractices extends Component {
       <Fragment><h1>{this.state.pastPracticeDocs.length} Practices</h1>
         <GridList cols={3} spacing={20}>
           {this.state.pastPracticeDocs.map((doc, index) =>
-            <GridListTile key={index}> <PracticeCard practiceDoc={doc} /> </GridListTile>
+            <GridListTile key={index}> <PracticeCard practiceDoc={doc} showName /> </GridListTile>
           )}
         </GridList>
       </Fragment>

@@ -37,12 +37,11 @@ class PracticeCard extends Component {
   state = {
     dialogOpen: false,
   };
- 
+  
 
   render() {
-    const { classes, practiceDoc } = this.props;
+    const { classes, practiceDoc, showName } = this.props;
     const data = practiceDoc.data()
-    
     return (
       <Card className={classes.card}>
 
@@ -54,7 +53,7 @@ class PracticeCard extends Component {
 
         <CardContent>
           <Typography variant="subtitle1"  color ="textSecondary">
-            { moment(data.submit_time.toDate()).format("l") }
+            { showName ? data.userName : moment(data.submit_time.toDate()).format("l") }
           </Typography>
 
           <Typography
