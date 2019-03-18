@@ -18,9 +18,11 @@ class CourseHomepage extends Component {
     }
 
     const courseURL = this.props.match.url
-    
+
     const Welcome = () => (
-      <h1>Welcome to this course! The ID is : {this.props.match.params.courseID}</h1>
+      <div className="Main-content">
+        <h1>Welcome to this course! The ID is: {this.props.match.params.courseID}</h1>
+      </div>
     )
 
     return (
@@ -30,7 +32,7 @@ class CourseHomepage extends Component {
         {this.props.role === "teacher" &&
           <Route path={courseURL + "/roster"} component={StudentList} />}
         <Route exact path={courseURL} component={Welcome} />
-        <Route component={() => <Redirect to={courseURL}/>}/>
+        <Route component={() => <Redirect to={courseURL} />} />
       </Switch>
     )
   }

@@ -41,7 +41,7 @@ class App extends Component {
 }
 
 const NoMatchingPath = () => (
-  <div>
+  <div className="Main-content">
     <h1>404 Not Found</h1>
   </div>
 )

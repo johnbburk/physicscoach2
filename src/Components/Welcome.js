@@ -9,7 +9,7 @@ class Welcome extends Component {
   render() {
     if (this.props.user === null) {
       return (
-        <div>
+        <div className="Main-content">
           <h1>Welcome to Physics Coach! Please sign in.</h1>
         </div>
       )
@@ -42,7 +42,7 @@ class CourseList extends Component {
     }
 
     return (
-      <div>
+      <div className="Main-content">
         {this.state.courseList.length === 0 ? <h1>You aren't enrolled in any courses yet.</h1> :
 
           <Fragment>
