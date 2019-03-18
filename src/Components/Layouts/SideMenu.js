@@ -1,9 +1,10 @@
 // code modified from: https://material-ui.com/demos/drawers/
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -66,9 +67,20 @@ class TemporaryDrawer extends React.Component {
           </ListItem>
 
           {this.props.role === "teacher" &&
-            <ListItem button component='a' href={courseURL + '/roster'}>
-              <ListItemText primary="Roster" />
-            </ListItem>
+            <Fragment>
+              <Divider />
+              <ListItem button component='a' href={courseURL + '/roster'}>
+                <ListItemText primary="Assignments" />
+              </ListItem>
+
+              <ListItem button component='a' href={courseURL + '/roster'}>
+                <ListItemText primary="Roster" />
+              </ListItem>
+
+              <ListItem button component='a' href={courseURL + '/roster'}>
+                <ListItemText primary="Join Requests" />
+              </ListItem>
+            </Fragment>
           }
         </List>
       </div>
