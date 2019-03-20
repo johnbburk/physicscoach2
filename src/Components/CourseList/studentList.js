@@ -1,68 +1,97 @@
+//TODO: add loading state
+
 import React, { Component } from "react";
 import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
-import Icon from '@material-ui/core/Icon';
+import Icon from "@material-ui/core/Icon";
+import { Button } from "@material-ui/core";
+
+import { connect } from "react-redux";
 
 const db = firebase.firestore();
-const users = db.collection("users");
 
 class StudentList extends Component {
+  courseDocRef = db.collection("courses").doc(this.props.course);
+
   state = {
-    selectedStudents: [],
-    allStudents: []
+    studentRequests: []
   };
 
   async componentDidMount() {
-    let students = [];
-    const snapshot = await users.where("role", "==", "student").get();
+    const courseDocSnapshot = await this.courseDocRef.get();
+    console.log("requests", courseDocSnapshot.get("requests"));
 
-    snapshot.forEach(doc => {
-      const student = {
-        uid: doc.id,
-        ...doc.data()
+    let studentRequests = courseDocSnapshot
+      .get("requests")
+      .map(async requestID => {
+        return db
+          .collection("users")
+          .doc(requestID)
+          .get();
+      });
+
+    studentRequests = await Promise.all(studentRequests);
+    studentRequests = studentRequests.map(request => {
+      return {
+        ...request.data(),
+        id: request.id,
+        selected: false
       };
-      students.push(student);
     });
-    this.setState({ allStudents: students });
+
+    console.log(studentRequests);
+
+    this.setState({ studentRequests });
   }
 
-  studentSelected = student => (event, checked) => {
-    let currentList = this.state.selectedStudents;
-    if (checked) {
-      // add student into state.selectedStudents
-      currentList.push(student);
-    } else {
-      // remove student from state.selectedStudents
-      currentList = currentList.filter(stu => stu.uid !== student.uid);
-    }
-    this.setState({ selectedStudents: currentList });
+  toggleStudent = index => (event, checked) => {
+    this.setState(({ studentRequests }) => {
+      studentRequests[index].selected = checked;
+      return { studentRequests };
+    });
   };
 
   renderAllStudents = () => (
     <ul style={{ listStyleType: "none" }}>
-      {this.state.allStudents.map(data => (
+      {this.state.studentRequests.map((data, index) => (
         <li key={data.uid}>
-          <Checkbox onChange={this.studentSelected(data)} value={"selected"} />
+          <Checkbox onChange={this.toggleStudent(index)} />
           <span>{data.displayName}</span>
         </li>
       ))}
     </ul>
   );
 
+  addStudents = async () => {
+    const selectedIDs = this.state.studentRequests
+      .filter(student => student.selected)
+      .map(student => student.id);
+
+    await this.courseDocRef.update({
+      requests: firebase.firestore.FieldValue.arrayRemove(...selectedIDs),
+      students: firebase.firestore.FieldValue.arrayUnion(...selectedIDs),
+    });
+
+    window.location.reload();
+  };
+
   render() {
     return (
       <div className="Main-content">
         <h1>Student List</h1>
         {this.renderAllStudents()}
-        <h2>Your class</h2>
-        {this.state.selectedStudents.map(data => (
-          <li key={data.uid}>
-            <span>{data.displayName}</span> <Icon onClick={this.studentSelected(data)}>remove_circle</Icon>
-          </li>
-        ))}
+        <Button variant="outlined" color="primary" onClick={this.addStudents}>
+          Add Selected Students
+        </Button>
       </div>
     );
   }
 }
 
-export default StudentList;
+const mapStateToProps = state => {
+  return {
+    course: state.course
+  };
+};
+
+export default connect(mapStateToProps)(StudentList);
