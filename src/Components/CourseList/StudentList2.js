@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import firebase from "../../config/constants";
-import Checkbox from "@material-ui/core/Checkbox";
-import Icon from '@material-ui/core/Icon';
 import MultiselectTwoSides from "react-multiselect-two-sides";
 
 const db = firebase.firestore();
@@ -20,9 +18,7 @@ class StudentList2 extends Component {
     async componentDidMount() {
         let students = [];
         const snapshot = await users.where("role", "==", "student").get();
-        console.log("snapshot", snapshot)
         snapshot.docs.forEach((doc, i)=> {
-            console.log("doc ",i, doc)
           const student = {
             uid: doc.id, 
             value: i,
@@ -30,8 +26,6 @@ class StudentList2 extends Component {
             FirstName: doc.data().displayName.split(" ")[0],
             ...doc.data()
           };
-          console.log("student",student);
-          console.log("displayName",student.displayName)
           students.push(student);
         });
         students.sort((a,b) =>{
@@ -40,7 +34,8 @@ class StudentList2 extends Component {
           if (a.displayName.split(" ")[1] < b.displayName.split(" ")[1])
             return -1;
           return 0;
-        })
+          
+        } )
         this.setState({ options: students });
     }
         handleChange = (value) => {
