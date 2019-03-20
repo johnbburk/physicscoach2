@@ -64,8 +64,7 @@ class EndDialog extends Component {
 
     const db = firebase.firestore();
     const user = this.props.user;
-    const courseURL = "/course/" + this.props.course
-    
+    const courseURL = this.props.courseURL;
     const {
       rating,
       goal_comment,
@@ -199,8 +198,10 @@ const mapStateToProps = state => {
   return {
     sessionInfo: state.currentSession,
     user: state.user,
-    course: state.course
+    course: state.course,
+    courseURL: state.courseURL
   };
+
 };
 
 export default connect(mapStateToProps)(EndDialog);

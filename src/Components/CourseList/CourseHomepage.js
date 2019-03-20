@@ -20,7 +20,7 @@ class CourseHomepage extends Component {
   }
 
   async componentDidMount() {
-    this.props.selectCourse(this.courseID)
+    this.props.selectCourse(this.courseID, this.props.match.url)
     const courseDoc = await db.collection("courses").doc(this.courseID).get();
     this.setState({ courseDoc });
   }

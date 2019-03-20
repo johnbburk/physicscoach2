@@ -11,8 +11,9 @@ const initialState = {
   user: null,
   role: null,
   course: null,
-  isWaitingForFirebase: true,
+  courseURL: null,
 
+  isWaitingForFirebase: true,
   currentSession: null,
 };
 
@@ -37,8 +38,8 @@ export const getReduxAuthAction = (user, userDocSnapShot) => {
   }
 };
 
-export const selectCourse = (courseID) => {
-  return { type: SELECT_COURSE, courseID };
+export const selectCourse = (courseID, courseURL) => {
+  return { type: SELECT_COURSE, courseID, courseURL};
 }
 
 const reducer = (state, action) => {
@@ -60,6 +61,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         course: action.courseID,
+        courseURL: action.courseURL,
       }
     case START_SESSION:
       return {
