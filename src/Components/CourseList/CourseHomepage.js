@@ -55,7 +55,7 @@ class CourseHomepage extends Component {
           <h1>You are not enrolled in this course.</h1>
           {this.state.courseDoc.get("requests").includes(this.props.user.uid) ?
             <h3>You have already requested to join this course.</h3> :
-            <Button onClick={this.requestJoin} color="primary">Request to join</Button>
+            <Button onClick={this.requestJoin} color="primary" variant="outlined">Request to join</Button>
           }
         </div>
       );
@@ -75,8 +75,8 @@ class CourseHomepage extends Component {
         <Route path={courseURL + "/new"} component={Content} />
         <Route path={courseURL + "/previous"} component={PracticeList} />
         <Route path={courseURL + "/classmates"} component={ClassmatePractices} />
-        {this.props.role === "teacher" &&
-          <Route path={courseURL + "/roster"} component={StudentList} />}
+        <Route path={courseURL + "/roster"} component={() => <StudentList join={false}/>} />
+        <Route path={courseURL + "/requests"} component={() => <StudentList join={true}/>} />
         <Route exact path={courseURL} component={Welcome} />
         <Route component={() => <Redirect to={courseURL} />} />
       </Switch>

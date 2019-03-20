@@ -70,14 +70,10 @@ class TemporaryDrawer extends React.Component {
             <Fragment>
               <Divider />
               <ListItem button component="a" href={courseURL + "/roster"}>
-                <ListItemText primary="Assignments" />
-              </ListItem>
-
-              <ListItem button component="a" href={courseURL + "/roster"}>
                 <ListItemText primary="Roster" />
               </ListItem>
 
-              <ListItem button component="a" href={courseURL + "/roster"}>
+              <ListItem button component="a" href={courseURL + "/requests"}>
                 <ListItemText primary="Join Requests" />
               </ListItem>
             </Fragment>

@@ -1,4 +1,6 @@
 //TODO: add loading state
+//TODO: add safeguard so you can't submit when no one is selected
+//TODO: deactviate button when there are no requests
 
 import React, { Component } from "react";
 import firebase from "../../config/constants";
@@ -21,9 +23,9 @@ class StudentList extends Component {
     const courseDocSnapshot = await this.courseDocRef.get();
     console.log("requests", courseDocSnapshot.get("requests"));
 
-    let studentRequests = courseDocSnapshot
-      .get("requests")
-      .map(async requestID => {
+    const listOfIDs = this.props.join ? courseDocSnapshot.get("requests") : courseDocSnapshot.get("students");
+
+    let studentRequests = listOfIDs.map(async requestID => {
         return db
           .collection("users")
           .doc(requestID)
@@ -54,13 +56,25 @@ class StudentList extends Component {
   renderAllStudents = () => (
     <ul style={{ listStyleType: "none" }}>
       {this.state.studentRequests.map((data, index) => (
-        <li key={data.uid}>
+        <li key={index}>
           <Checkbox onChange={this.toggleStudent(index)} />
-          <span>{data.displayName}</span>
+          <span>{data.displayName + ' (' + data.email + ')'}</span>
         </li>
       ))}
     </ul>
   );
+
+  removeStudents = async () => {
+    const selectedIDs = this.state.studentRequests
+      .filter(student => student.selected)
+      .map(student => student.id);
+
+    await this.courseDocRef.update({
+      students: firebase.firestore.FieldValue.arrayRemove(...selectedIDs)
+    });
+
+    window.location.reload();
+  };
 
   addStudents = async () => {
     const selectedIDs = this.state.studentRequests
@@ -69,7 +83,7 @@ class StudentList extends Component {
 
     await this.courseDocRef.update({
       requests: firebase.firestore.FieldValue.arrayRemove(...selectedIDs),
-      students: firebase.firestore.FieldValue.arrayUnion(...selectedIDs),
+      students: firebase.firestore.FieldValue.arrayUnion(...selectedIDs)
     });
 
     window.location.reload();
@@ -78,10 +92,14 @@ class StudentList extends Component {
   render() {
     return (
       <div className="Main-content">
-        <h1>Student List</h1>
+        <h1>{this.props.join ? "Requests" : "Student List"}</h1>
         {this.renderAllStudents()}
-        <Button variant="outlined" color="primary" onClick={this.addStudents}>
-          Add Selected Students
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.props.join ? this.addStudents : this.removeStudents}
+        >
+          {this.props.join ? "Add Selected Students" : "Remove Students"}
         </Button>
       </div>
     );
