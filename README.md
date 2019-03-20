@@ -1,11 +1,17 @@
 #My notes
 
-
-Next things to implement
-Webcam capture save to state, then firebase
-Webcame capture create a small gallery that can be edited, then saved
+working on D3 graph of previous practice
+https://medium.com/@Elijah_Meeks/interactive-applications-with-react-d3-f76f7b3ebc71
 
 
+d3-shape
+d3-svg-legend
+d3-array
+d3-geo
+d3-selection
+d3-transition
+d3-brush
+d3-axis
 
 
 
