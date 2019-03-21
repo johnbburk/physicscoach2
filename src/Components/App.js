@@ -30,9 +30,7 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Welcome} />
-              <Route path="/course/:courseID" component={CourseHomepage}/>
-              <Route path = "/test" component={StudentList2}/>
-
+              <Route strict path="/course/:courseID" component={CourseHomepage}/>
               <Route component={NoMatchingPath} />
             </Switch>
             
