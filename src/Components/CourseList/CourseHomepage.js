@@ -1,9 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Content from "../NewSession/Content";
 import PracticeList from "../PreviousSessions/PracticeList";
-import StudentList from "../CourseList/studentList";
+import StudentList from "../CourseList/StudentList";
 import ClassmatePractices from "../PreviousSessions/ClassmatePractices";
 import { Route, Switch, Redirect } from "react-router-dom";
+import TeacherRoute from "../ProtectedRoutes/TeacherRoute";
 
 import { connect } from 'react-redux';
 import { selectCourse } from '../../store';
@@ -53,9 +54,13 @@ class CourseHomepage extends Component {
       return (
         <div className="Main-content">
           <h1>You are not enrolled in this course.</h1>
-          {this.state.courseDoc.get("requests").includes(this.props.user.uid) ?
-            <h3>You have already requested to join this course.</h3> :
-            <Button onClick={this.requestJoin} color="primary" variant="outlined">Request to join</Button>
+          {
+            this.state.courseDoc.get("requests").includes(this.props.user.uid) ?
+              <h3>You have already requested to join this course.</h3>
+              :
+              <Button onClick={this.requestJoin} color="primary" variant="outlined">
+                Request to join
+              </Button>
           }
         </div>
       );
@@ -75,8 +80,12 @@ class CourseHomepage extends Component {
         <Route path={courseURL + "/new"} component={Content} />
         <Route path={courseURL + "/previous"} component={PracticeList} />
         <Route path={courseURL + "/classmates"} component={ClassmatePractices} />
-        <Route path={courseURL + "/roster"} component={() => <StudentList join={false}/>} />
-        <Route path={courseURL + "/requests"} component={() => <StudentList join={true}/>} />
+
+        <TeacherRoute path={courseURL + "/roster"}
+          render={(props) => <StudentList {...props} join={false} />} />
+        <TeacherRoute path={courseURL + "/requests"}
+          render={(props) => <StudentList {...props} join={true} />} />
+
         <Route exact path={courseURL} component={Welcome} />
         <Route component={() => <Redirect to={courseURL} />} />
       </Switch>
@@ -85,7 +94,7 @@ class CourseHomepage extends Component {
 }
 
 function mapStateToProps(state) {
-  return { user: state.user, role: state.role };
+  return { user: state.user };
 }
 
 const mapDispatchToProps = {

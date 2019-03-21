@@ -1,6 +1,7 @@
 //TODO: add loading state
 //TODO: add safeguard so you can't submit when no one is selected
-//TODO: deactviate button when there are no requests
+//TODO: don't display button when there are no requests, return custom message instead
+//(e.g. "There are currently no join requests.")
 
 import React, { Component } from "react";
 import firebase from "../../config/constants";
