@@ -1,7 +1,6 @@
 //TODO: add loading state
 //TODO: add safeguard so you can't submit when no one is selected
-//TODO: don't display button when there are no requests, return custom message instead
-//(e.g. "There are currently no join requests.")
+//TODO: deactviate button when there are no requests
 
 import React, { Component } from "react";
 import firebase from "../../config/constants";
@@ -96,6 +95,18 @@ class StudentList extends Component {
   }
   };
 
+  checkboxes=()=>{
+    const inputElems = document.getElementsByTagName("input")
+    let count = 0;
+
+    for (var i=0; i<inputElems.length; i++) {       
+    if (inputElems[i].type == "checkbox" && inputElems[i].checked == true){
+        count++;
+      }
+    }
+    return count;
+  };
+
   render() {
     return (
       <div className="Main-content">
@@ -105,6 +116,7 @@ class StudentList extends Component {
           variant="outlined"
           color="primary"
           onClick={this.props.join ? this.addStudents : this.removeStudents}
+          disabled = {this.checkboxes()==0}
         >
           {this.props.join ? "Add Selected Students" : "Remove Students"}
         </Button>
