@@ -1,6 +1,5 @@
 //TODO: add loading state
-//TODO: add safeguard so you can't submit when no one is selected
-//TODO: deactviate button when there are no requests
+
 
 import React, { Component } from "react";
 import firebase from "../../config/constants";
@@ -55,7 +54,17 @@ class StudentList extends Component {
     });
   };
 
-  renderAllStudents = () => (
+  renderAllStudents = () => {
+    //let students = this.state.studentRequests;
+
+    this.state.studentRequests.sort((a,b)=>{
+      if (a.displayName.split(" ")[1] > b.displayName.split(" ")[1])
+        return 1;
+      if(a.displayName.split(" ")[1] < b.displayName.split(" ")[1])
+        return -1;
+      return 0;
+    })
+    return(
     <ul style={{ listStyleType: "none" }}>
       {this.state.studentRequests.map((data, index) => (
         <li key={index}>
@@ -63,8 +72,8 @@ class StudentList extends Component {
           <span>{data.displayName + " (" + data.email + ")"}</span>
         </li>
       ))}
-    </ul>
-  );
+    </ul>)
+  };
 
   removeStudents = async () => {
       const selectedIDs = this.state.studentRequests
