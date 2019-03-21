@@ -15,7 +15,8 @@ class StudentList extends Component {
   courseDocRef = db.collection("courses").doc(this.props.course);
 
   state = {
-    studentRequests: []
+    studentRequests: [],
+    loading: true
   };
 
   async componentDidMount() {
@@ -44,7 +45,7 @@ class StudentList extends Component {
 
     console.log(studentRequests);
 
-    this.setState({ studentRequests });
+    this.setState({ studentRequests: studentRequests, loading: false });
   }
 
   toggleStudent = index => (event, checked) => {
@@ -104,19 +105,13 @@ class StudentList extends Component {
   }
   };
 
-  checkboxes=()=>{
-    const inputElems = document.getElementsByTagName("input")
-    let count = 0;
-
-    for (var i=0; i<inputElems.length; i++) {       
-    if (inputElems[i].type == "checkbox" && inputElems[i].checked == true){
-        count++;
-      }
-    }
-    return count;
-  };
+  c
 
   render() {
+    if (this.state.loading)
+    {
+      return null
+    }
     return (
       <div className="Main-content">
         <h1>{this.props.join ? "Requests" : "Student List"}</h1>
@@ -125,7 +120,7 @@ class StudentList extends Component {
           variant="outlined"
           color="primary"
           onClick={this.props.join ? this.addStudents : this.removeStudents}
-          disabled = {this.checkboxes()==0}
+          disabled = {this.state.studentRequests.filter(student => student.selected).length == 0}
         >
           {this.props.join ? "Add Selected Students" : "Remove Students"}
         </Button>
