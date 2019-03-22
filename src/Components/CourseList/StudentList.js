@@ -1,12 +1,7 @@
-//TODO: add loading state
-
-
 import React, { Component } from "react";
 import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
-import Icon from "@material-ui/core/Icon";
 import { Button } from "@material-ui/core";
-
 import { connect } from "react-redux";
 
 const db = firebase.firestore();
@@ -45,6 +40,13 @@ class StudentList extends Component {
 
     console.log(studentRequests);
 
+    studentRequests.sort((a,b)=>{
+      if (a.displayName.split(" ")[1] > b.displayName.split(" ")[1])
+        return 1;
+      if(a.displayName.split(" ")[1] < b.displayName.split(" ")[1])
+        return -1;
+      return 0;
+    })
     this.setState({ studentRequests: studentRequests, loading: false });
   }
 
@@ -58,13 +60,6 @@ class StudentList extends Component {
   renderAllStudents = () => {
     //let students = this.state.studentRequests;
 
-    this.state.studentRequests.sort((a,b)=>{
-      if (a.displayName.split(" ")[1] > b.displayName.split(" ")[1])
-        return 1;
-      if(a.displayName.split(" ")[1] < b.displayName.split(" ")[1])
-        return -1;
-      return 0;
-    })
     return(
     <ul style={{ listStyleType: "none" }}>
       {this.state.studentRequests.map((data, index) => (
@@ -120,7 +115,7 @@ class StudentList extends Component {
           variant="outlined"
           color="primary"
           onClick={this.props.join ? this.addStudents : this.removeStudents}
-          disabled = {this.state.studentRequests.filter(student => student.selected).length == 0}
+          disabled = {this.state.studentRequests.filter(student => student.selected).length === 0}
         >
           {this.props.join ? "Add Selected Students" : "Remove Students"}
         </Button>
