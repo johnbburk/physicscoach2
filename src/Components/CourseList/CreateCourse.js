@@ -14,7 +14,7 @@ class CreateCourse extends Component {
   courseDocRef = db.collection("courses");
   state = {
     courseName: "",
-    teacher: "",
+    teacher: firebase.auth().currentUser.displayName,
     courseID:"",
     courseURL:"",
   };
@@ -24,7 +24,7 @@ class CreateCourse extends Component {
   };
 
   writeNewCourse = () => {
-    if (!this.state.courseName || !this.state.teacher) {
+    if (!this.state.courseName) {
       return;
     }
 
@@ -61,13 +61,6 @@ class CreateCourse extends Component {
             onChange={this.onChange}
           />
 
-          <TextField
-            id="teacher"
-            name="teacher"
-            label="teacher"
-            variant="outlined"
-            onChange={this.onChange}
-          />
         </FormControl>
         <Button color="primary" onClick={this.writeNewCourse}>
           Create Class
