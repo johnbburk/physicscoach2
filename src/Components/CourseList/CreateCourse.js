@@ -1,6 +1,5 @@
 //TODO: add check for duplicate course
 //TODO: Style component
-//TODO: Add feature that reports back course url to share with students
 
 import React, { Component } from "react";
 import { createClassDeclaration } from "typescript";
@@ -15,7 +14,9 @@ class CreateCourse extends Component {
   courseDocRef = db.collection("courses");
   state = {
     courseName: "",
-    teacher: ""
+    teacher: "",
+    courseID:"",
+    courseURL:"",
   };
 
   onChange = event => {
@@ -35,11 +36,20 @@ class CreateCourse extends Component {
         requests: []
       })
       .then(ref => {
-        console.log("Write successful with ID: ", ref.id);
-      });
+        console.log("Write successful with ID: ", ref.id)
+        if (typeof window !== 'undefined') {
+            const courseURL = window.location.protocol + '//' + window.location.host + "/course/"+ref.id;
+            this.setState({
+                courseID: ref.id,
+                courseURL: courseURL
+            });
+        }}
+        )
   };
 
+
   render() {
+
     return (
       <div className="Main-content">
         <FormControl>
@@ -62,9 +72,16 @@ class CreateCourse extends Component {
         <Button color="primary" onClick={this.writeNewCourse}>
           Create Class
         </Button>
+        <div>
+        {this.state.courseURL ? "Please share this url with your students and ask them to register. \n Your new course url is: ": ""}
+        {this.state.courseURL}
+        </div>
+      
+
       </div>
     );
-  }
+  
+}
 }
 
 export default CreateCourse;
