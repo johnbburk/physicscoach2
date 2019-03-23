@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link } from "@material-ui/core";
 import firebase from "../config/constants";
+import CreateCourse from "./CourseList/CreateCourse"
 
 const db = firebase.firestore();
 
@@ -15,7 +16,7 @@ class Welcome extends Component {
       )
     }
 
-    return <CourseList user={this.props.user}></CourseList>
+    return <CourseList user={this.props.user} role ={this.props.role}></CourseList>
   }
 }
 
@@ -47,14 +48,16 @@ class CourseList extends Component {
 
           <Fragment>
             <h1>Your courses:</h1>
-
+            {console.log("role" ,this.props.role)}
             <ul>
               {this.state.courseList.map((course) => {
                 return (<li key={course}>
-                  <Link href={"/course/" + course.id}>{course.get("name")}</Link>
+                  <Link href={"/course/" + course.id}>{course.get("name")}</Link> {this.props.role === "teacher" ? "(rename)" : ""}
                 </li>)
               })}
             </ul>
+            {this.props.role ==="teacher" && <CreateCourse/>
+          }
           </Fragment>
         }
       </div>
