@@ -11,7 +11,7 @@ import { firebaseAuth } from "../config/constants";
 import CourseHomepage from "./CourseList/CourseHomepage";
 import Welcome from "./Welcome";
 import CreateCourse from "./CourseList/CreateCourse";
-import TagWindow from "./TagWindow"
+import InputTag from "./InputTag"
 
 class App extends Component {
   componentDidMount() {
@@ -32,8 +32,9 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Welcome} />
               <Route strict path="/course/:courseID" component={CourseHomepage}/>
-              <Route path = "/test" component ={TagWindow}/>
+              <Route plat ="/test" component={InputTag}/>
               <Route component={NoMatchingPath} />
+
             </Switch>
             
           </div>

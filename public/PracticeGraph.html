@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.enter {
+  fill: #EDCA3A;
+}
+.update {
+  fill: #1FBAD6;
+}
+.exit {
+  fill: #F25754;
+}
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+const allData = [
+  {
+    "Name": "name 1",
+    "Value": 6.629529053
+  },
+  {
+    "Name": "name 2",
+    "Value": 5.277847907
+  },
+  {
+    "Name": "name 3",
+    "Value": 5.024497803
+  },
+  {
+    "Name": "name 4",
+    "Value": 7.948939186
+  },
+  {
+    "Name": "name 5",
+    "Value": 9.237038796
+  },
+  {
+    "Name": "name 6",
+    "Value": 5.478688225
+  },
+  {
+    "Name": "name 7",
+    "Value": 6.137851942
+  },
+  {
+    "Name": "name 8",
+    "Value": 6.38233063
+  },
+  {
+    "Name": "name 9",
+    "Value": 7.778363964
+  },
+  {
+    "Name": "name 10",
+    "Value": 5.719140007
+  },
+  {
+    "Name": "name 11",
+    "Value": 5.217120487
+  },
+  {
+    "Name": "name 12",
+    "Value": 5.761643043
+  },
+  {
+    "Name": "name 13",
+    "Value": 6.972890389
+  },
+  {
+    "Name": "name 14",
+    "Value": 6.146719444
+  },
+  {
+    "Name": "name 15",
+    "Value": 9.462969845
+  },
+  {
+    "Name": "name 16",
+    "Value": 6.575663831
+  },
+  {
+    "Name": "name 17",
+    "Value": 7.238442978
+  },
+  {
+    "Name": "name 18",
+    "Value": 7.738132645
+  },
+  {
+    "Name": "name 19",
+    "Value": 7.668405262
+  },
+  {
+    "Name": "name 20",
+    "Value": 7.405561765
+  },
+  {
+    "Name": "name 21",
+    "Value": 9.53265424
+  },
+  {
+    "Name": "name 22",
+    "Value": 7.586782853
+  },
+  {
+    "Name": "name 23",
+    "Value": 6.176760737
+  },
+  {
+    "Name": "name 24",
+    "Value": 5.345532652
+  },
+  {
+    "Name": "name 25",
+    "Value": 3.542570095
+  },
+  {
+    "Name": "name 26",
+    "Value": 3.277555954
+  },
+  {
+    "Name": "name 27",
+    "Value": 5.240213162
+  },
+  {
+    "Name": "name 28",
+    "Value": 5.712919637
+  },
+  {
+    "Name": "name 29",
+    "Value": 6.78585084
+  },
+  {
+    "Name": "name 30",
+    "Value": 8.798133007
+  },
+  {
+    "Name": "name 31",
+    "Value": 7.788243314
+  },
+  {
+    "Name": "name 32",
+    "Value": 7.51199945
+  },
+  {
+    "Name": "name 33",
+    "Value": 6.71894919
+  },
+  {
+    "Name": "name 34",
+    "Value": 6.133102377
+  },
+  {
+    "Name": "name 35",
+    "Value": 4.849458538
+  },
+  {
+    "Name": "name 36",
+    "Value": 5.979778286
+  },
+  {
+    "Name": "name 37",
+    "Value": 7.808959795
+  },
+  {
+    "Name": "name 38",
+    "Value": 8.249656203
+  },
+  {
+    "Name": "name 39",
+    "Value": 6.670594553
+  },
+  {
+    "Name": "name 40",
+    "Value": 7.309446651
+  },
+  {
+    "Name": "name 41",
+    "Value": 4.897447661
+  },
+  {
+    "Name": "name 42",
+    "Value": 5.544802704
+  },
+  {
+    "Name": "name 43",
+    "Value": 4.748300456
+  },
+  {
+    "Name": "name 44",
+    "Value": 4.677454649
+  }
+];
+
+
+//SVG setup
+const margin = {top: 10, right: 30, bottom: 30, left: 30},
+      width = 550 - margin.left - margin.right,
+      height = 480 - margin.top - margin.bottom;
+
+//x scales
+const x = d3.scaleLinear()
+    .rangeRound([0, width])
+    .domain([2, 11]);
+
+//set up svg
+const svg = d3.select("body")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+
+const t = d3.transition()
+      .duration(1000);
+
+const dataFile = "roster.csv"
+
+//number of bins for histogram
+const nbins = 20;
+
+function update(){
+  // Get the data
+  d3.json(jdata, function(error, allData) {
+    allData.forEach(function(d) {
+        d.Name = d.Name
+        d.Value = +d.Value; 
+    }); 
+    //simulate new data by randomizing/slicing
+    let data = d3.shuffle(allData)
+      .slice(0, 35)
+
+    //histogram binning
+    const histogram = d3.histogram()
+      .domain(x.domain())
+      .thresholds(x.ticks(nbins))
+      .value(function(d) { return d.Value;} )
+
+    //binning data and filtering out empty bins
+    const bins = histogram(data).filter(d => d.length>0)
+
+    //g container for each bin
+    let binContainer = svg.selectAll(".gBin")
+      .data(bins);
+
+    binContainer.exit().remove()
+
+    let binContainerEnter = binContainer.enter()
+      .append("g")
+        .attr("class", "gBin")
+        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
+
+    //need to populate the bin containers with data the first time
+    binContainerEnter.selectAll("circle")
+        .data(d => d.map((p, i) => {
+          return {idx: i,
+                  name: p.Name,
+                  value: p.Value,
+                  radius: (x(d.x1)-x(d.x0))/2
+                }
+        }))
+      .enter()
+      .append("circle")
+        .attr("class", "enter")
+        .attr("cx", 0) //g element already at correct x pos
+        .attr("cy", function(d) {
+            return - d.idx * 2 * d.radius - d.radius; })
+        .attr("r", 0)
+        .transition()
+          .duration(500)
+          .attr("r", function(d) {
+          return (d.length==0) ? 0 : d.radius; })
+
+    binContainerEnter.merge(binContainer)
+        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
+
+    //enter/update/exit for circles, inside each container
+    let dots = binContainer.selectAll("circle")
+        .data(d => d.map((p, i) => {
+          return {idx: i,
+                  name: p.Name,
+                  value: p.Value,
+                  radius: (x(d.x1)-x(d.x0))/2
+                }
+        }))
+
+    //EXIT old elements not present in data
+    dots.exit()
+        .attr("class", "exit")
+      .transition(t)
+        .attr("r", 0)
+        .remove();
+
+    //UPDATE old elements present in new data.
+    dots.attr("class", "update");
+
+    //ENTER new elements present in new data.
+    dots.enter()
+      .append("circle")
+        .attr("class", "enter")
+        .attr("cx", 0) //g element already at correct x pos
+        .attr("cy", function(d) {
+          return - d.idx * 2 * d.radius - d.radius; })
+        .attr("r", 0)
+      .merge(dots)
+        .transition()
+          .duration(500)
+          .attr("r", function(d) {
+          return (d.length==0) ? 0 : d.radius; })
+  });//d3.csv
+};//update
+
+// add x axis
+svg.append("g")
+  .attr("class", "axis axis--x")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x));
+
+//draw everything
+update();
+
+//update with new data every 3sec
+d3.interval(function() {
+  update();
+}, 3000);
+
+</script>
+</body>
+</html>
