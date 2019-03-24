@@ -10,7 +10,8 @@ import { updateStateBasedOnUser } from "../helpers/auth";
 import { firebaseAuth } from "../config/constants";
 import CourseHomepage from "./CourseList/CourseHomepage";
 import Welcome from "./Welcome";
-import CreateCourse from "./CourseList/CreateCourse"
+import CreateCourse from "./CourseList/CreateCourse";
+import TagWindow from "./TagWindow"
 
 class App extends Component {
   componentDidMount() {
@@ -31,7 +32,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Welcome} />
               <Route strict path="/course/:courseID" component={CourseHomepage}/>
-              <Route path = "/test" component ={CreateCourse}/>
+              <Route path = "/test" component ={TagWindow}/>
               <Route component={NoMatchingPath} />
             </Switch>
             
