@@ -3,6 +3,12 @@ import { connect } from "react-redux";
 import { Link } from "@material-ui/core";
 import firebase from "../config/constants";
 import CreateCourse from "./CourseList/CreateCourse"
+import ContentEditable from 'react-contenteditable'
+import CourseLink from "./CourseLink"
+import ReactDOMServer from 'react-dom/server';
+import {Button} from "@material-ui/core"
+import sanitizeHtml from "sanitize-html";
+
 
 const db = firebase.firestore();
 
@@ -25,16 +31,48 @@ class CourseList extends Component {
     courseList: [],
     loading: true,
   }
+  courseName = "";
 
   async componentDidMount() {
-    const coursesSnapshot = await db.collection("courses")
-      .where("students", "array-contains", this.props.user.uid)
-      .get();
+    const coursesSnapshot = await this.loadCourses();
 
     this.setState({
       courseList: coursesSnapshot.docs,
-      loading: false
+      loading: false,
+      activeEditId: null,
     });
+  }
+
+  async loadCourses() {
+    const coursesSnapshot = await db.collection("courses")
+    .where("students", "array-contains", this.props.user.uid)
+    .get();
+
+    return coursesSnapshot;
+  }
+
+  onCourseChange = (evt) => {
+      this.courseName = sanitizeHtml(evt.target.value, {transformTags: {
+        'a': '',
+      }});
+  };
+
+  async handleEditButton(courseId) {
+    const {activeEditId} = this.state;
+    if (activeEditId) {
+      // save the name using activeEditName
+      const courseSnapshot = await db.collection("courses").doc(activeEditId);
+      await courseSnapshot.set(
+        {name: this.courseName},{merge: true}
+      )
+      
+      const coursesSnapshot = await this.loadCourses();
+
+      this.setState({courseList: coursesSnapshot.docs, activeEditId: null});
+    } else {
+      this.setState({activeEditId: courseId});
+      this.courseName="";
+    }    
   }
 
   render() {
@@ -51,9 +89,20 @@ class CourseList extends Component {
             {console.log("role" ,this.props.role)}
             <ul>
               {this.state.courseList.map((course) => {
-                return (<li key={course}>
-                  <Link href={"/course/" + course.id}>{course.get("name")}</Link> {this.props.role === "teacher" ? "(rename)" : ""}
-                </li>)
+                const editing = !(course.id === this.state.activeEditId);
+                return (  
+                <li>        
+                <ContentEditable
+                style={{display: 'inline', width: '200'}}
+                html={ReactDOMServer.renderToString(<CourseLink course = {course} role = {this.props.role}/>)}
+                disabled = {editing}
+                onChange={this.onCourseChange} 
+                />
+                {this.props.role === "teacher" ? <Button onClick = {() => {
+                  this.handleEditButton(course.id);
+                }}>{editing ? "Rename" : "Save"}</Button>: ""}
+               </li>   
+                )
               })}
             </ul>
             {this.props.role ==="teacher" && <CreateCourse/>

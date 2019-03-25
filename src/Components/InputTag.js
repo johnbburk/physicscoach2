@@ -43,7 +43,6 @@ class InputTag extends Component {
         this.setState({tags: newTags});
     }
 
-   
 
 
     render() {
