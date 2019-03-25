@@ -1,4 +1,18 @@
 import React, { Component } from "react";
+import Chip from '@material-ui/core/Chip';
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: theme.spacing.unit,
+    },
+});
 
 class InputTag extends Component {
     constructor() {
@@ -29,15 +43,18 @@ class InputTag extends Component {
         this.setState({tags: newTags});
     }
 
+   
+
+
     render() {
         return (
             <div className="input-tag">
                 <ul className="input-tag__tags">
                     {this.state.tags.map((tag, i) => (
-                        <li key={tag}>
-                            {tag}
-                            <button type="button" onClick ={()=> this.removeTag(i)}>Remove</button>
-                        </li>
+                        <Chip key={tag}
+                            label = {tag}
+                            onDelete ={()=> this.removeTag(i)}
+                        />
                     ))}
                     <li className="input-tag__tags__input"><input type="text" onKeyDown={this.inputKeyDown} ref={c => { this.tagInput = c; }} /></li>
                 </ul>
@@ -46,4 +63,4 @@ class InputTag extends Component {
     }
 }
 
-export default InputTag;
+export default withStyles(styles)(InputTag);
