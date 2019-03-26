@@ -60,7 +60,7 @@ class CourseList extends Component {
 
   async handleEditButton(courseId) {
     const {activeEditId} = this.state;
-    if (activeEditId) {
+    if (activeEditId) {//on save
       // save the name using activeEditName
       const courseSnapshot = await db.collection("courses").doc(activeEditId);
       await courseSnapshot.set(
@@ -69,13 +69,13 @@ class CourseList extends Component {
       
       const coursesSnapshot = await this.loadCourses();
       this.setState({courseList: coursesSnapshot.docs, activeEditId: null});
-    } else {
+    } else { //on rename
       this.setState({activeEditId: courseId});
       console.log("course Id:", courseId)
       let currentCourse = this.state.courseList.filter(course => course.id === courseId)
       let name = ""
       
-      if(currentCourse){  //John: there's got to be an easier way to do this...
+      if(currentCourse){  //John: there's got to be an easier way to do this...I'm trying to get the name of the course before you edit
         name = currentCourse.map((course)=>{return course.get("name")}); //returns an array
         name = name[0];
       }
