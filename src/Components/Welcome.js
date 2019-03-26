@@ -79,7 +79,6 @@ class CourseList extends Component {
             });
         } else {
             //on rename
-
             this.setState({ activeEditId: courseId });
             console.log("course Id:", courseId);
             let currentCourse = this.state.courseList.filter(
@@ -116,6 +115,7 @@ class CourseList extends Component {
                             {this.state.courseList.map(course => {
                                 return (
                                     <CourseListItem
+                                        key = {course.id}
                                         course={course}
                                         activeEditId={this.state.activeEditId}
                                         onCourseChange={this.onCourseChange}
