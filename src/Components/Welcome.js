@@ -40,6 +40,7 @@ class CourseList extends Component {
       courseList: coursesSnapshot.docs,
       loading: false,
       activeEditId: null,
+
     });
   }
 
@@ -67,14 +68,27 @@ class CourseList extends Component {
       )
       
       const coursesSnapshot = await this.loadCourses();
-
       this.setState({courseList: coursesSnapshot.docs, activeEditId: null});
     } else {
       this.setState({activeEditId: courseId});
-      this.courseName="";
+      console.log("course Id:", courseId)
+      let currentCourse = this.state.courseList.filter(course => course.id === courseId)
+      let name = ""
+      
+      if(currentCourse){  //John: there's got to be an easier way to do this...
+        name = currentCourse.map((course)=>{return course.get("name")}); //returns an array
+        name = name[0];
+      }
+      console.log("name " , name)
+      this.courseName=name;
     }    
   }
 
+  createRef = contentEditable => {
+    this.htmlElement = contentEditable && contentEditable.htmlEl;
+    console.log("reference to the html DOM element: ", this.htmlElement);
+  }
+  
   render() {
     if (this.state.loading) {
       return null;
@@ -91,12 +105,14 @@ class CourseList extends Component {
               {this.state.courseList.map((course) => {
                 const editing = !(course.id === this.state.activeEditId);
                 return (  
-                <li>        
+                <li key = {course.id}>        
                 <ContentEditable
+                ref = {this.createRef}
                 style={{display: 'inline', width: '200'}}
                 html={ReactDOMServer.renderToString(<CourseLink course = {course} role = {this.props.role}/>)}
                 disabled = {editing}
                 onChange={this.onCourseChange} 
+                
                 />
                 {this.props.role === "teacher" ? <Button onClick = {() => {
                   this.handleEditButton(course.id);
