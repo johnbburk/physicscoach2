@@ -10,7 +10,6 @@ import { updateStateBasedOnUser } from "../helpers/auth";
 import { firebaseAuth } from "../config/constants";
 import CourseHomepage from "./CourseList/CourseHomepage";
 import Welcome from "./Welcome";
-import CreateCourse from "./CourseList/CreateCourse";
 import InputTag from "./InputTag"
 
 class App extends Component {

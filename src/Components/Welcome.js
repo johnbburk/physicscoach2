@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Link } from "@material-ui/core";
 import firebase from "../config/constants";
 import CreateCourse from "./CourseList/CreateCourse"
 import ContentEditable from 'react-contenteditable'
@@ -8,6 +7,7 @@ import CourseLink from "./CourseLink"
 import ReactDOMServer from 'react-dom/server';
 import {Button} from "@material-ui/core"
 import sanitizeHtml from "sanitize-html";
+import CourseListItem from "./CourseListItem"
 
 
 const db = firebase.firestore();
@@ -70,6 +70,7 @@ class CourseList extends Component {
       const coursesSnapshot = await this.loadCourses();
       this.setState({courseList: coursesSnapshot.docs, activeEditId: null});
     } else { //on rename
+      
       this.setState({activeEditId: courseId});
       console.log("course Id:", courseId)
       let currentCourse = this.state.courseList.filter(course => course.id === courseId)
@@ -84,11 +85,7 @@ class CourseList extends Component {
     }    
   }
 
-  createRef = contentEditable => {
-    this.htmlElement = contentEditable && contentEditable.htmlEl;
-    console.log("reference to the html DOM element: ", this.htmlElement);
-  }
-  
+
   render() {
     if (this.state.loading) {
       return null;
@@ -103,11 +100,22 @@ class CourseList extends Component {
             {console.log("role" ,this.props.role)}
             <ul>
               {this.state.courseList.map((course) => {
-                const editing = !(course.id === this.state.activeEditId);
-                return (  
+             return(
+             <CourseListItem course = {course}
+             activeEditId = {this.state.activeEditId}
+             onCourseChange = {this.onCourseChange}
+             handleEditButton = {()=>this.handleEditButton(course.id)}
+             />
+             )
+             /*    const editing = !(course.id === this.state.activeEditId);
+                console.log("activeEditId: ", this.state.activeEditId)
+                console.log("focus: ", course.id, course.id === this.state.activeEditId)
+                return (  //this could all be turned into a component to clean up, right? 
+                
                 <li key = {course.id}>        
                 <ContentEditable
-                ref = {this.createRef}
+                ref = {course.id}
+                autoFocus = {editing}
                 style={{display: 'inline', width: '200'}}
                 html={ReactDOMServer.renderToString(<CourseLink course = {course} role = {this.props.role}/>)}
                 disabled = {editing}
@@ -118,11 +126,12 @@ class CourseList extends Component {
                   this.handleEditButton(course.id);
                 }}>{editing ? "Rename" : "Save"}</Button>: ""}
                </li>   
-                )
+                ) */
               })}
             </ul>
-            {this.props.role ==="teacher" && <CreateCourse/>
-          }
+            {this.props.role ==="teacher" && <CreateCourse/>}
+            
+          
           </Fragment>
         }
       </div>

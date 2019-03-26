@@ -1,5 +1,4 @@
 import { store } from "../store";
-import history from "../history";
 import { getReduxAuthAction } from "../store";
 import firebase from "../config/constants";
 
