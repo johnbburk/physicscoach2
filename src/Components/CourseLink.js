@@ -1,12 +1,5 @@
-import React, {Component, Fragment} from 'react'
+import React, { Fragment} from 'react'
 import {Link} from "@material-ui/core"
-
-
-class CourseListItem extends Component{
-    state={
-        isFocused: false
-    }
-}
 
 
 

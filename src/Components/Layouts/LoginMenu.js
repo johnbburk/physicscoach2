@@ -3,7 +3,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { firebaseAuth, provider } from "../../config/constants";
-import history from "../../history";
 
 const buttonStyle = {
   color: "white",

@@ -1,8 +1,7 @@
 //probelm: editing state is controlled outside the component—and doesn't get changed until after focus operated. Need to add editing to state, and set it before
 //I think I can just do it with the editing state
 
-import React, { Component, Fragment } from "react";
-import { Link } from "@material-ui/core";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import ContentEditable from "react-contenteditable";
 import ReactDOMServer from "react-dom/server";
@@ -32,7 +31,7 @@ class CourseListItem extends Component {
    
 
     render() {
-        const { course, activeEditId } = this.props;
+        const { course } = this.props;
         const editing = !(this.state.isEditing);
 
         return (

@@ -2,10 +2,6 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import firebase from "../config/constants";
 import CreateCourse from "./CourseList/CreateCourse";
-import ContentEditable from "react-contenteditable";
-import CourseLink from "./CourseLink";
-import ReactDOMServer from "react-dom/server";
-import { Button } from "@material-ui/core";
 import sanitizeHtml from "sanitize-html";
 import CourseListItem from "./CourseListItem";
 
