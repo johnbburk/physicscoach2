@@ -11,6 +11,8 @@ function alphaSort(a,b){
     const aSplit = a.split(" ")
     const bSplit = b.split(" ")
 
+    
+    
     if (aSplit.reverse[0] > bSplit.reverse[0])
         return 1;
     if(aSplit.reverse[0] < bSplit.reverse[0])
