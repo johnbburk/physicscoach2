@@ -3,6 +3,7 @@ import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
+import { sortByLastName } from "../../helpers/courseUtils";
 
 const db = firebase.firestore();
 
@@ -40,13 +41,7 @@ class StudentList extends Component {
 
     console.log(studentRequests);
 
-    studentRequests.sort((a,b)=>{
-      if (a.displayName.split(" ")[1] > b.displayName.split(" ")[1])
-        return 1;
-      if(a.displayName.split(" ")[1] < b.displayName.split(" ")[1])
-        return -1;
-      return 0;
-    })
+    studentRequests.sort((a,b)=>{sortByLastName(a.displayName, b.displayName)})
     this.setState({ studentRequests: studentRequests, loading: false });
   }
 
