@@ -88,7 +88,7 @@ class CourseHomepage extends Component {
           {this.state.courseDoc.get("teacher")}.
         </h2>
 
-        {this.props.role == "teacher" && (
+        {this.props.role === "teacher" && (
           <Fragment>
             Share the URL of this page with your students so they can request to
             join this course.

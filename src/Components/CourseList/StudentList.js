@@ -41,7 +41,7 @@ class StudentList extends Component {
 
     console.log(studentRequests);
 
-    studentRequests.sort((a,b)=>{sortByLastName(a.displayName, b.displayName)})
+    studentRequests.sort((a,b)=>{return sortByLastName(a.displayName, b.displayName)})
     this.setState({ studentRequests: studentRequests, loading: false });
   }
 
