@@ -5,96 +5,101 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import firebase from "../../config/constants";
-import {Typography} from "@material-ui/core";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  DialogTitle
+} from "@material-ui/core";
+import { connect } from "react-redux";
 
 const db = firebase.firestore();
-
-const NewCourseDisplay= (props) =>{
-    return(
-        <Typography variant="h6" gutterBottom>
-            Please share this url with your students and ask them to register. 
-            <br/> Your new course url is: {props.courseURL}
-        </Typography>
-    )
-}
 class CreateCourse extends Component {
-    courseDocRef = db.collection("courses");
-    state = {
-        courseName: "",
-        teacher: firebase.auth().currentUser.displayName,
-        teacherId: firebase.auth().currentUser.uid,
-        courseID: "",
-        courseURL: ""
-    };
+  courseDocRef = db.collection("courses");
+  state = {
+    show: false,
+    courseName: ""
+  };
 
-    onChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    writeNewCourse = async () => {
-        var self = this;
-        if (!this.state.courseName) {
-            return;
-        }
-        console.log("checking name and teacher", this.state.courseName, this.state.teacher)
-        this.courseDocRef
-            .where("name", "==", this.state.courseName)
-            .where("teacher", "==", this.state.teacher)
-            .get()
-            .then(function(doc) {
-                if (doc.empty) {
-                    db.collection("courses")
-                        .add({
-                            name: self.state.courseName,
-                            teacher: self.state.teacher,
-                            students: [self.state.teacherId],
-                            requests: []
-                        })
-                        .then(ref => {
-                            console.log("Write successful with ID: ", ref.id);
-                            if (typeof window !== "undefined") {
-                                const courseURL =
-                                    window.location.protocol +
-                                    "//" +
-                                    window.location.host +
-                                    "/course/" +
-                                    ref.id;
-                                self.setState({
-                                    courseID: ref.id,
-                                    courseURL: courseURL
-                                });
-                            }
-                        });
-                } //course is a duplicate
-                else {
-                    console.log("duplicate course");
-                    return;
-                }
-            });
-    };
-
-    render() {
-        console.log("teacherID: ",this.state.teacherId)
-        return (
-            <div className="Main-content">
-                <FormControl>
-                    <TextField
-                        id="courseName"
-                        name="courseName"
-                        label="What is the name of your new course?"
-                        variant="outlined"
-                        onChange={this.onChange}
-                    />
-                </FormControl>
-                <Button color="primary" onClick={this.writeNewCourse}>
-                    Create Class
-                </Button>
-                <div>
-                    {this.state.courseURL ? <NewCourseDisplay courseURL = {this.state.courseURL}/>: ""}
-                </div>
-            </div>
-        );
+  writeNewCourse = async () => {
+    if (!this.state.courseName) {
+      return;
     }
+
+    // const querySnapshot = await this.courseDocRef
+    //   .where("name", "==", this.state.courseName)
+    //   .where("teacher", "==", this.state.teacher)
+    //   .get();
+
+    // if (!querySnapshot.empty) {
+    //   return;
+    // }
+
+    const courseRef = await db.collection("courses").add({
+      name: this.state.courseName,
+      teacher: this.props.user.displayName,
+      students: [this.props.user.uid],
+      requests: [],
+    });
+
+    console.log("Write successful with ID: ", courseRef.id);
+
+    window.location.reload();
+  };
+
+  render() {
+    return (
+      <div className="Main-content">
+        <Dialog
+          open={this.state.show}
+          onClose={() => this.setState({ show: false })}
+        >
+          <DialogTitle align="center">
+            Create a New Course
+          </DialogTitle>
+
+          <DialogContent>
+            <FormControl>
+              <TextField
+                id="courseName"
+                name="courseName"
+                label="New Course Name"
+                required={true}
+                margin="normal"
+                variant="outlined"
+                onChange={event =>
+                  this.setState({ courseName: event.target.value })
+                }
+              />
+            </FormControl>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={this.writeNewCourse} color="primary">
+              Create Course
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Button
+          color="primary"
+          onClick={() => {
+            this.setState({ show: true });
+          }}
+        >
+          Create a New Course
+        </Button>
+      </div>
+    );
+  }
 }
 
-export default CreateCourse;
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+
+export default connect(mapStateToProps)(CreateCourse);
