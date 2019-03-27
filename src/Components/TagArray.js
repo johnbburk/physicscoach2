@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Chip from "@material-ui/core/Chip";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import ChipInput from "material-ui-chip-input";
 
 const styles = theme => ({
@@ -11,9 +9,7 @@ const styles = theme => ({
         flexWrap: "wrap",
         padding: theme.spacing.unit / 2
     },
-    chip: {
-        margin: theme.spacing.unit
-    }
+
 });
 
 class TagArray extends Component {
@@ -36,7 +32,6 @@ class TagArray extends Component {
     };
 
     render() {
-        const { classes } = this.props;
 
         return (
                 <ChipInput

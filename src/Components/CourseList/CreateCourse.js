@@ -5,14 +5,24 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import firebase from "../../config/constants";
+import {Typography} from "@material-ui/core";
 
 const db = firebase.firestore();
 
+const NewCourseDisplay= (props) =>{
+    return(
+        <Typography variant="h6" gutterBottom>
+            Please share this url with your students and ask them to register. 
+            <br/> Your new course url is: {props.courseURL}
+        </Typography>
+    )
+}
 class CreateCourse extends Component {
     courseDocRef = db.collection("courses");
     state = {
         courseName: "",
         teacher: firebase.auth().currentUser.displayName,
+        teacherId: firebase.auth().currentUser.uid,
         courseID: "",
         courseURL: ""
     };
@@ -37,7 +47,7 @@ class CreateCourse extends Component {
                         .add({
                             name: self.state.courseName,
                             teacher: self.state.teacher,
-                            students: [],
+                            students: [self.state.teacherId],
                             requests: []
                         })
                         .then(ref => {
@@ -64,6 +74,7 @@ class CreateCourse extends Component {
     };
 
     render() {
+        console.log("teacherID: ",this.state.teacherId)
         return (
             <div className="Main-content">
                 <FormControl>
@@ -79,10 +90,7 @@ class CreateCourse extends Component {
                     Create Class
                 </Button>
                 <div>
-                    {this.state.courseURL
-                        ? "Please share this url with your students and ask them to register. \n Your new course url is: "
-                        : ""}
-                    {this.state.courseURL}
+                    {this.state.courseURL ? <NewCourseDisplay courseURL = {this.state.courseURL}/>: ""}
                 </div>
             </div>
         );
