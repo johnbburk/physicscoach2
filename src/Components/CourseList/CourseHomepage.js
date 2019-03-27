@@ -8,6 +8,7 @@ import TeacherRoute from "../ProtectedRoutes/TeacherRoute";
 
 import { connect } from 'react-redux';
 import { selectCourse } from '../../store';
+import CreateCourse from './CreateCourse'
 
 import firebase from "../../config/constants";
 import { Button } from '@material-ui/core';
@@ -72,6 +73,9 @@ class CourseHomepage extends Component {
       <div className="Main-content">
         <h2>Welcome to {this.state.courseDoc.get("name")}
           , taught by {this.state.courseDoc.get("teacher")}.</h2>
+
+        <CreateCourse rename courseRef={this.state.courseDoc.ref}/>
+        {/*TODO:  teacher only */}
       </div>
     )
 

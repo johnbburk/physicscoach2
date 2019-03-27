@@ -43,7 +43,7 @@ class CreateCourse extends Component {
       name: this.state.courseName,
       teacher: this.props.user.displayName,
       students: [this.props.user.uid],
-      requests: [],
+      requests: []
     });
 
     console.log("Write successful with ID: ", courseRef.id);
@@ -51,7 +51,20 @@ class CreateCourse extends Component {
     window.location.reload();
   };
 
+  renameCourse = async () => {
+    if (!this.state.courseName) {
+      return;
+    }
+
+    await this.props.courseRef.update({
+      name: this.state.courseName
+    });
+
+    window.location.reload();
+  };
+
   render() {
+    console.log("from create course", this.props.courseRef);
     return (
       <div className="Main-content">
         <Dialog
@@ -59,7 +72,7 @@ class CreateCourse extends Component {
           onClose={() => this.setState({ show: false })}
         >
           <DialogTitle align="center">
-            Create a New Course
+            {this.props.rename ? "Rename Course" : "Create a New Course"}
           </DialogTitle>
 
           <DialogContent>
@@ -67,7 +80,7 @@ class CreateCourse extends Component {
               <TextField
                 id="courseName"
                 name="courseName"
-                label="New Course Name"
+                label="Course Name"
                 required={true}
                 margin="normal"
                 variant="outlined"
@@ -79,8 +92,11 @@ class CreateCourse extends Component {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={this.writeNewCourse} color="primary">
-              Create Course
+            <Button
+              onClick={this.props.rename ? this.renameCourse : this.writeNewCourse}
+              color="primary"
+            >
+              Submit
             </Button>
           </DialogActions>
         </Dialog>
@@ -91,7 +107,7 @@ class CreateCourse extends Component {
             this.setState({ show: true });
           }}
         >
-          Create a New Course
+          {this.props.rename ? "Rename Course" : "Create a New Course"}
         </Button>
       </div>
     );
