@@ -12,6 +12,7 @@ import CreateCourse from "./CreateCourse";
 
 import firebase from "../../config/constants";
 import { Button } from "@material-ui/core";
+import { ApprovalAlert } from "./ApprovalAlert";
 const db = firebase.firestore();
 
 class CourseHomepage extends Component {
@@ -80,18 +81,22 @@ class CourseHomepage extends Component {
     }
 
     const courseURL = this.props.match.url;
-
+    const requestCount = this.state.courseDoc.get("requests").length
+    console.log("rc: ", requestCount)
     const Welcome = () => (
       <div className="Main-content">
         <h2>
           Welcome to {this.state.courseDoc.get("name")}, taught by{" "}
           {this.state.courseDoc.get("teacher")}.
         </h2>
-
         {this.props.role === "teacher" && (
           <Fragment>
             Share the URL of this page with your students so they can request to
             join this course.
+            <ApprovalAlert 
+              requestCount = {requestCount}
+              courseURL = {courseURL}
+            />
             <CreateCourse rename courseRef={this.state.courseDoc.ref} />
           </Fragment>
         )}
