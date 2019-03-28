@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import DetailsDialog from "./DetailsDialog";
+import DeletePractice from "./DeletePractice";
 
 import { connect } from "react-redux";
 
@@ -25,7 +26,7 @@ const styles = {
 };
 
 function truncate(string) {
-  const MAX_CHARS = 40
+  const MAX_CHARS = 40;
   if (string.length > MAX_CHARS) {
     return string.slice(0, MAX_CHARS) + "...";
   } else {
@@ -36,15 +37,15 @@ function truncate(string) {
 class PracticeCard extends Component {
   state = {
     dialogOpen: false,
+    deleteDialogOpen: false
   };
-  
 
   render() {
     const { classes, practiceDoc, showName } = this.props;
-    const data = practiceDoc.data()
+    const data = practiceDoc.data();
+    console.log("practiceDoc", practiceDoc)
     return (
       <Card className={classes.card}>
-
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
@@ -52,20 +53,29 @@ class PracticeCard extends Component {
         />
 
         <CardContent>
-          <Typography variant="subtitle1"  color ="textSecondary">
-            { showName ? data.userName : moment(data.submit_time.toDate()).format("l") }
+          <Typography variant="subtitle1" color="textSecondary">
+            {showName
+              ? data.userName
+              : moment(data.submit_time.toDate()).format("l")}
           </Typography>
 
           <Typography
             className={classes.title}
             variant="title"
-            color = "textPrimary"
+            color="textPrimary"
             gutterBottom
           >
             {truncate(data.goal)}
           </Typography>
         </CardContent>
         <CardActions>
+          <DeletePractice
+            isOpen={this.state.deleteDialogOpen}
+            closeDeleteDialog={() => {
+              this.setState({ deleteDialogOpen: false });
+            }}
+            docRef = {practiceDoc}
+          />
           <Button
             size="small"
             color="primary"
@@ -74,7 +84,17 @@ class PracticeCard extends Component {
             Details
           </Button>
           <div className={classes.grow} />
-          {this.props.role === "teacher" && <Button size="small" color='secondary'>Edit</Button>}
+          {this.props.role === "teacher" && (
+            <Button
+              size="small"
+              color="secondary"
+              onClick={() => {
+                this.setState({ deleteDialogOpen: true });
+              }}
+            >
+              Delete
+            </Button>
+          )}
         </CardActions>
       </Card>
     );
@@ -84,7 +104,7 @@ class PracticeCard extends Component {
 function mapStateToProps(state) {
   return {
     role: state.role
-  }
+  };
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(PracticeCard));
