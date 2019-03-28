@@ -1,10 +1,5 @@
 
-/**
- * "Jason Xia"
- * ["Jason", "Xia"]
- * ["Xia", "Jason"]
- * Xia Jason
- */
+
 
 export function sortByLastName(a, b){
     const aReverse = a.split(" ").reverse().join();
