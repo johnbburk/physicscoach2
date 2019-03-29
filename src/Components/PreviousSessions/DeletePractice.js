@@ -15,7 +15,7 @@ const deleteFirebaseDoc = docRef => {
     });
 };
 
-const DeletePractice = ({ isOpen, closeDeleteDialog, docRef }) => (
+const DeletePractice = ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
   <Dialog open={isOpen}>
     Are you sure you want to delete this pracitice?
     <Button size="small" color="primary" onClick={closeDeleteDialog}>
@@ -26,6 +26,7 @@ const DeletePractice = ({ isOpen, closeDeleteDialog, docRef }) => (
       color="secondary"
       onClick={() => {
         deleteFirebaseDoc(docRef);
+        reLoad();
         closeDeleteDialog();
       }}
     >
