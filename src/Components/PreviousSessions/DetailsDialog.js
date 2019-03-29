@@ -12,7 +12,17 @@ import {
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from 'react-images-zoom';
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = theme => ({
+  multilineColor:{
+      color:'black',
+  },
+  notchedOutline: {
+    borderWidth: '1px',
+    borderColor: 'black !important'
+  },
+});
 
 class DetailsDialog extends Component {
 
@@ -41,7 +51,7 @@ class DetailsDialog extends Component {
   }
 
   render() {
-    const { open, onClose, data } = this.props
+    const { open, onClose, data, classes} = this.props
     const images = data.imageList.map(function (image) { return { src: image } });
 
     return (
@@ -73,6 +83,15 @@ class DetailsDialog extends Component {
               margin="normal"
               variant="outlined"
               multiline={true}
+              disabled = {true}
+    
+              InputProps={{
+                classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: classes.notchedOutline
+                },
+                color: "black"
+            }}
             />
             <TextField
               id="Learn-Comment-TextField"
@@ -83,6 +102,15 @@ class DetailsDialog extends Component {
               margin="normal"
               variant="outlined"
               multiline={true}
+              disabled = {true}
+              InputProps={{
+                classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: classes.notchedOutline
+                },
+                color: "black"
+            }}
+              
             />
             <TextField
               id="Question-Comment-TextField"
@@ -93,6 +121,15 @@ class DetailsDialog extends Component {
               margin="normal"
               variant="outlined"
               multiline={true}
+              disabled = {true}
+              InputProps={{
+                classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: classes.notchedOutline
+                },
+                color: "black"
+            }}
+
             />
 
             <GridList cols={4} style={{ marginTop: 20 }}>
@@ -127,4 +164,4 @@ class DetailsDialog extends Component {
   };
 }
 
-export default DetailsDialog;
+export default withStyles(styles)(DetailsDialog);
