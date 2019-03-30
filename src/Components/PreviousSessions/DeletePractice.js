@@ -1,18 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Dialog } from "@material-ui/core";
-import firebase from "../../config/constants";
 import Button from "@material-ui/core/Button";
 
-const deleteFirebaseDoc = docRef => {
-  console.log("deleting docRef", docRef.ref);
-  docRef
-    .delete()
-    .then(() => {
-      console.log("Document deleted successfully");
-    })
-    .catch(error => {
-      console.error("Error removing document", error);
-    });
+const deleteFirebaseDoc = async (docRef) => {
+  await docRef.delete()
+  window.location.reload()
 };
 
 const DeletePractice = ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
@@ -26,8 +18,6 @@ const DeletePractice = ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
       color="secondary"
       onClick={() => {
         deleteFirebaseDoc(docRef);
-        reLoad();
-        closeDeleteDialog();
       }}
     >
       Delete

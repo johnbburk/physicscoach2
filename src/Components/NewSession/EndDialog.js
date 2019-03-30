@@ -3,11 +3,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import DialogContent from "@material-ui/core/DialogContent";
 import FormControl from "@material-ui/core/FormControl";
-import StarRatings from "react-star-ratings";
 import { DialogActions } from "@material-ui/core";
 import firebase from "../../config/constants";
 import { GridList, GridListTile } from "@material-ui/core/";
 import PracticeImage from "./PracticeImage";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Radio, RadioGroup } from "@material-ui/core";
 
 import ImageDialog from "./ImageDialog";
 import { connect } from "react-redux";
@@ -72,7 +73,7 @@ class EndDialog extends Component {
       question_comment,
       imageList
     } = this.state;
-    
+
     db.collection("sessions")
       .add({
         submit_time: firebase.firestore.FieldValue.serverTimestamp(),
@@ -87,11 +88,11 @@ class EndDialog extends Component {
         goal_comment,
         learn_comment,
         question_comment,
-        imageList,
+        imageList
       })
       .then(ref => {
         console.log("Write successful with ID: ", ref.id);
-        history.push(courseURL + '/previous');
+        history.push(courseURL + "/previous");
       });
   };
 
@@ -103,7 +104,7 @@ class EndDialog extends Component {
         <div>
           <DialogContent>
             <FormControl fullWidth>
-              This practice was:
+              {/* This practice was:
               <br />
               <br />
               <div style={{ textAlign: "center" }}>
@@ -119,12 +120,52 @@ class EndDialog extends Component {
                   />
                 </span>
                 Focused
-              </div>
-              <br />
+              </div> */}
               <p>
-                Your goal for this session:{" "}
+                Your goal for this session was:{" "}
                 <strong>{this.props.sessionInfo.goal}</strong>
               </p>
+              How much of your goal did you accomplish? I accomplished...
+              <RadioGroup
+                style={{ float: "left", margin: "0 auto" }}
+                onChange={this.changeRating}
+                value={this.state.rating}
+                aria-label="position"
+                name="position"
+                row
+              >
+                <FormControlLabel
+                  value="-2"
+                  control={<Radio color="primary" />}
+                  label="Much Less"
+                  labelPlacement="bottom"
+                />
+                <FormControlLabel
+                  value="-1"
+                  control={<Radio color="primary" />}
+                  label="Less"
+                  labelPlacement="bottom"
+                />
+                <FormControlLabel
+                  value="0"
+                  control={<Radio color="primary" />}
+                  label="Accomplished Goal"
+                  labelPlacement="bottom"
+                />
+                <FormControlLabel
+                  value="1"
+                  control={<Radio color="primary" />}
+                  label="More"
+                  labelPlacement="bottom"
+                />
+                <FormControlLabel
+                  value="2"
+                  control={<Radio color="primary" />}
+                  label="Much More"
+                  labelPlacement="bottom"
+                />
+              </RadioGroup>
+              <br />
               <TextField
                 id="comment"
                 name="goal_comment"
@@ -201,7 +242,6 @@ const mapStateToProps = state => {
     course: state.course,
     courseURL: state.courseURL
   };
-
 };
 
 export default connect(mapStateToProps)(EndDialog);
