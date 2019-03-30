@@ -74,7 +74,7 @@ class PracticeCard extends Component {
             closeDeleteDialog={() => {
               this.setState({ deleteDialogOpen: false });
             }}
-            docRef = {practiceDoc}
+            docRef = {practiceDoc.ref}
             reLoad = {this.props.reLoad}
           />
           <Button

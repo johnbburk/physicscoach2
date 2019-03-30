@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 
 const deleteFirebaseDoc = docRef => {
   console.log("deleting docRef", docRef.ref);
-  docRef.ref
+  docRef
     .delete()
     .then(() => {
       console.log("Document deleted successfully");
