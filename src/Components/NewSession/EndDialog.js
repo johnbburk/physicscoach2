@@ -28,8 +28,8 @@ class EndDialog extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  changeRating = newRating => {
-    this.setState({ rating: newRating });
+  changeRating = event => {
+    this.setState({ rating: event.target.value });
   };
 
   closeImageDialog = () => {
