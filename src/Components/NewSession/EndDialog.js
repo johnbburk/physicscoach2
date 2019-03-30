@@ -104,23 +104,6 @@ class EndDialog extends Component {
         <div>
           <DialogContent>
             <FormControl fullWidth>
-              {/* This practice was:
-              <br />
-              <br />
-              <div style={{ textAlign: "center" }}>
-                Unfocused
-                <span style={{ margin: 20 }}>
-                  <StarRatings
-                    rating={this.state.rating}
-                    starRatedColor="red"
-                    numberOfStars={5}
-                    starDimension={"25px"}
-                    name="rating"
-                    changeRating={this.changeRating}
-                  />
-                </span>
-                Focused
-              </div> */}
               <p>
                 Your goal for this session was:{" "}
                 <strong>{this.props.sessionInfo.goal}</strong>
