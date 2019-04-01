@@ -110,7 +110,10 @@ class Countdown extends Component {
                 {this.state.running ? "Working" : "Paused"}
               </Typography>
 
-              <PushProtocolButton elapsedTime = {elapsedTime}/>
+              <PushProtocolButton 
+              elapsedTime = {elapsedTime}
+              toggleTimer = {this.toggleTimerRunning}
+              />
 
               <div id="timerControls" style={{ display: "inline-block", marginBottom: 20 }}>
                
