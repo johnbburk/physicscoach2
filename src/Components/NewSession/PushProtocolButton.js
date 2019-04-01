@@ -1,35 +1,30 @@
+//Todo: add a tooltip to the button to explain its purpose
 import React,{Component} from 'react'
 import {Button} from '@material-ui/core'
-import {connect} from 'react-redux'
 
+
+const PUSH_ACTIVE_TIME = 0.1;
 class  PushProtocolButton extends Component {
 constructor(props){
   super(props);
 }  
 
-
 render(){
-  let elapsedTime = this.props.initialTimeInMinutes - this.props.secondsRemaining/60;
-  console.log("elapsed time: " ,elapsedTime)
+  console.log("elapsed time: " ,this.props.elapsedTime)
 return(
 <Button
 style ={{display:"block" , margin:"0 auto 20px" }}
 variant = "contained"
 color = "secondary"
 size="large"
-disabled = {!(this.elaspedTime > 1)}
+disabled = {!(this.props.elapsedTime/60 > PUSH_ACTIVE_TIME)}
 >
   I'm stuck
 </Button>
 )}
-
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    initialTimeInMinutes: state.currentSession.timeInMinutes,
-  }
-}
 
-export default connect(mapStateToProps)(PushProtocolButton);
+
+export default PushProtocolButton;

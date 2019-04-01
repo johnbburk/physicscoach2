@@ -13,7 +13,6 @@ import { Typography } from "@material-ui/core";
 
 import { connect } from 'react-redux';
 import PushProtocolButton from "./PushProtocolButton"
-import { PassThrough } from "stream";
 
 class Countdown extends Component {
 
@@ -92,6 +91,7 @@ class Countdown extends Component {
  
 
   render() {
+    let elapsedTime = this.props.initialTimeInMinutes*60-this.state.secondsRemaining
     return (
       <Fragment>
         <Grid container direction="column" >
@@ -110,7 +110,7 @@ class Countdown extends Component {
                 {this.state.running ? "Working" : "Paused"}
               </Typography>
 
-              <PushProtocolButton secondsRemaining = {this.state.secondsRemaining}/>
+              <PushProtocolButton elapsedTime = {elapsedTime}/>
 
               <div id="timerControls" style={{ display: "inline-block", marginBottom: 20 }}>
                
