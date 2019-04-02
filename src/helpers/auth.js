@@ -19,6 +19,7 @@ export const updateStateBasedOnUser = async user => {
     if (!userDocSnapshot.exists) { // add new users to database
       db.collection('users').doc(user.uid).set({
         displayName: user.displayName,
+        sortedName: user.displayName.split(" ").reverse().join(), 
         role: "student",
         email: user.email
       })
