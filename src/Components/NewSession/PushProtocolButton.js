@@ -4,7 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
-const PUSH_ACTIVE_TIME = 0.1;
+const PUSH_ACTIVE_TIME = 1;
 
 function arrowGenerator(color) {
   return {
@@ -81,6 +81,8 @@ const styles = theme => ({
 });
 
 
+
+
 class PushProtocolButton extends Component {
   state = {
     arrowRef: null
@@ -102,12 +104,12 @@ class PushProtocolButton extends Component {
       <Tooltip
         placement="right"
         title = {<React.Fragment>
-          <Typography color="inherit" variant="h5">
-            If you're stuck...
-          </Typography>
-          <Typography variant = "body1">If you've worked for {PUSH_ACTIVE_TIME} minutes, and you haven't
-          made any progress at all, it's time to activate the push protocol by
-          pressing this button.</Typography>
+           <Typography color="inherit" variant="h5">
+    If you're stuck...
+  </Typography>
+  <Typography variant = "body1">If you've worked for {PUSH_ACTIVE_TIME} minutes, and you haven't
+  made any written progress at all, it's time to activate the push protocol by
+  pressing this button.</Typography>
           
           <span className={classes.arrow} ref={this.handleArrowRef} />
         </React.Fragment>}
