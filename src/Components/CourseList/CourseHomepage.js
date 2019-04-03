@@ -19,7 +19,9 @@ class CourseHomepage extends Component {
   courseID = this.props.match.params.courseID;
 
   state = {
-    courseDoc: null
+    courseDoc: null,
+    alreadyEnrolled: false,
+    alreadyRequested: false,
   };
 
   async componentDidMount() {
@@ -28,15 +30,27 @@ class CourseHomepage extends Component {
       .collection("courses")
       .doc(this.courseID)
       .get();
-    this.setState({ courseDoc });
+
+    const studentDoc = await db
+      .collection("users")
+      .doc(this.props.user.uid)
+      .get();
+
+    this.setState({
+      courseDoc,
+      alreadyEnrolled: studentDoc.get("courses").includes(this.courseID),
+      alreadyRequested: studentDoc.get("requests").includes(this.courseID),
+    });
+
+    console.log(this.state)
   }
 
   requestJoin = async () => {
     await db
-      .collection("courses")
-      .doc(this.courseID)
+      .collection("users")
+      .doc(this.props.user.uid)
       .update({
-        requests: firebase.firestore.FieldValue.arrayUnion(this.props.user.uid)
+        requests: firebase.firestore.FieldValue.arrayUnion(this.courseID)
       });
     window.location.reload();
   };
@@ -59,13 +73,11 @@ class CourseHomepage extends Component {
       );
     }
 
-    if (!this.state.courseDoc.get("students").includes(this.props.user.uid)) {
+    if (!this.state.alreadyEnrolled) {
       return (
         <div className="Main-content">
           <h1>You are not enrolled in this course.</h1>
-          {this.state.courseDoc
-            .get("requests")
-            .includes(this.props.user.uid) ? (
+          {this.state.alreadyRequested ? (
             <h3>You have already requested to join this course.</h3>
           ) : (
             <Button
@@ -81,8 +93,8 @@ class CourseHomepage extends Component {
     }
 
     const courseURL = this.props.match.url;
-    const requestCount = this.state.courseDoc.get("requests").length
-    console.log("rc: ", requestCount)
+    const requestCount = this.state.courseDoc.get("requests").length;
+    console.log("rc: ", requestCount);
     const Welcome = () => (
       <div className="Main-content">
         <h2>
@@ -93,10 +105,7 @@ class CourseHomepage extends Component {
           <Fragment>
             Share the URL of this page with your students so they can request to
             join this course.
-            <ApprovalAlert 
-              requestCount = {requestCount}
-              courseURL = {courseURL}
-            />
+            <ApprovalAlert requestCount={requestCount} courseURL={courseURL} />
             <CreateCourse rename courseRef={this.state.courseDoc.ref} />
           </Fragment>
         )}

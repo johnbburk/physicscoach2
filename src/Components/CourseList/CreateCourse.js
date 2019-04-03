@@ -30,21 +30,14 @@ class CreateCourse extends Component {
       return;
     }
 
-    // const querySnapshot = await this.courseDocRef
-    //   .where("name", "==", this.state.courseName)
-    //   .where("teacher", "==", this.state.teacher)
-    //   .get();
-
-    // if (!querySnapshot.empty) {
-    //   return;
-    // }
-
     const courseRef = await db.collection("courses").add({
       name: this.state.courseName,
-      teacher: this.props.user.displayName,
-      students: [this.props.user.uid],
-      requests: []
+      teacher: this.props.user.displayName,      
     });
+
+    await db.collection("users").doc(this.props.user.uid).update({
+      courses: firebase.firestore.FieldValue.arrayUnion(courseRef.id)
+    })
 
     console.log("Write successful with ID: ", courseRef.id);
 

@@ -27,7 +27,7 @@ class CourseList extends Component {
   }
 
   async componentDidMount() {
-    const coursesSnapshot = await db.collection("courses")
+    const coursesSnapshot = await db.collection("users")
       .where("students", "array-contains", this.props.user.uid)
       .orderBy("name")
       .get();
