@@ -128,7 +128,7 @@ class PushProtocolButton extends Component {
             }
           }
         }}
-      >
+      ><div>
         <Button
           style={{ display: "block", margin: "0 auto 20px" }}
           variant="contained"
@@ -139,6 +139,7 @@ class PushProtocolButton extends Component {
         >
           I'm stuck
         </Button>
+        </div>
       </Tooltip>
     );
   }
