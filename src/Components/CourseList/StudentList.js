@@ -3,7 +3,7 @@ import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import { sortByLastName } from "../../helpers/courseUtils";
+import { mapIDsToSortedObjects } from "../../helpers/courseUtils";
 
 const db = firebase.firestore();
 
@@ -23,25 +23,9 @@ class StudentList extends Component {
       ? courseDocSnapshot.get("requests")
       : courseDocSnapshot.get("students");
 
-    let studentRequests = listOfIDs.map(async requestID => {
-      return db
-        .collection("users")
-        .doc(requestID)
-        .get();
-    });
-
-    studentRequests = await Promise.all(studentRequests);
-    studentRequests = studentRequests.map(request => {
-      return {
-        ...request.data(),
-        id: request.id,
-        selected: false
-      };
-    });
+    const studentRequests = await mapIDsToSortedObjects(listOfIDs);
 
     console.log(studentRequests);
-
-    studentRequests.sort((a,b)=>{return sortByLastName(a.displayName, b.displayName)})
     this.setState({ studentRequests: studentRequests, loading: false });
   }
 
