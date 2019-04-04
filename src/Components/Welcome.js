@@ -12,7 +12,7 @@ class Welcome extends Component {
       return (
         <div className="Main-content">
           <h1>Welcome to Physics Coach! Please sign in.</h1>
-          <img src="/PhysicsCoach.png" width="800px"/>
+          <img src="/PhysicsCoach.png" alt="Aim, Practice, Reflect...Improve" width="800px"/>
         </div>
       )
     }
