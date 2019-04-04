@@ -3,8 +3,9 @@ import { Dialog } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 const deleteFirebaseDoc = async (docRef) => {
-  await docRef.delete()
-  window.location.reload()
+  await docRef.delete(),
+
+
 };
 
 const DeletePractice = ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
@@ -18,6 +19,7 @@ const DeletePractice = ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
       color="secondary"
       onClick={() => {
         deleteFirebaseDoc(docRef);
+        this.props.reLoad()
       }}
     >
       Delete
