@@ -68,10 +68,10 @@ class EndDialog extends Component {
     const courseURL = this.props.courseURL;
     const {
       rating,
-      goalComment: goalComment,
-      learnComment: learnComment,
-      questionComment: questionComment,
-      imageList
+      goalComment,
+      learnComment,
+      questionComment,
+      imageList,
     } = this.state;
 
     db.collection("sessions")
@@ -80,6 +80,7 @@ class EndDialog extends Component {
         user: user.uid,
         userName: user.displayName,
         email: user.email,
+        course: this.props.course,
 
         practiceLength: this.props.sessionInfo.timeInMinutes,
         goal: this.props.sessionInfo.goal,
