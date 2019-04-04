@@ -163,7 +163,7 @@ class EndDialog extends Component {
               <br />
               <TextField
                 id="learned"
-                name="learnomment"
+                name="learnComment"
                 label="What did you learn?"
                 required={true}
                 multiline
