@@ -17,9 +17,9 @@ import history from "../../history";
 class EndDialog extends Component {
   state = {
     rating: 0,
-    goal_comment: "",
-    question_comment: "",
-    learn_comment: "",
+    goalComment: "",
+    questionComment: "",
+    learnComment: "",
     showImageDialog: false,
     imageList: []
   };
@@ -55,8 +55,8 @@ class EndDialog extends Component {
 
   submit = () => {
     if (
-      !this.state.goal_comment ||
-      !this.state.learn_comment ||
+      !this.state.goalComment ||
+      !this.state.learnComment ||
       !this.state.rating
     ) {
       // don't let user submit if required question isn't filled out
@@ -68,9 +68,9 @@ class EndDialog extends Component {
     const courseURL = this.props.courseURL;
     const {
       rating,
-      goal_comment,
-      learn_comment,
-      question_comment,
+      goalComment: goalComment,
+      learnComment: learnComment,
+      questionComment: questionComment,
       imageList
     } = this.state;
 
@@ -81,13 +81,13 @@ class EndDialog extends Component {
         userName: user.displayName,
         email: user.email,
 
-        practice_length: this.props.sessionInfo.timeInMinutes,
+        practiceLength: this.props.sessionInfo.timeInMinutes,
         goal: this.props.sessionInfo.goal,
 
         rating,
-        goal_comment,
-        learn_comment,
-        question_comment,
+        goalComment,
+        learnComment,
+        questionComment,
         imageList
       })
       .then(ref => {
@@ -151,7 +151,7 @@ class EndDialog extends Component {
               <br />
               <TextField
                 id="comment"
-                name="goal_comment"
+                name="goalComment"
                 required={true}
                 label="How did this practice go?"
                 multiline
@@ -162,7 +162,7 @@ class EndDialog extends Component {
               <br />
               <TextField
                 id="learned"
-                name="learn_comment"
+                name="learnomment"
                 label="What did you learn?"
                 required={true}
                 multiline
@@ -173,7 +173,7 @@ class EndDialog extends Component {
               <br />
               <TextField
                 id="question"
-                name="question_comment"
+                name="questionComment"
                 label="One question I still have"
                 required={false}
                 multiline
