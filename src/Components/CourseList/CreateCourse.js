@@ -95,6 +95,7 @@ class CreateCourse extends Component {
             <Button
               onClick={this.props.rename ? this.renameCourse : this.writeNewCourse}
               color="primary"
+              variant = "outlined"
             >
               Submit
             </Button>
@@ -103,6 +104,7 @@ class CreateCourse extends Component {
 
         <Button
           color="primary"
+          variant = "outlined"
           onClick={() => {
             this.setState({ show: true });
           }}

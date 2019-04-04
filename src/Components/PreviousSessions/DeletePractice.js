@@ -5,10 +5,11 @@ import Button from "@material-ui/core/Button";
 const DeletePractice = async ({ isOpen, closeDeleteDialog, docRef,reLoad }) => (
   <Dialog open={isOpen}>
     Are you sure you want to delete this pracitice?
-    <Button size="small" color="primary" onClick={closeDeleteDialog}>
+    <Button variant = "outlined" size="small" color="primary" onClick={closeDeleteDialog}>
       Cancel
     </Button>
     <Button
+    variant = "outlined"
       size="small"
       color="secondary"
       onClick={async () => {

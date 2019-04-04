@@ -152,6 +152,7 @@ class DetailsDialog extends Component {
 
           <DialogActions>
             <Button
+            variant = "outlined"
               onClick={onClose}
               color="primary"
             >

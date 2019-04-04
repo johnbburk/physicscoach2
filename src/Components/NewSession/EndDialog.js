@@ -205,10 +205,10 @@ class EndDialog extends Component {
               })}
             </GridList>
             <DialogActions>
-              <Button onClick={() => this.setState({ showImageDialog: true })}>
+              <Button variant = "outlined" onClick={() => this.setState({ showImageDialog: true })}>
                 Add Image
               </Button>
-              <Button onClick={this.submit} color="primary">
+              <Button  variant = "outlined" onClick={this.submit} color="primary">
                 Save Practice
               </Button>
             </DialogActions>

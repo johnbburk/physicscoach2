@@ -78,6 +78,7 @@ class PracticeCard extends Component {
             reLoad = {this.props.reLoad}
           />
           <Button
+          variant = "outlined"
             size="small"
             color="primary"
             onClick={() => this.setState({ dialogOpen: true })}
@@ -87,6 +88,7 @@ class PracticeCard extends Component {
           <div className={classes.grow} />
           {this.props.role === "teacher" && (
             <Button
+            variant = "outlined"
               size="small"
               color="secondary"
               onClick={() => {

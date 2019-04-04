@@ -40,6 +40,7 @@ function PracticeImage(props) {
       {deleteEnabled && (
         <CardActions>
           <Button
+          variant = "outlined"
             size="small"
             color="primary"
             onClick={onDelete}
