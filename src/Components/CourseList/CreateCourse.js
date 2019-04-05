@@ -64,7 +64,6 @@ class CreateCourse extends Component {
   };
 
   render() {
-    console.log("from create course", this.props.courseRef);
     return (
       <div className="Main-content">
         <Dialog
