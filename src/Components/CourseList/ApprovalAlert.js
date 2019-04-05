@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import firebase from "../../config/constants";
 
 export const ApprovalAlert = (props) => {
   const {requestCount, courseURL} = props
