@@ -7,7 +7,7 @@ import EndForm from "./EndDialog";
 
 class Content extends Component {
   state = {
-    timeUp: false,
+    finished: false,
   }
 
   render() {
@@ -15,14 +15,14 @@ class Content extends Component {
       return <StartDialog/>
     }
 
-    if (this.state.timeUp) {
+    if (this.state.finished) {
       return <EndForm/>
     }
 
     return (
       <Grid container alignContent='center' direction='column'>
             <Paper style={{margin: 15, padding: 20, width: 300}}>
-              <Countdown timeUp={() => this.setState({timeUp: true})}/>
+              <Countdown finishPractice={() => this.setState({finished: true})}/>
             </Paper>
       </Grid>
     );

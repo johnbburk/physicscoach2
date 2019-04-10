@@ -1,5 +1,5 @@
 // Comment from Jason: This file is way too long
-//Agreed. Thanks for pulling out most of the state. 
+//Agreed. Thanks for pulling out most of the state.
 
 //TODO: wrap the goal field when it is displayed
 //need to update the style
@@ -11,19 +11,17 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 
-import { connect } from 'react-redux';
-import PushProtocolButton from "./PushProtocolButton"
+import { connect } from "react-redux";
+import PushProtocolButton from "./PushProtocolButton";
 
 class Countdown extends Component {
-
   state = {
     secondsRemaining: this.props.initialTimeInMinutes * 60,
-    running: false,
+    running: false
   };
-  componentDidMount= () => {
-    this.toggleTimerRunning()
-  }
-
+  componentDidMount = () => {
+    this.toggleTimerRunning();
+  };
 
   toggleTimerRunning = () => {
     switch (this.state.running) {
@@ -37,13 +35,12 @@ class Countdown extends Component {
             document.getElementById("notification").play();
 
             // wait for notification to play before dismounting component
-            setTimeout(this.props.timeUp, 500) //
-
+            setTimeout(this.props.finishPractice, 500); //
           } else {
-            this.setState((prevState) => {
+            this.setState(prevState => {
               return {
-                secondsRemaining: prevState.secondsRemaining - 1,
-              }
+                secondsRemaining: prevState.secondsRemaining - 1
+              };
             });
           }
         }, 100); //TODO: Set this back to 1000 when done
@@ -56,20 +53,20 @@ class Countdown extends Component {
         break;
 
       default:
-          return
+        return;
     }
-  }
+  };
 
   resetTimer = () => {
     if (this.state.running) {
       this.toggleTimerRunning();
     }
     this.setState({
-      secondsRemaining: this.props.initialTimeInMinutes * 60,
+      secondsRemaining: this.props.initialTimeInMinutes * 60
     });
-  }
+  };
 
-  formatMinutes = (time) => {
+  formatMinutes = time => {
     let seconds = time;
     const minutes =
       seconds % 60 === 0
@@ -77,25 +74,24 @@ class Countdown extends Component {
           ? "0" + seconds / 60
           : seconds / 60
         : Math.floor(seconds / 60) < 10
-          ? "0" + Math.floor(seconds / 60)
-          : Math.floor(seconds / 60);
+        ? "0" + Math.floor(seconds / 60)
+        : Math.floor(seconds / 60);
     seconds =
       seconds % 60 === 0
         ? "00"
         : seconds % 60 < 10
-          ? "0" + (seconds % 60)
-          : seconds % 60;
+        ? "0" + (seconds % 60)
+        : seconds % 60;
     return minutes + ":" + seconds;
-  }
-
- 
+  };
 
   render() {
-    let elapsedTime = this.props.initialTimeInMinutes*60-this.state.secondsRemaining
+    let elapsedTime =
+      this.props.initialTimeInMinutes * 60 - this.state.secondsRemaining;
     return (
       <Fragment>
-        <Grid container direction="column" >
-          <Grid item xs={12} style={{ textAlign: "center" }} >
+        <Grid container direction="column">
+          <Grid item xs={12} style={{ textAlign: "center" }}>
             <Typography align="center" variant="h4">
               {" "}
               Session Timer
@@ -110,13 +106,16 @@ class Countdown extends Component {
                 {this.state.running ? "Working" : "Paused"}
               </Typography>
 
-              <PushProtocolButton 
-              elapsedTime = {elapsedTime}
-              toggleTimer = {this.toggleTimerRunning}
+              <PushProtocolButton
+                elapsedTime={elapsedTime}
+                toggleTimer={this.toggleTimerRunning}
+                finishPractice={this.props.finishPractice}
               />
 
-              <div id="timerControls" style={{ display: "inline-block", marginBottom: 20 }}>
-               
+              <div
+                id="timerControls"
+                style={{ display: "inline-block", marginBottom: 20 }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
@@ -143,7 +142,7 @@ class Countdown extends Component {
         <audio
           id="notification"
           src="/Call-bell-ding.ogg" // starting slash = relative to root of the current web
-                                    // see here: https://www.w3schools.com/html/html_filepaths.asp
+          // see here: https://www.w3schools.com/html/html_filepaths.asp
           preload="auto"
         />
       </Fragment>
@@ -151,10 +150,10 @@ class Countdown extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    initialTimeInMinutes: state.currentSession.timeInMinutes,
-  }
-}
+    initialTimeInMinutes: state.currentSession.timeInMinutes
+  };
+};
 
 export default connect(mapStateToProps)(Countdown);

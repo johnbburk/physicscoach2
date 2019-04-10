@@ -4,6 +4,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
+import { connect } from "react-redux";
+import { activatePushProtocol } from "../../store";
+
 const PUSH_ACTIVE_TIME = 1;
 
 function arrowGenerator(color) {
@@ -86,6 +89,8 @@ class PushProtocolButton extends Component {
   };
   activatePush = () => {
     this.props.toggleTimer();
+    this.props.activatePushProtocol();
+    this.props.finishPractice();
   };
 
   handleArrowRef = node => {
@@ -145,4 +150,8 @@ class PushProtocolButton extends Component {
   }
 }
 
-export default withStyles(styles)(PushProtocolButton);
+const mapDispatchToProps = {
+  activatePushProtocol,
+}
+
+export default connect(undefined, mapDispatchToProps)(withStyles(styles)(PushProtocolButton));
