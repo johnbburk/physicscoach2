@@ -31,7 +31,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Welcome} />
               <Route strict path="/course/:courseID" component={CourseHomepage}/>
-              <Route plat ="/test" component={TagArray}/>
+              <Route path="/test" component={TagArray}/>
               <Route component={NoMatchingPath} />
 
             </Switch>
