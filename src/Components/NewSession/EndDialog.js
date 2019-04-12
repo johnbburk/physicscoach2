@@ -66,7 +66,7 @@ class EndDialog extends Component {
     const courseURL = this.props.courseURL;
     const {
       rating,
-      practiceNote: goalComment,
+      practiceNote,
       questionComment,
       imageList,
     } = this.state;
@@ -83,7 +83,7 @@ class EndDialog extends Component {
         goal: this.props.sessionInfo.goal,
 
         rating,
-        goalComment,
+        practiceNote,
         questionComment,
         imageList
       })
@@ -158,7 +158,7 @@ class EndDialog extends Component {
               <br />
               <TextField
                 id="comment"
-                name="goalComment"
+                name="practiceNote"
                 required={true}
                 label="Practice notes"
                 placeholder={isPushProtocol ? "How did this practice go? What has you stuck?":
