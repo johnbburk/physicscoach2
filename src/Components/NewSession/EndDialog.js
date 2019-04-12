@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -17,9 +17,8 @@ import history from "../../history";
 class EndDialog extends Component {
   state = {
     rating: 0,
-    goalComment: "",
+    practiceNote: "",
     questionComment: "",
-    learnComment: "",
     showImageDialog: false,
     imageList: []
   };
@@ -55,8 +54,7 @@ class EndDialog extends Component {
 
   submit = () => {
     if (
-      !this.state.goalComment ||
-      !this.state.learnComment ||
+      !this.state.practiceNote ||
       !this.state.rating
     ) {
       // don't let user submit if required question isn't filled out
@@ -68,8 +66,7 @@ class EndDialog extends Component {
     const courseURL = this.props.courseURL;
     const {
       rating,
-      goalComment,
-      learnComment,
+      practiceNote: goalComment,
       questionComment,
       imageList,
     } = this.state;
@@ -87,7 +84,6 @@ class EndDialog extends Component {
 
         rating,
         goalComment,
-        learnComment,
         questionComment,
         imageList
       })
@@ -98,9 +94,11 @@ class EndDialog extends Component {
   };
 
   render() {
+    const {isPushProtocol} = this.props.sessionInfo
+ 
     return (
       <div style={{ maxWidth: 1000, margin: "auto" }}>
-        {/* margin auto centers the div */}
+        {/* ma}rgin auto centers the div */}
 
         <div>
           <DialogContent>
@@ -109,6 +107,12 @@ class EndDialog extends Component {
                 Your goal for this session was:{" "}
                 <strong>{this.props.sessionInfo.goal}</strong>
               </p>
+
+              {isPushProtocol ?
+               <h4>Don’t worry—being stuck is a common experience when working on challenging things. 
+                 One of the best ways to get unstuck, and overcome frustration is to take a break and come back to the problem.
+                 <br/></h4> :
+              <Fragment>
               How much of your goal did you accomplish? I accomplished...
               <RadioGroup
                 style={{ float: "left", margin: "0 auto" }}
@@ -149,33 +153,33 @@ class EndDialog extends Component {
                   labelPlacement="bottom"
                 />
               </RadioGroup>
+              </Fragment>
+              }
               <br />
               <TextField
                 id="comment"
                 name="goalComment"
                 required={true}
-                label="How did this practice go?"
+                label="Practice notes"
+                placeholder={isPushProtocol ? "How did this practice go? What has you stuck?":
+                "How did the practice go? Did you meet your goal? What did you learn?"}
                 multiline
                 margin="normal"
                 variant="outlined"
                 onChange={this.onChange}
               />
               <br />
-              <TextField
-                id="learned"
-                name="learnComment"
-                label="What did you learn?"
-                required={true}
-                multiline
-                margin="normal"
-                variant="outlined"
-                onChange={this.onChange}
-              />
+
+            {isPushProtocol && <h4>Take a few minutes to write down everything you’ve tried thus far to solve the problem on your paper. 
+              This will be super helpful to you when you come back to the problem later. </h4>}
+              
               <br />
               <TextField
                 id="question"
                 name="questionComment"
-                label="One question I still have"
+                label="Question"
+                placeholder={isPushProtocol ? "Here is a question I need to be able to answer to make more progress on this problem..." :
+                 "One question I still have is..."}
                 required={false}
                 multiline
                 margin="normal"
@@ -224,7 +228,8 @@ const mapStateToProps = state => {
     sessionInfo: state.currentSession,
     user: state.user,
     course: state.course,
-    courseURL: state.courseURL
+    courseURL: state.courseURL,
+
   };
 };
 
