@@ -53,10 +53,7 @@ class EndDialog extends Component {
   };
 
   submit = () => {
-    if (
-      !this.state.practiceNote ||
-      !this.state.rating
-    ) {
+    if (!this.state.practiceNote || !this.state.rating) {
       // don't let user submit if required question isn't filled out
       return;
     }
@@ -64,12 +61,7 @@ class EndDialog extends Component {
     const db = firebase.firestore();
     const user = this.props.user;
     const courseURL = this.props.courseURL;
-    const {
-      rating,
-      practiceNote,
-      questionComment,
-      imageList,
-    } = this.state;
+    const { rating, practiceNote, questionComment, imageList } = this.state;
 
     db.collection("sessions")
       .add({
@@ -94,8 +86,8 @@ class EndDialog extends Component {
   };
 
   render() {
-    const {isPushProtocol} = this.props.sessionInfo
- 
+    const { isPushProtocol } = this.props.sessionInfo;
+
     return (
       <div style={{ maxWidth: 1000, margin: "auto" }}>
         {/* ma}rgin auto centers the div */}
@@ -108,61 +100,69 @@ class EndDialog extends Component {
                 <strong>{this.props.sessionInfo.goal}</strong>
               </p>
 
-              {isPushProtocol ?
-               <h4>Don’t worry—being stuck is a common experience when working on challenging things. 
-                 One of the best ways to get unstuck, and overcome frustration is to take a break and come back to the problem.
-                 <br/></h4> :
-              <Fragment>
-              How much of your goal did you accomplish? I accomplished...
-              <RadioGroup
-                style={{ float: "left", margin: "0 auto" }}
-                onChange={this.changeRating}
-                value={this.state.rating}
-                aria-label="position"
-                name="position"
-                row
-              >
-                <FormControlLabel
-                  value="-2"
-                  control={<Radio color="primary" />}
-                  label="Much Less"
-                  labelPlacement="bottom"
-                />
-                <FormControlLabel
-                  value="-1"
-                  control={<Radio color="primary" />}
-                  label="Less"
-                  labelPlacement="bottom"
-                />
-                <FormControlLabel
-                  value="0"
-                  control={<Radio color="primary" />}
-                  label="Accomplished Goal"
-                  labelPlacement="bottom"
-                />
-                <FormControlLabel
-                  value="1"
-                  control={<Radio color="primary" />}
-                  label="More"
-                  labelPlacement="bottom"
-                />
-                <FormControlLabel
-                  value="2"
-                  control={<Radio color="primary" />}
-                  label="Much More"
-                  labelPlacement="bottom"
-                />
-              </RadioGroup>
-              </Fragment>
-              }
+              {isPushProtocol ? (
+                <h4>
+                  Don’t worry—being stuck is a common experience when working on
+                  challenging things. One of the best ways to get unstuck, and
+                  overcome frustration is to take a break and come back to the
+                  problem.
+                  <br />
+                </h4>
+              ) : (
+                <Fragment>
+                  How much of your goal did you accomplish? I accomplished...
+                  <RadioGroup
+                    style={{ float: "left", margin: "0 auto" }}
+                    onChange={this.changeRating}
+                    value={this.state.rating}
+                    aria-label="position"
+                    name="position"
+                    row
+                  >
+                    <FormControlLabel
+                      value="-2"
+                      control={<Radio color="primary" />}
+                      label="Much Less"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="-1"
+                      control={<Radio color="primary" />}
+                      label="Less"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="0"
+                      control={<Radio color="primary" />}
+                      label="Accomplished Goal"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio color="primary" />}
+                      label="More"
+                      labelPlacement="bottom"
+                    />
+                    <FormControlLabel
+                      value="2"
+                      control={<Radio color="primary" />}
+                      label="Much More"
+                      labelPlacement="bottom"
+                    />
+                  </RadioGroup>
+                </Fragment>
+              )}
               <br />
               <TextField
                 id="comment"
                 name="practiceNote"
                 required={true}
                 label="Practice notes"
-                placeholder={isPushProtocol ? "How did this practice go? What has you stuck?":
-                "How did the practice go? Did you meet your goal? What did you learn?"}
+                placeholder={
+                  isPushProtocol
+                    ? "How did this practice go? What has you stuck?"
+                    : "How did the practice go? Did you meet your goal? What did you learn?"
+                }
                 multiline
                 margin="normal"
                 variant="outlined"
@@ -170,16 +170,24 @@ class EndDialog extends Component {
               />
               <br />
 
-            {isPushProtocol && <h4>Take a few minutes to write down everything you’ve tried thus far to solve the problem on your paper. 
-              This will be super helpful to you when you come back to the problem later. </h4>}
-              
+              {isPushProtocol && (
+                <h4>
+                  Take a few minutes to write down everything you’ve tried thus
+                  far to solve the problem on your paper. This will be super
+                  helpful to you when you come back to the problem later.{" "}
+                </h4>
+              )}
+
               <br />
               <TextField
                 id="question"
                 name="questionComment"
                 label="Question"
-                placeholder={isPushProtocol ? "Here is a question I need to be able to answer to make more progress on this problem..." :
-                 "One question I still have is..."}
+                placeholder={
+                  isPushProtocol
+                    ? "Here is a question I need to be able to answer to make more progress on this problem..."
+                    : "One question I still have is..."
+                }
                 required={false}
                 multiline
                 margin="normal"
@@ -187,6 +195,13 @@ class EndDialog extends Component {
                 onChange={this.onChange}
               />
             </FormControl>
+
+{isPushProtocol && (
+  <h4>
+    Please be sure to include a clear image of your problem and the description of all you've tried so far, so that you can get
+    useful help and feedback from your teacher. 
+  </h4>
+)}
 
             <ImageDialog
               open={this.state.showImageDialog}
@@ -209,10 +224,13 @@ class EndDialog extends Component {
               })}
             </GridList>
             <DialogActions>
-              <Button variant = "outlined" onClick={() => this.setState({ showImageDialog: true })}>
+              <Button
+                variant="outlined"
+                onClick={() => this.setState({ showImageDialog: true })}
+              >
                 Add Image
               </Button>
-              <Button  variant = "outlined" onClick={this.submit} color="primary">
+              <Button variant="outlined" onClick={this.submit} color="primary">
                 Save Practice
               </Button>
             </DialogActions>
@@ -228,8 +246,7 @@ const mapStateToProps = state => {
     sessionInfo: state.currentSession,
     user: state.user,
     course: state.course,
-    courseURL: state.courseURL,
-
+    courseURL: state.courseURL
   };
 };
 
