@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import firebase from "../../config/constants";
 
+import { connect } from "react-redux";
+import { getStudentList } from "../../helpers/courseUtils";
+
 const db = firebase.firestore();
 
 class StudentPicker extends Component {
@@ -11,11 +14,12 @@ class StudentPicker extends Component {
   }
 
   async componentDidMount() {
-    const studentListSnapshot = await db.collection("users").get();
+    // const studentListSnapshot = await db.collection("users").get();
     // note to future self, this doesn't work: await db.collection("users").get().docs
 
+    const studentDocList = await getStudentList(this.props.course);
     this.setState({
-      studentDocList: studentListSnapshot.docs,
+      studentDocList,
       loading: false
     });
   }
@@ -34,7 +38,7 @@ class StudentPicker extends Component {
         onChange={(event) => this.props.onSelectStudent(event.target.value)}
         SelectProps={{ native: true }}
       >
-        <option value=''/>
+        <option value='' />
         {this.state.studentDocList.map(doc => (
           <option key={doc.id} value={doc.id}>
             {doc.get("displayName") + ' (' + doc.get("email") + ")"}
@@ -45,4 +49,10 @@ class StudentPicker extends Component {
   }
 }
 
-export default StudentPicker;
+const mapStateToProps = state => {
+  return {
+    course: state.course
+  };
+};
+
+export default connect(mapStateToProps)(StudentPicker);
