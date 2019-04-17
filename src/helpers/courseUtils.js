@@ -1,6 +1,18 @@
 import firebase from "../config/constants";
 const db = firebase.firestore();
 
+export async function getStudentList(courseID) {
+  const courseDocSnapshot = await db.collection("courses").doc(courseID).get();
+  const listOfIDs = courseDocSnapshot.get("students");
+  return mapIDsToSortedObjects(listOfIDs);
+}
+
+export async function getRequestsList(courseID) {
+  const courseDocSnapshot = await db.collection("courses").doc(courseID).get();
+  const listOfIDs = courseDocSnapshot.get("requests");
+  return mapIDsToSortedObjects(listOfIDs);
+}
+
 export async function mapIDsToSortedObjects(listOfIDs) {
   let studentObjects = listOfIDs.map(async requestID => {
     return db
@@ -10,15 +22,8 @@ export async function mapIDsToSortedObjects(listOfIDs) {
   });
 
   studentObjects = await Promise.all(studentObjects);
-  studentObjects = studentObjects.map(request => {
-    return {
-      ...request.data(),
-      id: request.id,
-      selected: false
-    };
-  });
 
-  studentObjects.sort((a, b) => compareTwoNames(a.displayName, b.displayName));
+  studentObjects.sort((a, b) => compareTwoNames(a.get("displayName"), b.get("displayName")));
 
   return studentObjects;
 }
