@@ -30,7 +30,7 @@ class ClassmatePractices extends Component {
     })
 
     const sessionsSnapshot = await sessionsRef
-      .orderBy("submit_time", "desc")
+      .orderBy("submitTime", "desc")
       .endAt(firebase.firestore.Timestamp.fromDate(date))
       .get();
 

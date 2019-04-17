@@ -19,6 +19,7 @@ class StudentList extends Component {
     const courseDocSnapshot = await this.courseDocRef.get();
     console.log("requests", courseDocSnapshot.get("requests"));
 
+    // join is true if teacher is viewing requests, false if teacher is viewing roster
     const listOfIDs = this.props.join
       ? courseDocSnapshot.get("requests")
       : courseDocSnapshot.get("students");

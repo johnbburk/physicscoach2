@@ -53,8 +53,14 @@ class EndDialog extends Component {
   };
 
   submit = () => {
-    if (!this.state.practiceNote || !this.state.rating) {//need to modify this to deal with push protocol not having a rating
+    if (!this.state.practiceNote || !this.state.rating) {
+      //need to modify this to deal with push protocol not having a rating
       // don't let user submit if required question isn't filled out
+      return;
+    }
+
+    if (this.props.sessionInfo.isPushProtocol && !this.state.questionComment) {
+      // must have question when using push protocol
       return;
     }
 
@@ -62,12 +68,12 @@ class EndDialog extends Component {
     const user = this.props.user;
     const courseURL = this.props.courseURL;
     const { rating, practiceNote, questionComment, imageList } = this.state;
-    
+
     //TODO: how to handle writing the session when push protocol has no rating
 
     db.collection("sessions")
       .add({
-        submit_time: firebase.firestore.FieldValue.serverTimestamp(),
+        submitTime: firebase.firestore.FieldValue.serverTimestamp(),
         user: user.uid,
         userName: user.displayName,
         email: user.email,
@@ -75,6 +81,7 @@ class EndDialog extends Component {
 
         practiceLength: this.props.sessionInfo.timeInMinutes,
         goal: this.props.sessionInfo.goal,
+        isPushProtocol: this.props.sessionInfo.isPushProtocol,
 
         rating,
         practiceNote,
@@ -101,8 +108,7 @@ class EndDialog extends Component {
                 Your goal for this session was:{" "}
                 <strong>{this.props.sessionInfo.goal}</strong>
               </p>
-
-              {isPushProtocol ? (
+              {isPushProtocol && (
                 <h4>
                   Don’t worry—being stuck is a common experience when working on
                   challenging things. One of the best ways to get unstuck, and
@@ -110,50 +116,50 @@ class EndDialog extends Component {
                   problem.
                   <br />
                 </h4>
-              ) : (
-                <Fragment>
-                  How much of your goal did you accomplish? I accomplished...
-                  <RadioGroup
-                    style={{ float: "left", margin: "0 auto" }}
-                    onChange={this.changeRating}
-                    value={this.state.rating}
-                    aria-label="position"
-                    name="position"
-                    row
-                  >
-                    <FormControlLabel
-                      value="-2"
-                      control={<Radio color="primary" />}
-                      label="Much Less"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value="-1"
-                      control={<Radio color="primary" />}
-                      label="Less"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value="0"
-                      control={<Radio color="primary" />}
-                      label="Accomplished Goal"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value="1"
-                      control={<Radio color="primary" />}
-                      label="More"
-                      labelPlacement="bottom"
-                    />
-                    <FormControlLabel
-                      value="2"
-                      control={<Radio color="primary" />}
-                      label="Much More"
-                      labelPlacement="bottom"
-                    />
-                  </RadioGroup>
-                </Fragment>
               )}
+              <Fragment>
+                How much of your goal did you accomplish? I accomplished...
+                <RadioGroup
+                  style={{ float: "left", margin: "0 auto" }}
+                  onChange={this.changeRating}
+                  value={this.state.rating}
+                  aria-label="position"
+                  name="position"
+                  row
+                >
+                  <FormControlLabel
+                    value="-2"
+                    control={<Radio color="primary" />}
+                    label="Much Less"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="-1"
+                    control={<Radio color="primary" />}
+                    label="Less"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="0"
+                    control={<Radio color="primary" />}
+                    label="Accomplished Goal"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio color="primary" />}
+                    label="More"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio color="primary" />}
+                    label="Much More"
+                    labelPlacement="bottom"
+                  />
+                </RadioGroup>
+              </Fragment>
+
               <br />
               <TextField
                 id="comment"
@@ -171,7 +177,6 @@ class EndDialog extends Component {
                 onChange={this.onChange}
               />
               <br />
-
               {isPushProtocol && (
                 <h4>
                   Take a few minutes to write down everything you’ve tried thus
@@ -179,7 +184,6 @@ class EndDialog extends Component {
                   helpful to you when you come back to the problem later.{" "}
                 </h4>
               )}
-
               <br />
               <TextField
                 id="question"
@@ -190,7 +194,7 @@ class EndDialog extends Component {
                     ? "Here is a question I need to be able to answer to make more progress on this problem..."
                     : "One question I still have is..."
                 }
-                required={false}
+                required={isPushProtocol}
                 multiline
                 margin="normal"
                 variant="outlined"
@@ -198,12 +202,13 @@ class EndDialog extends Component {
               />
             </FormControl>
 
-{isPushProtocol && (
-  <h4>
-    Please be sure to include a clear image of your problem and the description of all you've tried so far, so that you can get
-    useful help and feedback from your teacher. 
-  </h4>
-)}
+            {isPushProtocol && (
+              <h4>
+                Please be sure to include a clear image of your problem and the
+                description of all you've tried so far, so that you can get
+                useful help and feedback from your teacher.
+              </h4>
+            )}
 
             <ImageDialog
               open={this.state.showImageDialog}

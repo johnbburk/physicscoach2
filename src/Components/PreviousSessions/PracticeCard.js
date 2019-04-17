@@ -48,7 +48,7 @@ class PracticeCard extends Component {
     const data = practiceDoc.data();
     console.log("practiceDoc", practiceDoc)
     return (
-      <Card className={Math.round(Math.random()) ? classes.pushProtocolCard : classes.card }>
+      <Card className={data.isPushProtocol ? classes.pushProtocolCard : classes.card }>
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
@@ -59,7 +59,7 @@ class PracticeCard extends Component {
           <Typography variant="subtitle1" color="textSecondary">
             {showName
               ? data.userName
-              : moment(data.submit_time.toDate()).format("l")}
+              : moment(data.submitTime.toDate()).format("l")}
           </Typography>
 
           <Typography

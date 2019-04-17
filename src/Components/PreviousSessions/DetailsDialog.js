@@ -75,9 +75,9 @@ class DetailsDialog extends Component {
           <DialogContent>
 
             <TextField
-              id="Goal-Comment-TextField"
-              label="Goal Comment"
-              value={data.goal_comment}
+              id="Practice-Note-TextField"
+              label="Practice Note"
+              value={data.practiceNote}
               fullWidth={true}
               readOnly={true}
               margin="normal"
@@ -91,31 +91,12 @@ class DetailsDialog extends Component {
                     notchedOutline: classes.notchedOutline
                 },
                 color: "black"
-            }}
-            />
-            <TextField
-              id="Learn-Comment-TextField"
-              label="Learn Comment"
-              value={data.learn_comment}
-              fullWidth={true}
-              readOnly={true}
-              margin="normal"
-              variant="outlined"
-              multiline={true}
-              disabled = {true}
-              InputProps={{
-                classes: {
-                    input: classes.multilineColor,
-                    notchedOutline: classes.notchedOutline
-                },
-                color: "black"
-            }}
-              
+            }}            
             />
             <TextField
               id="Question-Comment-TextField"
               label="Question Comment"
-              value={data.question_comment}
+              value={data.questionComment}
               fullWidth={true}
               readOnly={true}
               margin="normal"

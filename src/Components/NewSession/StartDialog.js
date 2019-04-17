@@ -15,7 +15,7 @@ class StartDialog extends Component {
 
   state = {
     goal: '',
-    sessionTimeEntry: 0.1, //Todo: change this to 25 minutes in production
+    sessionTimeEntry: 1, //Todo: change this to 25 minutes in production
     show: true,
   }
 
