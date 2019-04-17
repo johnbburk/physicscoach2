@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import DetailsDialog from "./DetailsDialog";
 import DeletePractice from "./DeletePractice";
-
+import yellow from "@material-ui/core/colors/yellow"
 import { connect } from "react-redux";
 
 const styles = {
@@ -16,6 +16,9 @@ const styles = {
     // minWidth: 400, // removed because this messes with the "edit button"
     backgroundColor: "#eff0f2"
     // margin: 15,
+  },
+  pushProtocolCard: {
+    backgroundColor: yellow[100],
   },
   title: {
     fontSize: 24
@@ -45,7 +48,7 @@ class PracticeCard extends Component {
     const data = practiceDoc.data();
     console.log("practiceDoc", practiceDoc)
     return (
-      <Card className={classes.card}>
+      <Card className={Math.round(Math.random()) ? classes.pushProtocolCard : classes.card }>
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
@@ -106,7 +109,9 @@ class PracticeCard extends Component {
 
 function mapStateToProps(state) {
   return {
-    role: state.role
+    role: state.role,
+
+
   };
 }
 

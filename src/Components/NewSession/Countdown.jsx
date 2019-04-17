@@ -1,7 +1,6 @@
 // Comment from Jason: This file is way too long
 //Agreed. Thanks for pulling out most of the state.
 
-//TODO: wrap the goal field when it is displayed
 //need to update the style
 //need to refactor so that state is in the app.
 //idea: create state for local start, and measure splits off of that, then record them in array on FS

@@ -53,7 +53,7 @@ class EndDialog extends Component {
   };
 
   submit = () => {
-    if (!this.state.practiceNote || !this.state.rating) {
+    if (!this.state.practiceNote || !this.state.rating) {//need to modify this to deal with push protocol not having a rating
       // don't let user submit if required question isn't filled out
       return;
     }
@@ -62,6 +62,8 @@ class EndDialog extends Component {
     const user = this.props.user;
     const courseURL = this.props.courseURL;
     const { rating, practiceNote, questionComment, imageList } = this.state;
+    
+    //TODO: how to handle writing the session when push protocol has no rating
 
     db.collection("sessions")
       .add({
