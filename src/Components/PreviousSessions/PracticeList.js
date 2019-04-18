@@ -44,9 +44,10 @@ class PracticeList extends Component {
       isStudentSelected: true,
       loading: true,
     });
-
+    
     const sessionsSnapshot = await sessionsRef
       .where("user", "==", uid)
+      .where("course", "==", this.props.course)
       .orderBy("submitTime", "desc")
       .get();
 
@@ -102,7 +103,7 @@ class PracticeList extends Component {
 }
 
 function mapStateToProps(state) {
-  return { user: state.user, role: state.role };
+  return { user: state.user, role: state.role, course: state.course };
 }
 
 export default connect(mapStateToProps)(PracticeList);
