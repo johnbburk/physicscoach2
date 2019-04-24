@@ -63,7 +63,7 @@ class PracticeCard extends Component {
         />
 
         <CardHeader
-          action={data.isQuestionOpen && <IconButton>?</IconButton>}
+          action={data.isQuestionOpen && <IconButton variant="contained" color="secondary">?</IconButton>}
           title={
             showName
               ? data.displayName
