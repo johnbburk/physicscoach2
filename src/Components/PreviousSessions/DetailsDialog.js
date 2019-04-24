@@ -13,7 +13,7 @@ import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = {
   multilineColor: {
     color: "black"
   },
@@ -21,7 +21,7 @@ const styles = theme => ({
     borderWidth: "1px",
     borderColor: "black !important"
   }
-});
+};
 
 class DetailsDialog extends Component {
   state = {
@@ -47,9 +47,17 @@ class DetailsDialog extends Component {
     }
   };
 
+  onToggleQuestionOpen = async () => {
+    await this.props.practiceDoc.ref.update({
+      isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
+    });
+    
+    window.location.reload();
+  }
+
   render() {
     const { open, onClose, practiceDoc, classes } = this.props;
-    const data = practiceDoc.data()
+    const data = practiceDoc.data();
     const images = data.imageList.map(function(image) {
       return { src: image };
     });
@@ -130,7 +138,7 @@ class DetailsDialog extends Component {
           <DialogActions>
             <Button
               variant="outlined"
-              onClick={() => {}}
+              onClick={this.onToggleQuestionOpen}
               color={data.isQuestionOpen ? "primary" : "secondary"}
             >
               Mark Question as{" "}
