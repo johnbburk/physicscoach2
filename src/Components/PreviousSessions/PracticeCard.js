@@ -5,6 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import IconButton from "@material-ui/core/IconButton";
+import { Help } from '@material-ui/icons';
 
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -23,8 +24,12 @@ const styles = {
   pushProtocolCard: {
     backgroundColor: yellow[100]
   },
-  title: {
-    fontSize: 24
+  questionIcon: {
+    padding: 4,
+    marginTop: -5
+  },
+  cardContent: {
+    paddingTop: 0,
   },
   grow: {
     flexGrow: 1
@@ -63,7 +68,10 @@ class PracticeCard extends Component {
         />
 
         <CardHeader
-          action={data.isQuestionOpen && <IconButton variant="contained" color="secondary">?</IconButton>}
+          action={data.isQuestionOpen &&
+            <IconButton color="secondary" className={classes.questionIcon}>
+              <Help fontSize="large" />
+            </IconButton>}
           title={
             showName
               ? data.displayName
@@ -71,13 +79,8 @@ class PracticeCard extends Component {
           }
         />
 
-        <CardContent>
-          <Typography
-            className={classes.title}
-            variant="title"
-            color="textPrimary"
-            gutterBottom
-          >
+        <CardContent className={classes.cardContent}>
+          <Typography>
             {truncate(data.goal)}
           </Typography>
         </CardContent>

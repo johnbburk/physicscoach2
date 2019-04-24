@@ -137,7 +137,7 @@ class DetailsDialog extends Component {
 
           <DialogActions>
             <Button
-              variant="outlined"
+              variant="contained"
               onClick={this.onToggleQuestionOpen}
               color={data.isQuestionOpen ? "primary" : "secondary"}
             >
