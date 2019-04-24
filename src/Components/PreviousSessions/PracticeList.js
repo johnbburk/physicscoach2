@@ -75,13 +75,12 @@ class PracticeList extends Component {
         <GridList cols={3} spacing={20}>
           {this.state.pastPracticeDocs.map((doc, index) => (
             <GridListTile key={index}>
-              {" "}
               <PracticeCard
                 practiceDoc={doc}
                 reLoad={() => {
                   this.getPastSessionsOfStudent(this.state.selectedUID);
                 }}
-              />{" "}
+              />
             </GridListTile>
           ))}
         </GridList>

@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import {
   Dialog,
@@ -11,48 +10,49 @@ import {
   TextField
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
-import Lightbox from 'react-images-zoom';
+import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
-  multilineColor:{
-      color:'black',
+  multilineColor: {
+    color: "black"
   },
   notchedOutline: {
-    borderWidth: '1px',
-    borderColor: 'black !important'
-  },
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
 });
 
 class DetailsDialog extends Component {
-
   state = {
     lightBoxOpen: false,
     currentImage: 0
-  }
+  };
 
-  openLightBox = (currentImage) => {
+  openLightBox = currentImage => {
     this.setState({ lightBoxOpen: true, currentImage: currentImage });
-
-  }
+  };
 
   onClickPrev = () => {
-    let index = this.state.currentImage
+    let index = this.state.currentImage;
     if (this.state.currentImage !== 0) {
-      this.setState({ currentImage: index - 1 })
+      this.setState({ currentImage: index - 1 });
     }
-  }
+  };
 
   onClickNext = () => {
-    let index = this.state.currentImage
-    if (this.state.currentImage !== this.props.data.imageList.length - 1) {
-      this.setState({ currentImage: index + 1 })
+    let index = this.state.currentImage;
+    if (this.state.currentImage !== this.props.practiceDoc.get("imageList").length - 1) {
+      this.setState({ currentImage: index + 1 });
     }
-  }
+  };
 
   render() {
-    const { open, onClose, data, classes} = this.props
-    const images = data.imageList.map(function (image) { return { src: image } });
+    const { open, onClose, practiceDoc, classes } = this.props;
+    const data = practiceDoc.data()
+    const images = data.imageList.map(function(image) {
+      return { src: image };
+    });
 
     return (
       <div>
@@ -73,7 +73,6 @@ class DetailsDialog extends Component {
           </DialogTitle>
 
           <DialogContent>
-
             <TextField
               id="Practice-Note-TextField"
               label="Practice Note"
@@ -83,15 +82,14 @@ class DetailsDialog extends Component {
               margin="normal"
               variant="outlined"
               multiline={true}
-              disabled = {true}
-    
+              disabled={true}
               InputProps={{
                 classes: {
-                    input: classes.multilineColor,
-                    notchedOutline: classes.notchedOutline
+                  input: classes.multilineColor,
+                  notchedOutline: classes.notchedOutline
                 },
                 color: "black"
-            }}            
+              }}
             />
             <TextField
               id="Question-Comment-TextField"
@@ -102,15 +100,14 @@ class DetailsDialog extends Component {
               margin="normal"
               variant="outlined"
               multiline={true}
-              disabled = {true}
+              disabled={true}
               InputProps={{
                 classes: {
-                    input: classes.multilineColor,
-                    notchedOutline: classes.notchedOutline
+                  input: classes.multilineColor,
+                  notchedOutline: classes.notchedOutline
                 },
                 color: "black"
-            }}
-
+              }}
             />
 
             <GridList cols={4} style={{ marginTop: 20 }}>
@@ -128,22 +125,25 @@ class DetailsDialog extends Component {
                 );
               })}
             </GridList>
-
           </DialogContent>
 
           <DialogActions>
             <Button
-            variant = "outlined"
-              onClick={onClose}
-              color="primary"
+              variant="outlined"
+              onClick={() => {}}
+              color={data.isQuestionOpen ? "primary" : "secondary"}
             >
+              Mark Question as{" "}
+              {data.isQuestionOpen ? "Answered" : "Unanswered"}
+            </Button>
+            <Button variant="outlined" onClick={onClose} color="default">
               Close
-        </Button>
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
     );
-  };
+  }
 }
 
 export default withStyles(styles)(DetailsDialog);

@@ -4,8 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import IconButton from "@material-ui/core/IconButton";
 
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -60,25 +59,19 @@ class PracticeCard extends Component {
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
-          data={data}
+          practiceDoc={practiceDoc}
         />
 
         <CardHeader
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
+          action={data.isQuestionOpen && <IconButton>?</IconButton>}
+          title={
+            showName
+              ? data.displayName
+              : moment(data.submitTime.toDate()).format("l")
           }
-          title="Shrimp and Chorizo Paella"
         />
 
         <CardContent>
-          <Typography variant="subtitle1" color="textSecondary">
-            {showName
-              ? data.displayName
-              : moment(data.submitTime.toDate()).format("l")}
-          </Typography>
-
           <Typography
             className={classes.title}
             variant="title"
