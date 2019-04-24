@@ -74,14 +74,14 @@ class EndDialog extends Component {
     db.collection("sessions")
       .add({
         submitTime: firebase.firestore.FieldValue.serverTimestamp(),
-        user: user.uid,
-        userName: user.displayName,
-        email: user.email,
+        uid: user.uid,
+        displayName: user.displayName,
         course: this.props.course,
 
         practiceLength: this.props.sessionInfo.timeInMinutes,
         goal: this.props.sessionInfo.goal,
         isPushProtocol: this.props.sessionInfo.isPushProtocol,
+        isQuestionOpen: questionComment !== "",
 
         rating,
         practiceNote,

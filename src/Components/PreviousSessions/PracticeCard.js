@@ -3,12 +3,16 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import DetailsDialog from "./DetailsDialog";
 import DeletePractice from "./DeletePractice";
-import yellow from "@material-ui/core/colors/yellow"
+import yellow from "@material-ui/core/colors/yellow";
 import { connect } from "react-redux";
 
 const styles = {
@@ -18,7 +22,7 @@ const styles = {
     // margin: 15,
   },
   pushProtocolCard: {
-    backgroundColor: yellow[100],
+    backgroundColor: yellow[100]
   },
   title: {
     fontSize: 24
@@ -46,19 +50,32 @@ class PracticeCard extends Component {
   render() {
     const { classes, practiceDoc, showName } = this.props;
     const data = practiceDoc.data();
-    console.log("practiceDoc", practiceDoc)
+    console.log("practiceDoc", practiceDoc);
     return (
-      <Card className={data.isPushProtocol ? classes.pushProtocolCard : classes.card }>
+      <Card
+        className={
+          data.isPushProtocol ? classes.pushProtocolCard : classes.card
+        }
+      >
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
           data={data}
         />
 
+        <CardHeader
+          action={
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title="Shrimp and Chorizo Paella"
+        />
+
         <CardContent>
           <Typography variant="subtitle1" color="textSecondary">
             {showName
-              ? data.userName
+              ? data.displayName
               : moment(data.submitTime.toDate()).format("l")}
           </Typography>
 
@@ -77,11 +94,11 @@ class PracticeCard extends Component {
             closeDeleteDialog={() => {
               this.setState({ deleteDialogOpen: false });
             }}
-            docRef = {practiceDoc.ref}
-            reLoad = {this.props.reLoad}
+            docRef={practiceDoc.ref}
+            reLoad={this.props.reLoad}
           />
           <Button
-          variant = "outlined"
+            variant="outlined"
             size="small"
             color="primary"
             onClick={() => this.setState({ dialogOpen: true })}
@@ -91,7 +108,7 @@ class PracticeCard extends Component {
           <div className={classes.grow} />
           {this.props.role === "teacher" && (
             <Button
-            variant = "outlined"
+              variant="outlined"
               size="small"
               color="secondary"
               onClick={() => {
@@ -109,9 +126,7 @@ class PracticeCard extends Component {
 
 function mapStateToProps(state) {
   return {
-    role: state.role,
-
-
+    role: state.role
   };
 }
 

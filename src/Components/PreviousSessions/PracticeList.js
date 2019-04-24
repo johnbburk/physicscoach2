@@ -46,7 +46,7 @@ class PracticeList extends Component {
     });
 
     const sessionsSnapshot = await sessionsRef
-      .where("user", "==", uid)
+      .where("uid", "==", uid)
       .orderBy("submitTime", "desc")
       .get();
 
