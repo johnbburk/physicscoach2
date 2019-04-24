@@ -3,7 +3,7 @@ import firebase from "../../config/constants";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
-import { mapIDsToSortedObjects } from "../../helpers/courseUtils";
+import { getStudentList, getRequestsList } from "../../helpers/courseUtils";
 
 const db = firebase.firestore();
 
@@ -11,52 +11,55 @@ class StudentList extends Component {
   courseDocRef = db.collection("courses").doc(this.props.course);
 
   state = {
-    studentRequests: [],
+    rosterOrRequestsList: [],
     loading: true
   };
 
   async componentDidMount() {
-    const courseDocSnapshot = await this.courseDocRef.get();
-    console.log("requests", courseDocSnapshot.get("requests"));
+    let rosterOrRequestsList = this.props.join
+      ? await getRequestsList(this.props.course)
+      : await getStudentList(this.props.course);
 
-    // join is true if teacher is viewing requests, false if teacher is viewing roster
-    const listOfIDs = this.props.join
-      ? courseDocSnapshot.get("requests")
-      : courseDocSnapshot.get("students");
+    // now this is a list of DocumentSnapshots
 
-    const studentRequests = await mapIDsToSortedObjects(listOfIDs);
+    rosterOrRequestsList = rosterOrRequestsList.map(request => {
+      return {
+        ...request.data(),
+        id: request.id,
+        selected: false
+      };
+    });
 
-    console.log(studentRequests);
-    this.setState({ studentRequests: studentRequests, loading: false });
+    // now it's a list of objects
+
+    this.setState({ rosterOrRequestsList, loading: false });
   }
 
   toggleStudent = index => (event, checked) => {
-    this.setState(({ studentRequests }) => {
-      studentRequests[index].selected = checked;
-      return { studentRequests };
+    this.setState(({ rosterOrRequestsList }) => {
+      rosterOrRequestsList[index].selected = checked;
+      return { rosterOrRequestsList };
     });
   };
 
   renderAllStudents = () => {
-    //let students = this.state.studentRequests;
-
-    return(
-    <ul style={{ listStyleType: "none" }}>
-      {this.state.studentRequests.map((data, index) => (
-        <li key={index}>
-          <Checkbox onChange={this.toggleStudent(index)} />
-          <span>{data.displayName + " (" + data.email + ")"}</span>
-        </li>
-      ))}
-    </ul>)
+    return (
+      <ul style={{ listStyleType: "none" }}>
+        {this.state.rosterOrRequestsList.map((data, index) => (
+          <li key={index}>
+            <Checkbox onChange={this.toggleStudent(index)} />
+            <span>{data.displayName + " (" + data.email + ")"}</span>
+          </li>
+        ))}
+      </ul>)
   };
 
   removeStudents = async () => {
-      const selectedIDs = this.state.studentRequests
-        .filter(student => student.selected)
-        .map(student => student.id);
+    const selectedIDs = this.state.rosterOrRequestsList
+      .filter(student => student.selected)
+      .map(student => student.id);
 
-    if (selectedIDs > 0) {
+    if (selectedIDs.length > 0) {
       await this.courseDocRef.update({
         students: firebase.firestore.FieldValue.arrayRemove(...selectedIDs)
       });
@@ -66,25 +69,22 @@ class StudentList extends Component {
   };
 
   addStudents = async () => {
-    
-    const selectedIDs = this.state.studentRequests
+
+    const selectedIDs = this.state.rosterOrRequestsList
       .filter(student => student.selected)
       .map(student => student.id);
-    
-      if(selectedIDs.length > 0){
-    await this.courseDocRef.update({
-      requests: firebase.firestore.FieldValue.arrayRemove(...selectedIDs),
-      students: firebase.firestore.FieldValue.arrayUnion(...selectedIDs)
-    });
-    window.location.reload();
-  }
+
+    if (selectedIDs.length > 0) {
+      await this.courseDocRef.update({
+        requests: firebase.firestore.FieldValue.arrayRemove(...selectedIDs),
+        students: firebase.firestore.FieldValue.arrayUnion(...selectedIDs)
+      });
+      window.location.reload();
+    }
   };
 
-  c
-
   render() {
-    if (this.state.loading)
-    {
+    if (this.state.loading) {
       return null
     }
     return (
@@ -95,7 +95,7 @@ class StudentList extends Component {
           variant="outlined"
           color="primary"
           onClick={this.props.join ? this.addStudents : this.removeStudents}
-          disabled = {this.state.studentRequests.filter(student => student.selected).length === 0}
+          disabled={this.state.rosterOrRequestsList.filter(student => student.selected).length === 0}
         >
           {this.props.join ? "Add Selected Students" : "Remove Students"}
         </Button>
