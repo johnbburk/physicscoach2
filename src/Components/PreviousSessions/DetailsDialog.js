@@ -12,6 +12,7 @@ import {
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
+import { GoalProgressIndicator } from "./GoalProgressIndicator";
 
 const styles = {
   multilineColor: {
@@ -42,7 +43,10 @@ class DetailsDialog extends Component {
 
   onClickNext = () => {
     let index = this.state.currentImage;
-    if (this.state.currentImage !== this.props.practiceDoc.get("imageList").length - 1) {
+    if (
+      this.state.currentImage !==
+      this.props.practiceDoc.get("imageList").length - 1
+    ) {
       this.setState({ currentImage: index + 1 });
     }
   };
@@ -51,9 +55,9 @@ class DetailsDialog extends Component {
     await this.props.practiceDoc.ref.update({
       isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
     });
-    
+
     window.location.reload();
-  }
+  };
 
   render() {
     const { open, onClose, practiceDoc, classes } = this.props;
@@ -81,6 +85,11 @@ class DetailsDialog extends Component {
           </DialogTitle>
 
           <DialogContent>
+            <h5>Practice Length: {data.practiceLength} minutes </h5>
+            <h5>
+              <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
+              <GoalProgressIndicator rating={data.rating} format={"emoji"} />
+            </h5>
             <TextField
               id="Practice-Note-TextField"
               label="Practice Note"
@@ -141,8 +150,7 @@ class DetailsDialog extends Component {
               onClick={this.onToggleQuestionOpen}
               color={data.isQuestionOpen ? "primary" : "secondary"}
             >
-              Mark Question as{" "}
-              {data.isQuestionOpen ? "Answered" : "Unanswered"}
+              Mark Question as {data.isQuestion}
             </Button>
             <Button variant="outlined" onClick={onClose} color="default">
               Close

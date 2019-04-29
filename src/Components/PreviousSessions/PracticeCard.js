@@ -5,7 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import IconButton from "@material-ui/core/IconButton";
-import { Help } from '@material-ui/icons';
+import { Help, Autorenew } from "@material-ui/icons";
 
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +14,7 @@ import DetailsDialog from "./DetailsDialog";
 import DeletePractice from "./DeletePractice";
 import yellow from "@material-ui/core/colors/yellow";
 import { connect } from "react-redux";
+import { GoalProgressIndicator } from "./GoalProgressIndicator";
 
 const styles = {
   card: {
@@ -28,8 +29,12 @@ const styles = {
     padding: 4,
     marginTop: -5
   },
+  practiceLength: {
+    marginTop: 0,
+    marginBottom: 0
+  },
   cardContent: {
-    paddingTop: 0,
+    paddingTop: 0
   },
   grow: {
     flexGrow: 1
@@ -55,6 +60,7 @@ class PracticeCard extends Component {
     const { classes, practiceDoc, showName } = this.props;
     const data = practiceDoc.data();
     console.log("practiceDoc", practiceDoc);
+    console.log("rating", data.rating);
     return (
       <Card
         className={
@@ -68,21 +74,29 @@ class PracticeCard extends Component {
         />
 
         <CardHeader
-          action={data.isQuestionOpen &&
-            <IconButton color="secondary" className={classes.questionIcon}>
-              <Help fontSize="large" />
-            </IconButton>}
+          action={
+            data.isQuestionOpen && (
+              <IconButton color="secondary" className={classes.questionIcon}>
+                <Help fontSize="large" />
+              </IconButton>
+            )
+          }
           title={
             showName
               ? data.displayName
               : moment(data.submitTime.toDate()).format("l")
           }
+          titleTypographyProps={{ variant: "h6" }}
+          subheader={
+            <GoalProgressIndicator rating={data.rating} format={"emoji"} />
+          }
         />
 
         <CardContent className={classes.cardContent}>
-          <Typography>
-            {truncate(data.goal)}
-          </Typography>
+          <h6 className={classes.practiceLength}>
+            {data.practiceLength} minutes
+          </h6>
+          <Typography>{truncate(data.goal)}</Typography>
         </CardContent>
         <CardActions>
           <DeletePractice
