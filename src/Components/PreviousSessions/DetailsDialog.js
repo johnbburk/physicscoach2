@@ -13,6 +13,7 @@ import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
+import { formatMinutes } from "../../helpers/textUtils";
 
 const styles = {
   multilineColor: {
@@ -85,7 +86,7 @@ class DetailsDialog extends Component {
           </DialogTitle>
 
           <DialogContent>
-            <h5>Practice Length: {data.practiceLength} minutes </h5>
+            <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
             <h5>
               <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
               <GoalProgressIndicator rating={data.rating} format={"emoji"} />

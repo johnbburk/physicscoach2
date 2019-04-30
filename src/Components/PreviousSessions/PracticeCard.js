@@ -15,6 +15,7 @@ import DeletePractice from "./DeletePractice";
 import yellow from "@material-ui/core/colors/yellow";
 import { connect } from "react-redux";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
+import { formatMinutes } from "../../helpers/textUtils";
 
 const styles = {
   card: {
@@ -94,7 +95,7 @@ class PracticeCard extends Component {
 
         <CardContent className={classes.cardContent}>
           <h6 className={classes.practiceLength}>
-            {data.practiceLength} minutes
+            {formatMinutes(data.practiceLength)}
           </h6>
           <Typography>{truncate(data.goal)}</Typography>
         </CardContent>
