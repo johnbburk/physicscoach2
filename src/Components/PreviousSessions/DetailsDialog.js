@@ -151,7 +151,7 @@ class DetailsDialog extends Component {
               onClick={this.onToggleQuestionOpen}
               color={data.isQuestionOpen ? "primary" : "secondary"}
             >
-              Mark Question as {data.isQuestion}
+              Mark Question as {data.isQuestionOpen ? "Answered" : "Unanswered"}
             </Button>
             <Button variant="outlined" onClick={onClose} color="default">
               Close

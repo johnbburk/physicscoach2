@@ -23,9 +23,9 @@ export const initializeSessionInfo = (timeInMinutes, goalForSession) => {
   return { type: START_SESSION, timeInMinutes, goalForSession };
 };
 
-export const activatePushProtocol = () => {
-  return { type: ACTIVATE_PUSH_PROTOCOL };
-}
+export const activatePushProtocol = timeElapsed => {
+  return { type: ACTIVATE_PUSH_PROTOCOL, timeElapsed };
+};
 
 export const getReduxAuthAction = (user, userDocSnapShot) => {
   if (user) {
@@ -81,6 +81,7 @@ const reducer = (state, action) => {
         ...state,
         currentSession: {
           ...state.currentSession,
+          timeInMinutes: action.timeElapsed,
           isPushProtocol: true
         }
       };

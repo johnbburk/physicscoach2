@@ -7,33 +7,33 @@ import EndForm from "./EndDialog";
 
 class Content extends Component {
   state = {
-    finished: false,
-  }
+    finished: false
+  };
 
   render() {
     if (this.props.sessionUninitalized) {
-      return <StartDialog/>
+      return <StartDialog />;
     }
 
     if (this.state.finished) {
-      return <EndForm/>
+      return <EndForm />;
     }
 
     return (
-      <Grid container alignContent='center' direction='column'>
-            <Paper style={{margin: 15, padding: 20, width: 300}}>
-              <Countdown finishPractice={() => this.setState({finished: true})}/>
-            </Paper>
+      <Grid container alignContent="center" direction="column">
+        <Paper style={{ margin: 15, padding: 20, width: 300 }}>
+          <Countdown finishPractice={() => this.setState({ finished: true })} />
+        </Paper>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const sessionUninitalized = (state.currentSession === null);
+const mapStateToProps = state => {
+  const sessionUninitalized = state.currentSession === null;
   return {
     sessionUninitalized
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Content);

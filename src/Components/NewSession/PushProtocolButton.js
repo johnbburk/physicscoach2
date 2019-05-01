@@ -87,9 +87,10 @@ class PushProtocolButton extends Component {
   state = {
     arrowRef: null
   };
-  activatePush = () => {
+
+  onClick = () => {
     this.props.toggleTimer();
-    this.props.activatePushProtocol();
+    this.props.activatePushProtocol(Math.floor(this.props.elapsedTime / 60));
     this.props.finishPractice();
   };
 
@@ -133,17 +134,18 @@ class PushProtocolButton extends Component {
             }
           }
         }}
-      ><div>
-        <Button
-          style={{ display: "block", margin: "0 auto 20px" }}
-          variant="contained"
-          color="secondary"
-          size="large"
-          disabled={!(this.props.elapsedTime / 60 > PUSH_ACTIVE_TIME)}
-          onClick={this.activatePush}
-        >
-          I'm stuck
-        </Button>
+      >
+        <div>
+          <Button
+            style={{ display: "block", margin: "0 auto 20px" }}
+            variant="contained"
+            color="secondary"
+            size="large"
+            disabled={!(this.props.elapsedTime / 60 > PUSH_ACTIVE_TIME)}
+            onClick={this.onClick}
+          >
+            I'm stuck
+          </Button>
         </div>
       </Tooltip>
     );
@@ -151,7 +153,10 @@ class PushProtocolButton extends Component {
 }
 
 const mapDispatchToProps = {
-  activatePushProtocol,
-}
+  activatePushProtocol
+};
 
-export default connect(undefined, mapDispatchToProps)(withStyles(styles)(PushProtocolButton));
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(withStyles(styles)(PushProtocolButton));
