@@ -16,6 +16,7 @@ import yellow from "@material-ui/core/colors/yellow";
 import { connect } from "react-redux";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
 import { formatMinutes } from "../../helpers/textUtils";
+import QuestionIcon from "./QuestionIcon.js";
 
 const styles = {
   card: {
