@@ -17,12 +17,11 @@ const styles = {
 
 class QuestionIcon extends Component {
   render() {
-    const { isQuestionOpen, isAnswered, classes } = this.props;
-    console.log("isAnswered", isAnswered);
-    if (isQuestionOpen) {
+    const { isQuestionOpen, question, classes } = this.props;
+    if (question) {
       return (
         <IconButton
-          color={isAnswered ? "primary" : "secondary"}
+          color={isQuestionOpen ? "primary" : "secondary"}
           className={classes.questionIcon}
         >
           <Help fontSize="large" />

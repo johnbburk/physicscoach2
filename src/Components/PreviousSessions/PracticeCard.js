@@ -77,6 +77,11 @@ class PracticeCard extends Component {
 
         <CardHeader
           action={
+            /*   <QuestionIcon
+              question={data.questionComment}
+              isQuestionOpen={data.isQuestionOpen}
+            /> */
+
             data.isQuestionOpen && (
               <IconButton color="secondary" className={classes.questionIcon}>
                 <Help fontSize="large" />
