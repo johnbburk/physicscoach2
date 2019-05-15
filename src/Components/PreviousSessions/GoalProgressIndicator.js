@@ -1,7 +1,10 @@
 import emoji from "react-easy-emoji";
+import Tooltip from "@material-ui/core/Tooltip";
+import { withStyles } from "@material-ui/core/styles";
 
 export const GoalProgressIndicator = props => {
   const rating = parseInt(props.rating, 10);
+  const { classes } = this.props;
 
   if (props.format === "emoji") {
     switch (rating) {

@@ -20,8 +20,28 @@ const styles = {
     color: "black"
   },
   notchedOutline: {
+    color: "black !important",
     borderWidth: "1px",
     borderColor: "black !important"
+  },
+  openNotchedOutline: {
+    color: "red !important",
+    borderWidth: "1px",
+    borderColor: "red !important"
+  },
+  closedNotchedOutline: {
+    color: "green !important",
+    borderWidth: "1px",
+    borderColor: "green !important"
+  },
+  label: {
+    color: "black"
+  },
+  openLabel: {
+    color: "red"
+  },
+  closedLabel: {
+    color: "green"
   }
 };
 
@@ -111,7 +131,7 @@ class DetailsDialog extends Component {
             />
             <TextField
               id="Question-Comment-TextField"
-              label="Question Comment"
+              label="Question"
               value={data.questionComment}
               fullWidth={true}
               readOnly={true}
@@ -122,9 +142,13 @@ class DetailsDialog extends Component {
               InputProps={{
                 classes: {
                   input: classes.multilineColor,
-                  notchedOutline: classes.notchedOutline
-                },
-                color: "black"
+                  notchedOutline: data.isQuestionOpen
+                    ? classes.openNotchedOutline
+                    : classes.closedNotchedOutline
+                }
+              }}
+              InputLabelProps={{
+                className: classes.openLabel
               }}
             />
 
