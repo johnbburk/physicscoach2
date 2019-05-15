@@ -77,7 +77,7 @@ class DetailsDialog extends Component {
       isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
     });
 
-    window.location.reload();
+    this.props.reLoad();
   };
 
   render() {
@@ -170,13 +170,17 @@ class DetailsDialog extends Component {
           </DialogContent>
 
           <DialogActions>
-            <Button
-              variant="contained"
-              onClick={this.onToggleQuestionOpen}
-              color={data.isQuestionOpen ? "primary" : "secondary"}
-            >
-              Mark Question as {data.isQuestionOpen ? "Answered" : "Unanswered"}
-            </Button>
+            {data.questionComment !== "" && (
+              <Button
+                variant="contained"
+                onClick={this.onToggleQuestionOpen}
+                color={data.isQuestionOpen ? "primary" : "secondary"}
+              >
+                Mark Question as{" "}
+                {data.isQuestionOpen ? "Answered" : "Unanswered"}
+              </Button>
+            )}
+
             <Button variant="outlined" onClick={onClose} color="default">
               Close
             </Button>

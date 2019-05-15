@@ -73,6 +73,7 @@ class PracticeCard extends Component {
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
           practiceDoc={practiceDoc}
+          reLoad={this.props.reLoad}
         />
 
         <CardHeader
@@ -87,6 +88,8 @@ class PracticeCard extends Component {
                 <Help fontSize="large" />
               </IconButton>
             ) */
+          }
+          title={
           }
           title={
             showName

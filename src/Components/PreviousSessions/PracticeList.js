@@ -31,6 +31,19 @@ class PracticeList extends Component {
     }
   }
 
+  pullData = async uid => {
+    const sessionsSnapshot = await sessionsRef
+      .where("uid", "==", uid)
+      .where("course", "==", this.props.course)
+      .orderBy("submitTime", "desc")
+      .get();
+
+    this.setState({
+      selectedUID: uid,
+      pastPracticeDocs: sessionsSnapshot.docs
+    });
+  };
+
   getPastSessionsOfStudent = async uid => {
     console.log("getting sessions for", uid);
 
@@ -42,19 +55,10 @@ class PracticeList extends Component {
 
     this.setState({
       isStudentSelected: true,
-      loading: true,
+      loading: true
     });
-    
-    const sessionsSnapshot = await sessionsRef
-      .where("uid", "==", uid)
-      .where("course", "==", this.props.course)
-      .orderBy("submitTime", "desc")
-      .get();
 
-    this.setState({
-      pastPracticeDocs: sessionsSnapshot.docs,
-      selectedUID: uid
-    });
+    this.pullData(uid);
 
     setTimeout(() => this.setState({ loading: false }), 750);
     // make sure loading icon doesn't disappear too quickly
@@ -78,7 +82,7 @@ class PracticeList extends Component {
               <PracticeCard
                 practiceDoc={doc}
                 reLoad={() => {
-                  this.getPastSessionsOfStudent(this.state.selectedUID);
+                  this.pullData(this.state.selectedUID);
                 }}
               />
             </GridListTile>
