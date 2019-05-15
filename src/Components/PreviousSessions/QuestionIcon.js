@@ -9,30 +9,20 @@ import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 
 const styles = {
-  openQuestionIcon: {
+  questionIcon: {
     padding: 4,
-    marginTop: -5,
-    color: "red"
-  },
-  closedQuestionIcon: {
-    padding: 4,
-    marginTop: -5,
-    color: "green"
+    marginTop: -5
   }
 };
 
 class QuestionIcon extends Component {
   render() {
     const { isQuestionOpen, question, classes } = this.props;
-
     if (question) {
       return (
         <IconButton
-          className={
-            isQuestionOpen
-              ? classes.openQuestionIcon
-              : classes.closedQuestionIcon
-          }
+          color={isQuestionOpen ? "primary" : "secondary"}
+          className={classes.questionIcon}
         >
           <Help fontSize="large" />
         </IconButton>
