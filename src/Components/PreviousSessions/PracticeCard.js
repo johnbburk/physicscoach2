@@ -90,8 +90,6 @@ class PracticeCard extends Component {
             ) */
           }
           title={
-          }
-          title={
             showName
               ? data.displayName
               : moment(data.submitTime.toDate()).format("l")
