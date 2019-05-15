@@ -64,25 +64,21 @@ class DetailsDialog extends Component {
 
   onClickNext = () => {
     let index = this.state.currentImage;
-    if (
-      this.state.currentImage !==
-      this.props.practiceDoc.get("imageList").length - 1
-    ) {
+    if (this.state.currentImage !== this.props.data.imageList.length - 1) {
       this.setState({ currentImage: index + 1 });
     }
   };
 
   onToggleQuestionOpen = async () => {
-    await this.props.practiceDoc.ref.update({
-      isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
+    await this.props.practiceDocRef.update({
+      isQuestionOpen: !this.props.data.isQuestionOpen
     });
 
     window.location.reload();
   };
 
   render() {
-    const { open, onClose, practiceDoc, classes } = this.props;
-    const data = practiceDoc.data();
+    const { open, onClose, data, classes } = this.props;
     const images = data.imageList.map(function(image) {
       return { src: image };
     });

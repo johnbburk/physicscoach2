@@ -1,5 +1,6 @@
 //should change color depending on status of question
 //should also have tooltip to show question
+//TODO: have parent control visibility of QuestionIcon
 
 import React, { Component } from "react";
 import IconButton from "@material-ui/core/IconButton";

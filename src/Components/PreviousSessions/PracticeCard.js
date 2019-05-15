@@ -55,14 +55,16 @@ function truncate(string) {
 class PracticeCard extends Component {
   state = {
     dialogOpen: false,
-    deleteDialogOpen: false
+    deleteDialogOpen: false,
+    practiceDocData: this.props.practiceDoc.data(),
+    practiceDocRef: this.props.practiceDoc.ref
   };
 
   render() {
+    console.log("doc", this.state.practiceDocData, this.state.practiceDocRef);
     const { classes, practiceDoc, showName } = this.props;
-    const data = practiceDoc.data();
-    console.log("practiceDoc", practiceDoc);
-    console.log("rating", data.rating);
+    const data = this.state.practiceDocData;
+
     return (
       <Card
         className={
@@ -72,7 +74,8 @@ class PracticeCard extends Component {
         <DetailsDialog
           open={this.state.dialogOpen}
           onClose={() => this.setState({ dialogOpen: false })}
-          practiceDoc={practiceDoc}
+          data={data}
+          practiceDocRef={this.state.practiceDocRef}
         />
 
         <CardHeader
