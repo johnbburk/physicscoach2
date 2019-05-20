@@ -64,6 +64,14 @@ class PracticeList extends Component {
     // make sure loading icon doesn't disappear too quickly
   };
 
+  countTotalHours = () => {
+    const totalMinutes = this.state.pastPracticeDocs.reduce(
+      (acc, curr) => acc + curr.get("practiceLength"),
+      0
+    );
+    return totalMinutes / 60;
+  };
+
   renderPastPractices = () => {
     if (!this.state.isStudentSelected) {
       return null;
@@ -75,7 +83,10 @@ class PracticeList extends Component {
 
     return (
       <Fragment>
-        <h1>{this.state.pastPracticeDocs.length} Previous Practices</h1>
+        <h1>
+          {this.state.pastPracticeDocs.length} Previous Practices (
+          {this.countTotalHours()} Total Hours)
+        </h1>
         <GridList cols={3} spacing={20}>
           {this.state.pastPracticeDocs.map((doc, index) => (
             <GridListTile key={index}>
