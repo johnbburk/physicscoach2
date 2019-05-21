@@ -69,7 +69,7 @@ class PracticeList extends Component {
       (acc, curr) => acc + curr.get("practiceLength"),
       0
     );
-    return totalMinutes / 60;
+    return (totalMinutes / 60).toFixed(2);
   };
 
   renderPastPractices = () => {
