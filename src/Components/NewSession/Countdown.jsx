@@ -42,7 +42,7 @@ class Countdown extends Component {
               };
             });
           }
-        }, 100); //TODO: Set this back to 1000 when done
+        }, 1000); //TODO: Set this back to 1000 when done
         break;
 
       case true:

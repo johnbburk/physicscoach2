@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { activatePushProtocol } from "../../store";
 
-const PUSH_ACTIVE_TIME = 1;
+const PUSH_ACTIVE_TIME = 5;
 
 function arrowGenerator(color) {
   return {

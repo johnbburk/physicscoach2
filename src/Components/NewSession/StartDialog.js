@@ -8,60 +8,63 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControl from "@material-ui/core/FormControl";
 
-import { initializeSessionInfo } from '../../store';
-import { connect } from 'react-redux';
+import { initializeSessionInfo } from "../../store";
+import { connect } from "react-redux";
 
 class StartDialog extends Component {
-
   state = {
-    goal: '',
-    sessionTimeEntry: 1, //Todo: change this to 25 minutes in production
-    show: true,
-  }
+    goal: "",
+    sessionTimeEntry: 25, //Todo: change this to 25 minutes in production
+    show: true
+  };
 
-  changeTime = (amount) => {
-    this.setState((prevState) => {
+  changeTime = amount => {
+    this.setState(prevState => {
       if (prevState.sessionTimeEntry + amount < 1) return;
       return {
         sessionTimeEntry: prevState.sessionTimeEntry + amount
-      }
-    })
-  }
+      };
+    });
+  };
 
   submit = () => {
     if (!this.state.goal) {
       return;
     }
-    this.props.initializeSessionInfo(this.state.sessionTimeEntry, this.state.goal);
-  }
+    this.props.initializeSessionInfo(
+      this.state.sessionTimeEntry,
+      this.state.goal
+    );
+  };
 
   render() {
     return (
       <Dialog
         open={this.state.show}
         aria-labelledby="timer-start-dialog"
-        onClose={() => this.setState({show: false})}
+        onClose={() => this.setState({ show: false })}
       >
         <DialogTitle align="center" id="timer-start-dialog">
           Start New Practice
-          </DialogTitle>
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText variant="h3" align="center">
             {this.state.sessionTimeEntry}:00
-            </DialogContentText>
+          </DialogContentText>
 
           <FormControl>
-
             <div align="center">
-              <Button variant="outlined"
+              <Button
+                variant="outlined"
                 onClick={() => this.changeTime(-1)}
                 id="session-decrement"
                 className="timerContainerButtons"
               >
                 -
-                </Button>
-              <Button variant="outlined"
+              </Button>
+              <Button
+                variant="outlined"
                 onClick={() => this.changeTime(+1)}
                 id="session-increment"
                 className="timerContainerButtons"
@@ -79,9 +82,8 @@ class StartDialog extends Component {
               multiline
               margin="normal"
               variant="outlined"
-              onChange={(event) => this.setState({goal: event.target.value})}
+              onChange={event => this.setState({ goal: event.target.value })}
             />
-
           </FormControl>
         </DialogContent>
 
@@ -90,14 +92,16 @@ class StartDialog extends Component {
             Start Practice
           </Button>
         </DialogActions>
-
       </Dialog>
     );
-  };
+  }
 }
 
 const mapDispatchToProps = {
-  initializeSessionInfo,
-}
+  initializeSessionInfo
+};
 
-export default connect(undefined, mapDispatchToProps)(StartDialog);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(StartDialog);
