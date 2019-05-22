@@ -53,6 +53,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://physics-coach.firebaseapp.com/",
   "browserslist": [
     ">0.2%",
     "not dead",
