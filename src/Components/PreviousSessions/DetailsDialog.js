@@ -34,6 +34,16 @@ const styles = {
     borderWidth: "1px",
     borderColor: "green !important"
   },
+  openAnswerNotchedOutline: {
+    color: "blue !important",
+    borderWidth: "1px",
+    borderColor: "blue !important"
+  },
+  closedAnswerNotchedOutline: {
+    color: "purple !important",
+    borderWidth: "1px",
+    borderColor: "purple !important"
+  },
   label: {
     color: "black"
   },
@@ -83,7 +93,7 @@ class DetailsDialog extends Component {
   render() {
     const { open, onClose, practiceDoc, classes } = this.props;
     const data = practiceDoc.data();
-    const images = data.imageList.map(function(image) {
+    const images = data.imageList.map(function (image) {
       return { src: image };
     });
 
@@ -167,6 +177,31 @@ class DetailsDialog extends Component {
                 );
               })}
             </GridList>
+          </DialogContent>
+
+          <DialogContent>
+            <TextField
+              id="Teacher-Comment-TextField"
+              label="Teacher's Comments"
+              value={data.teacherComment}
+              fullWidth={true}
+              readOnly={true}
+              margin="normal"
+              variant="outlined"
+              multiline={true}
+              disabled={true}
+              InputProps={{
+                classes: {
+                  input: classes.multilineColor,
+                  notchedOutline: data.isQuestionOpen
+                    ? classes.openAnswerNotchedOutline
+                    : classes.closedAnswerNotchedOutline
+                }
+              }}
+              InputLabelProps={{
+                className: classes.openLabel
+              }}
+            />
           </DialogContent>
 
           <DialogActions>
