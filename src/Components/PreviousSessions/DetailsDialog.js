@@ -7,13 +7,16 @@ import {
   Button,
   GridList,
   GridListTile,
-  TextField
+  TextField,
+  Input
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
 import { formatMinutes } from "../../helpers/textUtils";
+import { userInfo } from "os";
+import TeacherRoute from "../ProtectedRoutes/TeacherRoute";
 
 const styles = {
   multilineColor: {
@@ -97,132 +100,247 @@ class DetailsDialog extends Component {
       return { src: image };
     });
 
-    return (
-      <div>
-        <Lightbox
-          images={images}
-          currentImage={this.state.currentImage}
-          isOpen={this.state.lightBoxOpen}
-          onClickPrev={this.onClickPrev}
-          onClickNext={this.onClickNext}
-          onClose={() => this.setState({ lightBoxOpen: false })}
-          rotatable={true}
-          zoomable={true}
-        />
+    if (TeacherRoute.role === "teacher") {
 
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-          <DialogTitle align="center" id="timer-start-dialog">
-            {data.goal}
-          </DialogTitle>
+      return (
+        <div>
+          <Lightbox
+            images={images}
+            currentImage={this.state.currentImage}
+            isOpen={this.state.lightBoxOpen}
+            onClickPrev={this.onClickPrev}
+            onClickNext={this.onClickNext}
+            onClose={() => this.setState({ lightBoxOpen: false })}
+            rotatable={true}
+            zoomable={true}
+          />
 
-          <DialogContent>
-            <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
-            <h5>
-              <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
-              <GoalProgressIndicator rating={data.rating} format={"emoji"} />
-            </h5>
-            <TextField
-              id="Practice-Note-TextField"
-              label="Practice Note"
-              value={data.practiceNote}
-              fullWidth={true}
-              readOnly={true}
-              margin="normal"
-              variant="outlined"
-              multiline={true}
-              disabled={true}
-              InputProps={{
-                classes: {
-                  input: classes.multilineColor,
-                  notchedOutline: classes.notchedOutline
-                },
-                color: "black"
-              }}
-            />
-            <TextField
-              id="Question-Comment-TextField"
-              label="Question"
-              value={data.questionComment}
-              fullWidth={true}
-              readOnly={true}
-              margin="normal"
-              variant="outlined"
-              multiline={true}
-              disabled={true}
-              InputProps={{
-                classes: {
-                  input: classes.multilineColor,
-                  notchedOutline: data.isQuestionOpen
-                    ? classes.openNotchedOutline
-                    : classes.closedNotchedOutline
-                }
-              }}
-              InputLabelProps={{
-                className: classes.openLabel
-              }}
-            />
+          <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+            <DialogTitle align="center" id="timer-start-dialog">
+              {data.goal}
+            </DialogTitle>
 
-            <GridList cols={4} style={{ marginTop: 20 }}>
-              {data.imageList.map((image, index) => {
-                return (
-                  <GridListTile key={index}>
-                    <PracticeImage
-                      image={image}
-                      index={index}
-                      alt={"student work"}
-                      deleteEnabled={false}
-                      onClick={() => this.openLightBox(index)}
-                    />
-                  </GridListTile>
-                );
-              })}
-            </GridList>
-          </DialogContent>
+            <DialogContent>
+              <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
+              <h5>
+                <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
+                <GoalProgressIndicator rating={data.rating} format={"emoji"} />
+              </h5>
+              <TextField
+                id="Practice-Note-TextField"
+                label="Practice Note"
+                value={data.practiceNote}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: classes.notchedOutline
+                  },
+                  color: "black"
+                }}
+              />
+              <TextField
+                id="Question-Comment-TextField"
+                label="Question"
+                value={data.questionComment}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: data.isQuestionOpen
+                      ? classes.openNotchedOutline
+                      : classes.closedNotchedOutline
+                  }
+                }}
+                InputLabelProps={{
+                  className: classes.openLabel
+                }}
+              />
 
-          <DialogContent>
-            <TextField
-              id="Teacher-Comment-TextField"
-              label="Teacher's Comments"
-              value={data.teacherComment}
-              fullWidth={true}
-              readOnly={true}
-              margin="normal"
-              variant="outlined"
-              multiline={true}
-              disabled={true}
-              InputProps={{
-                classes: {
-                  input: classes.multilineColor,
-                  notchedOutline: data.isQuestionOpen
-                    ? classes.openAnswerNotchedOutline
-                    : classes.closedAnswerNotchedOutline
-                }
-              }}
-              InputLabelProps={{
-                className: classes.openLabel
-              }}
-            />
-          </DialogContent>
+              <GridList cols={4} style={{ marginTop: 20 }}>
+                {data.imageList.map((image, index) => {
+                  return (
+                    <GridListTile key={index}>
+                      <PracticeImage
+                        image={image}
+                        index={index}
+                        alt={"student work"}
+                        deleteEnabled={false}
+                        onClick={() => this.openLightBox(index)}
+                      />
+                    </GridListTile>
+                  );
+                })}
+              </GridList>
+            </DialogContent>
 
-          <DialogActions>
-            {data.questionComment !== "" && (
-              <Button
-                variant="contained"
-                onClick={this.onToggleQuestionOpen}
-                color={data.isQuestionOpen ? "primary" : "secondary"}
-              >
-                Mark Question as{" "}
-                {data.isQuestionOpen ? "Answered" : "Unanswered"}
-              </Button>
-            )}
 
-            <Button variant="outlined" onClick={onClose} color="default">
-              Close
+
+            <DialogContent>
+              <input
+                type="text"
+
+              />
+            </DialogContent>
+
+            <DialogActions>
+              {data.questionComment !== "" && (
+                <Button
+                  variant="contained"
+                  onClick={this.onToggleQuestionOpen}
+                  color={data.isQuestionOpen ? "primary" : "secondary"}
+                >
+                  Mark Question as{" "}
+                  {data.isQuestionOpen ? "Answered" : "Unanswered"}
+                </Button>
+              )}
+
+              <Button variant="outlined" onClick={onClose} color="default">
+                Close
             </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
+            </DialogActions>
+          </Dialog>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <Lightbox
+            images={images}
+            currentImage={this.state.currentImage}
+            isOpen={this.state.lightBoxOpen}
+            onClickPrev={this.onClickPrev}
+            onClickNext={this.onClickNext}
+            onClose={() => this.setState({ lightBoxOpen: false })}
+            rotatable={true}
+            zoomable={true}
+          />
+
+          <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+            <DialogTitle align="center" id="timer-start-dialog">
+              {data.goal}
+            </DialogTitle>
+
+            <DialogContent>
+              <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
+              <h5>
+                <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
+                <GoalProgressIndicator rating={data.rating} format={"emoji"} />
+              </h5>
+              <TextField
+                id="Practice-Note-TextField"
+                label="Practice Note"
+                value={data.practiceNote}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: classes.notchedOutline
+                  },
+                  color: "black"
+                }}
+              />
+              <TextField
+                id="Question-Comment-TextField"
+                label="Question"
+                value={data.questionComment}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: data.isQuestionOpen
+                      ? classes.openNotchedOutline
+                      : classes.closedNotchedOutline
+                  }
+                }}
+                InputLabelProps={{
+                  className: classes.openLabel
+                }}
+              />
+
+              <GridList cols={4} style={{ marginTop: 20 }}>
+                {data.imageList.map((image, index) => {
+                  return (
+                    <GridListTile key={index}>
+                      <PracticeImage
+                        image={image}
+                        index={index}
+                        alt={"student work"}
+                        deleteEnabled={false}
+                        onClick={() => this.openLightBox(index)}
+                      />
+                    </GridListTile>
+                  );
+                })}
+              </GridList>
+            </DialogContent>
+
+            <DialogContent>
+              <TextField
+                id="Teacher-Comment-TextField"
+                label="Teacher's Comments"
+                value={data.teacherComment}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: data.isQuestionOpen
+                      ? classes.openAnswerNotchedOutline
+                      : classes.closedAnswerNotchedOutline
+                  }
+                }}
+                InputLabelProps={{
+                  className: classes.openLabel
+                }}
+              />
+            </DialogContent>
+
+            <DialogActions>
+              {data.questionComment !== "" && (
+                <Button
+                  variant="contained"
+                  onClick={this.onToggleQuestionOpen}
+                  color={data.isQuestionOpen ? "primary" : "secondary"}
+                >
+                  Mark Question as{" "}
+                  {data.isQuestionOpen ? "Answered" : "Unanswered"}
+                </Button>
+              )}
+
+              <Button variant="outlined" onClick={onClose} color="default">
+                Close
+            </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      );
+    }
   }
 }
 
