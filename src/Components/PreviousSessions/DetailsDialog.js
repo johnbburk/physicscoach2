@@ -17,6 +17,8 @@ import { GoalProgressIndicator } from "./GoalProgressIndicator";
 import { formatMinutes } from "../../helpers/textUtils";
 import { userInfo } from "os";
 import TeacherRoute from "../ProtectedRoutes/TeacherRoute";
+import firebase from "../../config/constants";
+const db = firebase.firestore();
 
 const styles = {
   multilineColor: {
@@ -100,8 +102,10 @@ class DetailsDialog extends Component {
       return { src: image };
     });
 
-    if (TeacherRoute.role === "teacher") {
+    var role = db.collection('users').doc("pNleoGezTZczcqkOmomQMJIqm543").role
 
+
+    if (role === "teacher") {
       return (
         <div>
           <Lightbox
@@ -121,7 +125,7 @@ class DetailsDialog extends Component {
             </DialogTitle>
 
             <DialogContent>
-              <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
+              <h5>Practice Length: Teacher{formatMinutes(data.practiceLength)} </h5>
               <h5>
                 <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
                 <GoalProgressIndicator rating={data.rating} format={"emoji"} />
@@ -184,7 +188,30 @@ class DetailsDialog extends Component {
               </GridList>
             </DialogContent>
 
-
+            <DialogContent>
+              <TextField
+                id="Teacher-Comment-TextField"
+                label="Teacher's Comments"
+                value={data.teacherComment}
+                fullWidth={true}
+                readOnly={true}
+                margin="normal"
+                variant="outlined"
+                multiline={true}
+                disabled={true}
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor,
+                    notchedOutline: data.isQuestionOpen
+                      ? classes.openAnswerNotchedOutline
+                      : classes.closedAnswerNotchedOutline
+                  }
+                }}
+                InputLabelProps={{
+                  className: classes.openLabel
+                }}
+              />
+            </DialogContent>
 
             <DialogContent>
               <input
@@ -233,7 +260,7 @@ class DetailsDialog extends Component {
             </DialogTitle>
 
             <DialogContent>
-              <h5>Practice Length: {formatMinutes(data.practiceLength)} </h5>
+              <h5>Practice Length: Student{formatMinutes(data.practiceLength)} </h5>
               <h5>
                 <GoalProgressIndicator rating={data.rating} format={"text"} />{" "}
                 <GoalProgressIndicator rating={data.rating} format={"emoji"} />
