@@ -19,6 +19,7 @@ class EndDialog extends Component {
     rating: 0,
     practiceNote: "",
     questionComment: "",
+    teacherComment: "",
     showImageDialog: false,
     imageList: []
   };
@@ -67,7 +68,7 @@ class EndDialog extends Component {
     const db = firebase.firestore();
     const user = this.props.user;
     const courseURL = this.props.courseURL;
-    const { rating, practiceNote, questionComment, imageList } = this.state;
+    const { rating, practiceNote, questionComment, teacherComment, imageList } = this.state;
 
     //TODO: how to handle writing the session when push protocol has no rating
 
@@ -82,10 +83,12 @@ class EndDialog extends Component {
         goal: this.props.sessionInfo.goal,
         isPushProtocol: this.props.sessionInfo.isPushProtocol,
         isQuestionOpen: questionComment !== "",
+        isAnsweredOpen: teacherComment !== "",
 
         rating,
         practiceNote,
         questionComment,
+        teacherComment,
         imageList
       })
       .then(ref => {

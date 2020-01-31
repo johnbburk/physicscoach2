@@ -64,7 +64,20 @@ const styles = {
 class DetailsDialog extends Component {
   state = {
     lightBoxOpen: false,
+    teacherComment: this.props.practiceDoc.get("teacherComment"),
     currentImage: 0
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  submit = async () => {
+    await this.props.practiceDoc.ref.update({
+      teacherComment: this.state.teacherComment
+    });
+
+    //this.props.reLoad();
   };
 
   openLightBox = currentImage => {
@@ -93,7 +106,15 @@ class DetailsDialog extends Component {
       isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
     });
 
-    this.props.reLoad();
+    //this.props.reLoad();
+  };
+
+  onToggleAnsweredOpen = async () => {
+    await this.props.practiceDoc.ref.update({
+      isAnsweredOpen: !this.props.practiceDoc.get("isAnsweredOpen"),
+    });
+
+    //this.props.reLoad();
   };
 
   render() {
@@ -185,41 +206,19 @@ class DetailsDialog extends Component {
             </GridList>
           </DialogContent>
 
-          <DialogContent>
-            <TextField
-              id="Teacher-Comment-TextField"
-              label="Teacher's Comments"
-              value={data.teacherComment}
-              fullWidth={true}
-              readOnly={true}
-              margin="normal"
-              variant="outlined"
-              multiline={true}
-              disabled={true}
-              InputProps={{
-                classes: {
-                  input: classes.multilineColor,
-                  notchedOutline: data.isQuestionOpen
-                    ? classes.openAnswerNotchedOutline
-                    : classes.closedAnswerNotchedOutline
-                }
-              }}
-              InputLabelProps={{
-                className: classes.openLabel
-              }}
-            />
 
-          </DialogContent>
-          {this.props.role === "teacher" && (
-            <DialogContent>
-              <Input
-                type="input"
-                id="Teacher-Comment-Input"
+          <DialogContent>
+            {this.props.role === "student" && (
+              <TextField
+                id="Teacher-Comment-TextField"
                 label="Teacher's Comments"
-                //value={data.teacherComment}
+                value={data.teacherComment}
                 fullWidth={true}
+                readOnly={true}
                 margin="normal"
                 variant="outlined"
+                multiline={true}
+                disabled={true}
                 InputProps={{
                   classes: {
                     input: classes.multilineColor,
@@ -232,6 +231,25 @@ class DetailsDialog extends Component {
                   className: classes.openLabel
                 }}
               />
+            )}
+
+          </DialogContent>
+          {this.props.role === "teacher" && (
+            <DialogContent>
+
+              <TextField
+                id="comment"
+                name="practiceNote"
+                label="Add Comment"
+                fullWidth={true}
+                placeholder={
+                  data.teacherComment
+                }
+                multiline
+                margin="normal"
+                variant="outlined"
+                onChange={this.onChange}
+              />
 
             </DialogContent>
 
@@ -239,6 +257,18 @@ class DetailsDialog extends Component {
 
 
           <DialogActions>
+            {this.props.role === "teacher" && (
+              <Button
+                variant="contained"
+                onClick={this.onToggleAnsweredOpen}
+                onClick={this.submit}
+                color={data.isAnsweredOpen ? "primary" : "secondary"}
+              >
+                Add Comment
+              </Button>
+            )}
+
+
             {data.questionComment !== "" && (
               <Button
                 variant="contained"
