@@ -238,8 +238,8 @@ class DetailsDialog extends Component {
             <DialogContent>
 
               <TextField
-                id="comment"
-                name="practiceNote"
+                id="Teacher-Comment"
+                name="teacherComment"
                 label="Add Comment"
                 fullWidth={true}
                 placeholder={
@@ -260,7 +260,7 @@ class DetailsDialog extends Component {
             {this.props.role === "teacher" && (
               <Button
                 variant="contained"
-                onClick={this.onToggleAnsweredOpen}
+                //onClick={this.onToggleAnsweredOpen}
                 onClick={this.submit}
                 color={data.isAnsweredOpen ? "primary" : "secondary"}
               >
@@ -293,7 +293,8 @@ class DetailsDialog extends Component {
 }
 function mapStateToProps(state) {
   return {
-    role: state.role
+    role: state.role,
+    teacherComment: state.teacherComment
   };
 }
 export default connect(mapStateToProps)(withStyles(styles)(DetailsDialog));
