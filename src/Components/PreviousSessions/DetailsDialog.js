@@ -74,7 +74,7 @@ class DetailsDialog extends Component {
 
   submit = async () => {
     await this.props.practiceDoc.ref.update({
-      teacherComment: this.state.teacherComment
+      teacherComment: (this.props.role.charAt(0).toUpperCase() + this.props.role.slice(1) + ": ") + this.state.teacherComment
     });
 
     //this.props.reLoad();
@@ -240,7 +240,7 @@ class DetailsDialog extends Component {
               <TextField
                 id="Teacher-Comment"
                 name="teacherComment"
-                label="Add Comment"
+                label={data.teacherComment}
                 fullWidth={true}
                 placeholder={
                   data.teacherComment
