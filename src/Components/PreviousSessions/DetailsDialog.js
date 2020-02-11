@@ -74,6 +74,7 @@ class DetailsDialog extends Component {
 
   submit = async () => {
     await this.props.practiceDoc.ref.update({
+      //Display the role of the commenter and display the message 
       teacherComment: (this.props.role.charAt(0).toUpperCase() + this.props.role.slice(1) + ": ") + this.state.teacherComment
     });
 
