@@ -209,6 +209,7 @@ class DetailsDialog extends Component {
 
 
           <DialogContent>
+
             {this.props.role === "student" && (
               <TextField
                 id="Teacher-Comment-TextField"
@@ -255,6 +256,7 @@ class DetailsDialog extends Component {
             </DialogContent>
 
           )}
+
 
 
           <DialogActions>
