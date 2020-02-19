@@ -102,10 +102,16 @@ class DetailsDialog extends Component {
     }
   };
 
+  onToggleChatWindow = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   onToggleQuestionOpen = async () => {
     await this.props.practiceDoc.ref.update({
       isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
     });
+
+
 
     //this.props.reLoad();
   };
@@ -254,7 +260,6 @@ class DetailsDialog extends Component {
               />
 
             </DialogContent>
-
           )}
 
 
@@ -282,6 +287,10 @@ class DetailsDialog extends Component {
                 {data.isQuestionOpen ? "Answered" : "Unanswered"}
               </Button>
             )}
+
+            <Button variant="outlined" onClick={this.onToggleChatWindow} color="default">
+              Comment
+            </Button>
 
             <Button variant="outlined" onClick={onClose} color="default">
               Close

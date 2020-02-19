@@ -22,6 +22,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.1",
+    "react-chat-window": "^1.2.1",
     "react-contenteditable": "^3.2.6",
     "react-dnd": "^7.3.2",
     "react-dnd-html5-backend": "^7.2.0",
