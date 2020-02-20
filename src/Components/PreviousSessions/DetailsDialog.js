@@ -11,6 +11,7 @@ import {
   Input
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
+import CommentThread from "./CommentThread";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
@@ -103,7 +104,7 @@ class DetailsDialog extends Component {
   };
 
   onToggleChatWindow = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    alert("Joshua");
   };
 
   onToggleQuestionOpen = async () => {
@@ -295,6 +296,7 @@ class DetailsDialog extends Component {
             <Button variant="outlined" onClick={onClose} color="default">
               Close
             </Button>
+
           </DialogActions>
         </Dialog>
       </div>
@@ -311,3 +313,4 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps)(withStyles(styles)(DetailsDialog));
 //export default withStyles(styles)(DetailsDialog);
+//export default CommentThread;
