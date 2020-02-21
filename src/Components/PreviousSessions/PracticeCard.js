@@ -103,7 +103,6 @@ class PracticeCard extends Component {
             {formatMinutes(data.practiceLength)}
           </h6>
           <Typography>{truncate(data.goal)}
-            Joshua Robinson
           </Typography>
         </CardContent>
         <CardActions>
