@@ -11,7 +11,7 @@ import {
   Input
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
-import CommentThread from "./CommentThread";
+import { CommentThread } from "./CommentThread";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
@@ -103,7 +103,7 @@ class DetailsDialog extends Component {
     }
   };
 
-  onToggleChatWindow = event => {
+  onToggleChatWindow = () => {
     alert("Joshua");
   };
 
@@ -276,6 +276,8 @@ class DetailsDialog extends Component {
                 Add Comment
               </Button>
             )}
+
+            <CommentThread />
 
 
             {data.questionComment !== "" && (

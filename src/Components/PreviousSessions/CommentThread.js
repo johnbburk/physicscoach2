@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Launcher } from 'react-chat-window'
 
-export class CommentThread extends Component {
+export default class CommentThread extends Component {
 
   constructor() {
     super();
