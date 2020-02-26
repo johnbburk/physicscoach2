@@ -11,7 +11,9 @@ import {
   Input
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
-import { CommentThread } from "./CommentThread";
+import Comment from "../PreviousSessions/Comment"
+import Board from "../PreviousSessions/Comment"
+import CommentThread from "./Comment";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
@@ -263,6 +265,8 @@ class DetailsDialog extends Component {
             </DialogContent>
           )}
 
+          <DialogContent><Board />
+          </DialogContent>
 
 
           <DialogActions>
@@ -276,8 +280,6 @@ class DetailsDialog extends Component {
                 Add Comment
               </Button>
             )}
-
-            <CommentThread />
 
 
             {data.questionComment !== "" && (
@@ -294,6 +296,8 @@ class DetailsDialog extends Component {
             <Button variant="outlined" onClick={this.onToggleChatWindow} color="default">
               Comment
             </Button>
+
+            <div id="root"></div>
 
             <Button variant="outlined" onClick={onClose} color="default">
               Close
