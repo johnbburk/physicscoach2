@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
 import Comment from "../PreviousSessions/Comment"
-import Board from "../PreviousSessions/Comment"
+import Board from "../PreviousSessions/Board"
 import CommentThread from "./Comment";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
@@ -292,12 +292,6 @@ class DetailsDialog extends Component {
                 {data.isQuestionOpen ? "Answered" : "Unanswered"}
               </Button>
             )}
-
-            <Button variant="outlined" onClick={this.onToggleChatWindow} color="default">
-              Comment
-            </Button>
-
-            <div id="root"></div>
 
             <Button variant="outlined" onClick={onClose} color="default">
               Close
