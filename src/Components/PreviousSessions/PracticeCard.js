@@ -102,7 +102,8 @@ class PracticeCard extends Component {
           <h6 className={classes.practiceLength}>
             {formatMinutes(data.practiceLength)}
           </h6>
-          <Typography>{truncate(data.goal)}</Typography>
+          <Typography>{truncate(data.goal)}
+          </Typography>
         </CardContent>
         <CardActions>
           <DeletePractice

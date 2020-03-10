@@ -11,6 +11,9 @@ import {
   Input
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
+import Comment from "../PreviousSessions/Comment"
+import Board from "../PreviousSessions/Board"
+import CommentThread from "./Comment";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
@@ -74,7 +77,8 @@ class DetailsDialog extends Component {
 
   submit = async () => {
     await this.props.practiceDoc.ref.update({
-      teacherComment: this.state.teacherComment
+      //Display the role of the commenter and display the message 
+      teacherComment: (this.props.role.charAt(0).toUpperCase() + this.props.role.slice(1) + ": ") + this.state.teacherComment
     });
 
     //this.props.reLoad();
@@ -101,10 +105,16 @@ class DetailsDialog extends Component {
     }
   };
 
+  onToggleChatWindow = () => {
+    alert("Joshua");
+  };
+
   onToggleQuestionOpen = async () => {
     await this.props.practiceDoc.ref.update({
       isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
     });
+
+
 
     //this.props.reLoad();
   };
@@ -208,6 +218,7 @@ class DetailsDialog extends Component {
 
 
           <DialogContent>
+
             {this.props.role === "student" && (
               <TextField
                 id="Teacher-Comment-TextField"
@@ -240,7 +251,7 @@ class DetailsDialog extends Component {
               <TextField
                 id="Teacher-Comment"
                 name="teacherComment"
-                label="Add Comment"
+                label={data.teacherComment}
                 fullWidth={true}
                 placeholder={
                   data.teacherComment
@@ -252,8 +263,10 @@ class DetailsDialog extends Component {
               />
 
             </DialogContent>
-
           )}
+
+          <DialogContent><Board />
+          </DialogContent>
 
 
           <DialogActions>
@@ -283,6 +296,7 @@ class DetailsDialog extends Component {
             <Button variant="outlined" onClick={onClose} color="default">
               Close
             </Button>
+
           </DialogActions>
         </Dialog>
       </div>
@@ -299,3 +313,4 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps)(withStyles(styles)(DetailsDialog));
 //export default withStyles(styles)(DetailsDialog);
+//export default CommentThread;
