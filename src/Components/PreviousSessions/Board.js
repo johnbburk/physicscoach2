@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Launcher } from 'react-chat-window'
 import ReactDOM from 'react-dom';
 import Comment from "../PreviousSessions/Comment"
+import firebase from "../../config/constants";
+const db = firebase.firestore();
 
 export default class Board extends React.Component {
 
@@ -28,11 +30,13 @@ export default class Board extends React.Component {
   }
 
   addNewComment() {
-    var newText = this.myRef.value;
+    var newText = this.myRef.current.value;
     if (newText !== "") {
       var arr = this.state.comments;
       arr.push(newText);
       this.setState({ comments: arr })
+      /* db.collection("sessions").doc("18FhsxcUv1FQPxGJq53a").collection("comments").doc("ckkYl5KSBJtxsfV6sl8f").update({ text: newText });*/
+      db.collection("sessions").doc("18FhsxcUv1FQPxGJq53a").collection("comments").add({ text: newText });
     }
     else alert("Please write a comment to share!")
 
