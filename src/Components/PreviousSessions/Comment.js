@@ -26,11 +26,13 @@ export default class Comment extends
   save() {
     console.log(this.newText.value);
     var newText = this.newText.value;
+    this.props.commentRef.update({text:newText});
     this.props.updateCommentFromBoard(newText, this.props.index);
-    this.setState({ editing: false })
+    this.setState({ editing: false });
   }
 
   remove() {
+    this.props.commentRef.delete();
     this.props.removeCommentFromBoard(this.props.index);
   }
 

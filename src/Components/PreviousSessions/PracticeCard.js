@@ -59,7 +59,7 @@ class PracticeCard extends Component {
   render() {
     const { classes, practiceDoc, showName } = this.props;
     const data = practiceDoc.data();
-    console.log("practiceDoc", practiceDoc);
+    //console.log("practiceDoc", practiceDoc);
     console.log("rating", data.rating);
     return (
       <Card

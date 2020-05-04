@@ -8,12 +8,12 @@ import {
   GridList,
   GridListTile,
   TextField,
-  Input
+  CircularProgress
 } from "@material-ui/core";
 import PracticeImage from "../NewSession/PracticeImage";
-import Comment from "../PreviousSessions/Comment"
+//import Comment from "../PreviousSessions/Comment"
 import Board from "../PreviousSessions/Board"
-import CommentThread from "./Comment";
+//import CommentThread from "./Comment";
 import Lightbox from "react-images-zoom";
 import { withStyles } from "@material-ui/core/styles";
 import { GoalProgressIndicator } from "./GoalProgressIndicator";
@@ -109,22 +109,18 @@ class DetailsDialog extends Component {
     alert("Joshua");
   };
 
-  onToggleQuestionOpen = async () => {
-    await this.props.practiceDoc.ref.update({
-      isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen")
-    });
-
-
-
-    //this.props.reLoad();
+  onToggleQuestionOpen = () => {
+    console.log('Toggling Question Open',this);
+    this.setState({loading:true});
+    this.props.practiceDoc.ref.update({
+      isQuestionOpen: !this.props.practiceDoc.get("isQuestionOpen"),
+    }).then(this.props.reLoad);
   };
 
-  onToggleAnsweredOpen = async () => {
-    await this.props.practiceDoc.ref.update({
+  onToggleAnsweredOpen = () => {
+    this.props.practiceDoc.ref.update({
       isAnsweredOpen: !this.props.practiceDoc.get("isAnsweredOpen"),
-    });
-
-    //this.props.reLoad();
+    }).then(this.props.reLoad);
   };
 
   render() {
@@ -133,6 +129,8 @@ class DetailsDialog extends Component {
     const images = data.imageList.map(function (image) {
       return { src: image };
     });
+    const loading = this.state.loading;
+    this.state.loading = false;
 
     return (
       <div>
@@ -265,7 +263,9 @@ class DetailsDialog extends Component {
             </DialogContent>
           )}
 
-          <DialogContent><Board />
+          <DialogContent><Board
+            practiceDoc={practiceDoc}
+          />
           </DialogContent>
 
 
@@ -288,8 +288,7 @@ class DetailsDialog extends Component {
                 onClick={this.onToggleQuestionOpen}
                 color={data.isQuestionOpen ? "primary" : "secondary"}
               >
-                Mark Question as{" "}
-                {data.isQuestionOpen ? "Answered" : "Unanswered"}
+                {loading ? (<span style={{lineHeight:1.75}}><CircularProgress color='white' size='0.875rem' /></span>) : data.isQuestionOpen ? "Mark Question as Answered" : "Mark Question as Unanswered"}
               </Button>
             )}
 

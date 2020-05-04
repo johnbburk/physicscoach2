@@ -1,3 +1,5 @@
+// I don't think this is ever used
+
 import React, { Component, Fragment } from "react";
 import firebase from "../../config/constants";
 
@@ -43,6 +45,11 @@ class PracticeList extends Component {
       pastPracticeDocs: sessionsSnapshot.docs
     });
   };
+
+  thingy() {
+    console.log(this.state.uid);
+    this.pullData(this.state.uid);
+  }
 
   getPastSessionsOfStudent = async uid => {
     console.log("getting sessions for", uid);
@@ -92,9 +99,7 @@ class PracticeList extends Component {
             <GridListTile key={index}>
               <PracticeCard
                 practiceDoc={doc}
-                reLoad={() => {
-                  this.pullData(this.state.selectedUID);
-                }}
+                reLoad={this.thingy.bind(this)}
               />
             </GridListTile>
           ))}
