@@ -6,7 +6,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
 import StudentPicker from './StudentPicker';
-import LoadingComponent from '../Layouts/LoadingComponent'
+import LoadingComponent from '../Layouts/LoadingComponent';
 
 import { connect } from "react-redux";
 
@@ -19,15 +19,17 @@ class ClassmatePractices extends Component {
     loading: false,
   };
 
-  componentDidMount() {
-    this.getSessionsAfterDate(new Date(2019, 2, 14)); // march 14th
+  componentDidMount(load=true) {
+    this.getSessionsAfterDate(new Date(2019, 2, 14),load); // march 14th
   }
 
-  getSessionsAfterDate = async (date) => {
+  getSessionsAfterDate = async (date,load=true) => {
     console.log('hola')
-    this.setState({
-      loading: true
-    })
+    if (load) {
+      this.setState({
+        loading: true
+      })
+    }
 
     const sessionsSnapshot = await sessionsRef
       .orderBy("submitTime", "desc")
@@ -38,9 +40,13 @@ class ClassmatePractices extends Component {
       pastPracticeDocs: sessionsSnapshot.docs,
     });
 
-    setTimeout(() => this.setState({ loading: false }), 750)
+    if (load) setTimeout(() => this.setState({ loading: false }), 750);
     // make sure loading icon doesn't disappear too quickly
   };
+
+  reLoad() {
+    this.componentDidMount(false);
+  }
 
   renderPastPractices = () => {
     if (this.state.loading) {
@@ -51,7 +57,7 @@ class ClassmatePractices extends Component {
       <Fragment><h1>{this.state.pastPracticeDocs.length} Practices</h1>
         <GridList cols={3} spacing={20}>
           {this.state.pastPracticeDocs.map((doc, index) =>
-            <GridListTile key={index}> <PracticeCard practiceDoc={doc} showName /> </GridListTile>
+            <GridListTile key={index}> <PracticeCard practiceDoc={doc} reLoad={this.reLoad.bind(this)} showName /> </GridListTile>
           )}
         </GridList>
       </Fragment>
