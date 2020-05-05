@@ -66,16 +66,16 @@ class CourseHomepage extends Component {
           {this.state.courseDoc
             .get("requests")
             .includes(this.props.user.uid) ? (
-            <h3>You have already requested to join this course.</h3>
-          ) : (
-            <Button
-              onClick={this.requestJoin}
-              color="primary"
-              variant="outlined"
-            >
-              Request to join
+              <h3>You have already requested to join this course.</h3>
+            ) : (
+              <Button
+                onClick={this.requestJoin}
+                color="primary"
+                variant="outlined"
+              >
+                Request to join
             </Button>
-          )}
+            )}
         </div>
       );
     }
@@ -93,9 +93,9 @@ class CourseHomepage extends Component {
           <Fragment>
             Share the URL of this page with your students so they can request to
             join this course.
-            <ApprovalAlert 
-              requestCount = {requestCount}
-              courseURL = {courseURL}
+            <ApprovalAlert
+              requestCount={requestCount}
+              courseURL={courseURL}
             />
             <CreateCourse rename courseRef={this.state.courseDoc.ref} />
           </Fragment>

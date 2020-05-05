@@ -24,7 +24,7 @@ function ButtonAppBar(props) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <SideMenu/>
+        <SideMenu />
         <Link variant="h5" color="inherit" href="/" underline='none'>
           Physics Coach
           </Link>
@@ -32,7 +32,7 @@ function ButtonAppBar(props) {
         <div className={classes.grow}></div>
         {/* makes the login button right-aligned. */}
 
-        {user === null ? <LoginMenu/> : <AccountMenu/>}
+        {user === null ? <LoginMenu /> : <AccountMenu />}
 
       </Toolbar>
     </AppBar>
